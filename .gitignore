@@ -1,0 +1,12 @@
+.idea
+.workspace/
+node_modules/
+**/node_modules/
+
+*npm-debug.log
+**.DS_Store
+cache.buildArtifact
+.nyc_output
+nyc-reports
+*lerna-debug.log
+lerna-debug.log
