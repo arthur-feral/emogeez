@@ -8,5 +8,7 @@ node_modules/
 cache.buildArtifact
 .nyc_output
 nyc-reports
+**/.nyc_output
+**/nyc-reports
 *lerna-debug.log
 lerna-debug.log
