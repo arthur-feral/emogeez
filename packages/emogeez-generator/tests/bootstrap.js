@@ -1,9 +1,6 @@
 import jimp from 'jimp';
 import fs from 'fs-extra';
 
-process.env.NODE_ENV = 'test';
-process.env.TEMP_FILES_PATH = `${process.cwd()}/tests/tmp`;
-
 const baseConfig = {
   destination: `${process.env.TEMP_FILES_PATH}/emojis`,
   size: 48,

@@ -1,13 +1,17 @@
 import {
   expect,
 } from 'chai';
+import sinon from 'sinon';
 import EventEmitter from 'eventemitter3';
 import Configuration from './Configuration';
 import Config from './config';
+import { APP_READY } from '../constants';
 
 const emitter = new EventEmitter();
 
 let conf;
+const appReadySpy = sinon.spy();
+emitter.on(APP_READY, appReadySpy);
 
 describe('Config', () => {
   it('returns default config if no custom param given', () => {
@@ -38,5 +42,11 @@ describe('Config', () => {
       prefix: 'prefix',
       preproc: 'less',
     }));
+  });
+
+  it('emit APP_READY', async () => {
+    expect(appReadySpy.callCount).to.equal(0);
+    conf = await Config({}, emitter);
+    expect(appReadySpy.callCount).to.equal(1);
   });
 });

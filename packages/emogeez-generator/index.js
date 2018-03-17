@@ -1,7 +1,11 @@
 process.stdin.resume();
 
 import commander from 'commander';
+import superagent from 'superagent';
+
 import Config from './lib/config/config';
+import Fetcher from './lib/fetcher/fetcher';
+
 import EventEmitter from 'eventemitter3';
 import {
   APP_START,
@@ -23,6 +27,7 @@ commander
   .parse(process.argv);
 
 const config = Config(commander, emitter);
+const fetcher = Fetcher(superagent, config, emitter);
 
 emitter.emit(APP_START);
 
