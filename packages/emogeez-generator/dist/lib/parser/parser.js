@@ -23,12 +23,13 @@ var _utils = require('../utils');
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * This module is used to parse html files from emojipedia
+ *
  * @param config
  * @param emitter
  * @return {{parseCategories: function(), parseCategory: function(*), parseEmoji: function(*), parseImage: function(*=)}}
  */
 exports.default = function (config, emitter) {
+
   /**
    * this method parse the index page of emojipedia
    * to get all categories and fetch it
@@ -39,7 +40,7 @@ exports.default = function (config, emitter) {
       var $ = _cheerio2.default.load(html);
       var $categoriesContainer = $(_constants.HTML_CATEGORIES_SELECTOR);
       if ($categoriesContainer.find('h2').text() !== 'Categories') {
-        throw new Error('[Parser] Canno\'t get categories list, Html structure has changed');
+        throw new Error('[Scrapper] Canno\'t get categories list, Html structure has changed');
       }
 
       var categories = [];
@@ -69,6 +70,7 @@ exports.default = function (config, emitter) {
       emitter.emit(_constants.PARSER_PARSE_CATEGORIES_ERROR, error);
     }
   };
+  emitter.on(_constants.FETCHER_FETCH_CATEGORIES_SUCCESS, parseCategories);
 
   /**
    * parse a category html page from emojipedia and notify with the emojis list
@@ -111,6 +113,7 @@ exports.default = function (config, emitter) {
       emitter.emit(_constants.PARSER_PARSE_CATEGORY_ERROR, error);
     }
   };
+  emitter.on(_constants.FETCHER_FETCH_CATEGORY_SUCCESS, parseCategory);
 
   /**
    * parse an emoji page and gather more informations about the emojis:
@@ -118,8 +121,8 @@ exports.default = function (config, emitter) {
    * - modifiers
    * - unicode
    * - themes
-   * @param {object} emojiBase
-   * @param {string} html
+   * @param emojiBase
+   * @param html
    */
   var parseEmoji = function parseEmoji(emojiBase, html) {
     try {
@@ -184,8 +187,11 @@ exports.default = function (config, emitter) {
       emitter.emit(_constants.PARSER_PARSE_EMOJI_ERROR, error);
     }
   };
-
-  emitter.on(_constants.FETCHER_FETCH_CATEGORIES_SUCCESS, parseCategories);
-  emitter.on(_constants.FETCHER_FETCH_CATEGORY_SUCCESS, parseCategory);
   emitter.on(_constants.FETCHER_FETCH_EMOJI_SUCCESS, parseEmoji);
+
+  return {
+    parseCategories: parseCategories,
+    parseCategory: parseCategory,
+    parseEmoji: parseEmoji
+  };
 };

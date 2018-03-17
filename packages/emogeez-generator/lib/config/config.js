@@ -4,7 +4,7 @@ import {
 } from 'lodash';
 import logger from '../logger';
 import {
-  APP_READY,
+  APP_READY, APP_START,
   ERROR,
 } from '../constants';
 import fse from 'fs-extra';
@@ -52,25 +52,26 @@ export default (commander, emitter) => {
   logger.success('⚙️ Configuring app: ✅');
 
   logger.sameLine('💾 Preparing files space: ♻️');
-  fse.mkdirpSync(`${config.destination}/`);
-  fse.mkdirpSync(`${TEMP_FILES_PATH}/images/`);
-  fse.mkdirpSync(`${TEMP_FILES_PATH}/html/`);
-  fse.mkdirpSync(`${TEMP_FILES_PATH}/jsons/`);
-  fse.mkdirpSync(`${TEMP_FILES_PATH}/styles/`);
-  jimp.read(`${process.cwd()}/res/base.png`).then((image) => {
-    image
-      .resize(parseInt(config.size, 10), parseInt(config.size, 10))
-      .write(BASE_IMAGE_PATH, (imageError) => {
-        if (imageError) {
-          emitter.emit(ERROR, imageError);
-        }
-        logger.success('💾 Preparing files space: ✅️');
-        emitter.emit(APP_READY);
-      });
-  }).catch((readError) => {
-    emitter.emit(ERROR, readError);
+  emitter.on(APP_START, () => {
+    fse.mkdirpSync(`${config.destination}/`);
+    fse.mkdirpSync(`${TEMP_FILES_PATH}/images/`);
+    fse.mkdirpSync(`${TEMP_FILES_PATH}/html/`);
+    fse.mkdirpSync(`${TEMP_FILES_PATH}/jsons/`);
+    fse.mkdirpSync(`${TEMP_FILES_PATH}/styles/`);
+    jimp.read(`${process.cwd()}/res/base.png`).then((image) => {
+      image
+        .resize(parseInt(config.size, 10), parseInt(config.size, 10))
+        .write(BASE_IMAGE_PATH, (imageError) => {
+          if (imageError) {
+            emitter.emit(ERROR, imageError);
+          }
+          logger.success('💾 Preparing files space: ✅️');
+          emitter.emit(APP_READY);
+        });
+    }).catch((readError) => {
+      emitter.emit(ERROR, readError);
+    });
   });
-
 
   return new Configuration(config);
 };

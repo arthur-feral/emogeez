@@ -3,7 +3,6 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Config = undefined;
 
 var _lodash = require('lodash');
 
@@ -21,38 +20,11 @@ var _jimp = require('jimp');
 
 var _jimp2 = _interopRequireDefault(_jimp);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _Configuration = require('./Configuration');
 
-/**
- * @typedef Config
- * @property {String} destination
- * @property {String|Integer} size
- * @property {Boolean} cache
- * @property {String} prefix
- * @property {String} preproc
- */
-/**
- * @param {String} destination
- * @param {String|Integer} size
- * @param {Boolean} cache
- * @param {String} prefix
- * @param {String} preproc
- * @constructor
- */
-var Config = exports.Config = function Config(_ref) {
-  var destination = _ref.destination,
-      size = _ref.size,
-      cache = _ref.cache,
-      prefix = _ref.prefix,
-      preproc = _ref.preproc;
-  return {
-    destination: destination,
-    size: parseInt(size, 10),
-    cache: cache,
-    prefix: prefix,
-    preproc: preproc
-  };
-};
+var _Configuration2 = _interopRequireDefault(_Configuration);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * default config
@@ -93,23 +65,25 @@ exports.default = function (commander, emitter) {
   });
   _logger2.default.success('⚙️ Configuring app: ✅');
 
-  _logger2.default.info('💾 Preparing files space: ♻️');
-  _fsExtra2.default.mkdirpSync(config.destination + '/');
-  _fsExtra2.default.mkdirpSync(TEMP_FILES_PATH + '/images/');
-  _fsExtra2.default.mkdirpSync(TEMP_FILES_PATH + '/html/');
-  _fsExtra2.default.mkdirpSync(TEMP_FILES_PATH + '/jsons/');
-  _fsExtra2.default.mkdirpSync(TEMP_FILES_PATH + '/styles/');
-  _jimp2.default.read(process.cwd() + '/res/base.png').then(function (image) {
-    image.resize(parseInt(config.size, 10), parseInt(config.size, 10)).write(BASE_IMAGE_PATH, function (imageError) {
-      if (imageError) {
-        emitter.emit(_constants.ERROR, imageError);
-      }
-      _logger2.default.success('💾 Preparing files space: ✅️');
-      emitter.emit(_constants.APP_READY);
+  _logger2.default.sameLine('💾 Preparing files space: ♻️');
+  emitter.on(_constants.APP_START, function () {
+    _fsExtra2.default.mkdirpSync(config.destination + '/');
+    _fsExtra2.default.mkdirpSync(TEMP_FILES_PATH + '/images/');
+    _fsExtra2.default.mkdirpSync(TEMP_FILES_PATH + '/html/');
+    _fsExtra2.default.mkdirpSync(TEMP_FILES_PATH + '/jsons/');
+    _fsExtra2.default.mkdirpSync(TEMP_FILES_PATH + '/styles/');
+    _jimp2.default.read(process.cwd() + '/res/base.png').then(function (image) {
+      image.resize(parseInt(config.size, 10), parseInt(config.size, 10)).write(BASE_IMAGE_PATH, function (imageError) {
+        if (imageError) {
+          emitter.emit(_constants.ERROR, imageError);
+        }
+        _logger2.default.success('💾 Preparing files space: ✅️');
+        emitter.emit(_constants.APP_READY);
+      });
+    }).catch(function (readError) {
+      emitter.emit(_constants.ERROR, readError);
     });
-  }).catch(function (readError) {
-    emitter.emit(_constants.ERROR, readError);
   });
 
-  return new Config(config);
+  return new _Configuration2.default(config);
 };

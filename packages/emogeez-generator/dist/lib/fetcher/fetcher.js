@@ -70,6 +70,7 @@ exports.default = function (superagent, config, emitter) {
       emitter.emit(_constants.FETCHER_FETCH_CATEGORIES_ERROR, error);
     });
   };
+  emitter.on(_constants.APP_READY, fetchCategories);
 
   /**
    * Once we parsed the index file containing all categories
@@ -105,6 +106,11 @@ exports.default = function (superagent, config, emitter) {
       emitter.emit(_constants.FETCHER_FETCH_CATEGORY_ERROR, error);
     });
   };
+  emitter.on(_constants.PARSER_PARSE_CATEGORIES_SUCCESS, function (categories) {
+    categories.map(function (category) {
+      return fetchCategory(category);
+    });
+  });
 
   /**
    * once we have fetched the category page and listed all emojis on it
@@ -135,10 +141,19 @@ exports.default = function (superagent, config, emitter) {
       (0, _utils.saveFile)(content, htmlPath + '/' + emoji.category, emoji.name + '.html');
       emitter.emit(_constants.FETCHER_FETCH_EMOJI_SUCCESS, emoji, content);
     }).catch(function (error) {
-      console.log(error);
       emitter.emit(_constants.FETCHER_FETCH_EMOJI_ERROR, error);
     });
   };
+  emitter.on(_constants.PARSER_PARSE_CATEGORY_SUCCESS, function (emojis) {
+    emojis.map(function (emoji) {
+      return fetchEmoji(emoji);
+    });
+  });
+  emitter.on(_constants.PARSER_FOUND_MODIFIERS, function (emojis) {
+    (0, _lodash.map)(emojis, function (emoji) {
+      return fetchEmoji(emoji);
+    });
+  });
 
   /**
    * fetch the image for a theme for an emoji
@@ -172,27 +187,14 @@ exports.default = function (superagent, config, emitter) {
       emitter.emit(_constants.FETCHER_FETCH_IMAGE_ERROR, error, emoji, themeName);
     });
   };
-
-  emitter.on(_constants.APP_FILES_SPACE_READY, fetchCategories);
-  emitter.on(_constants.PARSER_PARSE_CATEGORIES_SUCCESS, function (categories) {
-    categories.map(function (category) {
-      return fetchCategory(category);
-    });
-  });
-
-  emitter.on(_constants.PARSER_PARSE_CATEGORY_SUCCESS, function (emojis) {
-    emojis.map(function (emoji) {
-      return fetchEmoji(emoji);
-    });
-  });
-
-  emitter.on(_constants.PARSER_FOUND_MODIFIERS, function (emojis) {
-    (0, _lodash.map)(emojis, function (emoji) {
-      return fetchEmoji(emoji);
-    });
-  });
-
   emitter.on(_constants.PARSER_FOUND_THEME, function (emoji, themeName, imageUrl) {
     fetchImage(emoji, themeName, imageUrl);
   });
+
+  return {
+    fetchCategories: fetchCategories,
+    fetchCategory: fetchCategory,
+    fetchEmoji: fetchEmoji,
+    fetchImage: fetchImage
+  };
 };

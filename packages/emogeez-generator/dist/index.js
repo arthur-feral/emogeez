@@ -12,25 +12,13 @@ var _config = require('./lib/config/config');
 
 var _config2 = _interopRequireDefault(_config);
 
-var _parser = require('./lib/parser/parser');
-
-var _parser2 = _interopRequireDefault(_parser);
-
 var _fetcher = require('./lib/fetcher/fetcher');
 
 var _fetcher2 = _interopRequireDefault(_fetcher);
 
-var _monitor = require('./lib/monitor/monitor');
+var _parser = require('./lib/parser/parser');
 
-var _monitor2 = _interopRequireDefault(_monitor);
-
-var _collector = require('./lib/collector/collector');
-
-var _collector2 = _interopRequireDefault(_collector);
-
-var _generator = require('./lib/generator/generator');
-
-var _generator2 = _interopRequireDefault(_generator);
+var _parser2 = _interopRequireDefault(_parser);
 
 var _eventemitter = require('eventemitter3');
 
@@ -49,11 +37,8 @@ var packagejson = require(process.cwd() + '/package.json');
 _commander2.default.version(packagejson.version).usage('[options] [value]').option('-d, --destination [path]', 'Path for generated files').option('-s, --size [size]', 'The sprite\'s height').option('--preproc [preprocessor type]', 'the css preprocessor type (less, sass etc...)').option('-p, --prefix [prefix]', 'The classnames prefix').option('-c, --cache', 'Force cache use (use last cached html and images) Dont use it if you want last released emojis').parse(process.argv);
 
 var config = (0, _config2.default)(_commander2.default, emitter);
-// const fetcher = Fetcher(superagent, config, emitter);
-// const parser = Parser(config, emitter);
-// const monitor = Monitor(config, emitter);
-// const collector = Collector(config, emitter);
-// const generator = Generator(config, emitter);
+var fetcher = (0, _fetcher2.default)(_superagent2.default, config, emitter);
+var parser = (0, _parser2.default)(config, emitter);
 
 emitter.emit(_constants.APP_START);
 
