@@ -26,8 +26,11 @@ describe('Constants', () => {
     expect(constants.PARSER_PARSE_CATEGORY_SUCCESS).to.equal('PARSER_PARSE_CATEGORY_SUCCESS');
     expect(constants.PARSER_PARSE_EMOJI_ERROR).to.equal('PARSER_PARSE_EMOJI_ERROR');
     expect(constants.PARSER_PARSE_EMOJI_SUCCESS).to.equal('PARSER_PARSE_EMOJI_SUCCESS');
+    expect(constants.PARSER_PARSE_IMAGE_SUCCESS).to.equal('PARSER_PARSE_IMAGE_SUCCESS');
+    expect(constants.PARSER_PARSE_IMAGE_ERROR).to.equal('PARSER_PARSE_IMAGE_ERROR');
     expect(constants.PARSER_FOUND_MODIFIERS).to.equal('PARSER_FOUND_MODIFIERS');
     expect(constants.PARSER_FOUND_THEME).to.equal('PARSER_FOUND_THEME');
+    expect(constants.PARSER_PARSED_ALL_IMAGES).to.equal('PARSER_PARSED_ALL_IMAGES');
 
     expect(constants.HTML_CATEGORIES_SELECTOR).to.equal('body div.container div.sidebar div.block:first-child');
     expect(constants.HTML_EMOJIS_SELECTOR).to.equal('body div.container div.content ul.emoji-list');

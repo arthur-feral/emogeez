@@ -6,6 +6,7 @@ import superagent from 'superagent';
 import Config from './lib/config/config';
 import Fetcher from './lib/fetcher/fetcher';
 import Parser from './lib/parser/parser';
+import Monitor from './lib/monitor/monitor';
 
 import EventEmitter from 'eventemitter3';
 import {
@@ -30,6 +31,7 @@ commander
 const config = Config(commander, emitter);
 const fetcher = Fetcher(superagent, config, emitter);
 const parser = Parser(config, emitter);
+const monitor = Monitor(config, emitter);
 
 emitter.emit(APP_START);
 
