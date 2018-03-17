@@ -1,0 +1,10 @@
+$emojiCharSize: <%emojiSize%>px;
+
+[class^="<%prefix%>-"], [class*=" <%prefix%>-"] {
+    background: transparent url("<%pathToSprite%>") 0 0 no-repeat;
+    display: inline-block;
+    height: $emojiCharSize;
+    background-size: <%spriteWidth%>px <%spriteHeight%>px;
+    width: $emojiCharSize;
+    vertical-align: middle;
+}

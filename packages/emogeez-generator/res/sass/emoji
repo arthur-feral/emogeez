@@ -1,0 +1,3 @@
+.<%prefix%>-<%emojiName%> {
+    background-position: <%emojiXPosition%>px <%emojiYPosition%>px;
+}

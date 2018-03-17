@@ -1,10 +1,11 @@
-.idea
+.idea/*
 .workspace/
 node_modules/
 **/node_modules/
 
-*npm-debug.log
+*.swp
 **.DS_Store
+
 cache.buildArtifact
 .nyc_output
 nyc-reports
@@ -12,3 +13,9 @@ nyc-reports
 **/nyc-reports
 *lerna-debug.log
 lerna-debug.log
+yarn-*.log
+
+dist/*
+emojis/*
+tests/tmp
+tmp/

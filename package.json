@@ -7,12 +7,10 @@
   "scripts": {
     "test": "echo \"no tests yet\"",
     "bootstrap": "yarn",
+    "lerna-bootstrap": "lerna bootstrap",
     "lerna-publish": "lerna publish"
   },
   "devDependencies": {
     "lerna": "^2.9.0"
-  },
-  "workspaces": [
-    "packages/*"
-  ]
+  }
 }

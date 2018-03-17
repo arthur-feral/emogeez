@@ -1,0 +1,193 @@
+{
+  "people": {
+    "symbol": "😃",
+    "url": "https://emojipedia.org/people/",
+    "name": "people",
+    "fullName": "Smileys & People",
+    "emojis": {
+      "grinning-face": {
+        "symbol": "😀",
+        "name": "grinning-face",
+        "fullName": "Grinning Face",
+        "category": "people",
+        "unicode": "1f600",
+        "shortnames": [
+          "grinning"
+        ],
+        "modifiers": {},
+        "themes": {
+          "apple": "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/grinning-face_1f600.png"
+        },
+        "shortname": "grinning"
+      },
+      "winking-face": {
+        "symbol": "😉",
+        "name": "winking-face",
+        "fullName": "Winking Face",
+        "category": "people",
+        "unicode": "1f609",
+        "shortnames": [
+          "wink"
+        ],
+        "modifiers": {},
+        "themes": {
+          "apple": "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/winking-face_1f609.png",
+          "google": "https://emojipedia-us.s3.amazonaws.com/thumbs/120/google/119/winking-face_1f609.png",
+          "microsoft": "https://emojipedia-us.s3.amazonaws.com/thumbs/120/microsoft/106/winking-face_1f609.png",
+          "samsung": "https://emojipedia-us.s3.amazonaws.com/thumbs/120/samsung/128/winking-face_1f609.png",
+          "lg": "https://emojipedia-us.s3.amazonaws.com/thumbs/120/lg/57/winking-face_1f609.png",
+          "htc": "https://emojipedia-us.s3.amazonaws.com/thumbs/120/htc/122/winking-face_1f609.png",
+          "whatsapp": "https://emojipedia-us.s3.amazonaws.com/thumbs/120/whatsapp/116/winking-face_1f609.png",
+          "facebook": "https://emojipedia-us.s3.amazonaws.com/thumbs/120/facebook/111/winking-face_1f609.png",
+          "messenger": "https://emojipedia-us.s3.amazonaws.com/thumbs/120/facebook/65/winking-face_1f609.png",
+          "twitter": "https://emojipedia-us.s3.amazonaws.com/thumbs/120/twitter/131/winking-face_1f609.png",
+          "emojione": "https://emojipedia-us.s3.amazonaws.com/thumbs/120/emoji-one/104/winking-face_1f609.png",
+          "emojidex": "https://emojipedia-us.s3.amazonaws.com/thumbs/120/emojidex/112/winking-face_1f609.png",
+          "mozilla": "https://emojipedia-us.s3.amazonaws.com/thumbs/120/mozilla/36/winking-face_1f609.png"
+        },
+        "shortname": "wink"
+      },
+      "father-christmas": {
+        "symbol": "🎅",
+        "name": "father-christmas",
+        "fullName": "Santa Claus",
+        "category": "people",
+        "unicode": "1f385",
+        "shortnames": [
+          "santa"
+        ],
+        "modifiers": {
+          "father-christmas-type-1-2": {
+            "parent": "father-christmas",
+            "fullName": "Santa Claus: Light Skin Tone",
+            "name": "father-christmas-type-1-2",
+            "symbol": "🎅🏻",
+            "category": "people",
+            "url": "https://emojipedia.org/father-christmas-type-1-2/"
+          },
+          "father-christmas-type-3": {
+            "parent": "father-christmas",
+            "fullName": "Santa Claus: Medium-Light Skin Tone",
+            "name": "father-christmas-type-3",
+            "symbol": "🎅🏼",
+            "category": "people",
+            "url": "https://emojipedia.org/father-christmas-type-3/"
+          },
+          "father-christmas-type-4": {
+            "parent": "father-christmas",
+            "fullName": "Santa Claus: Medium Skin Tone",
+            "name": "father-christmas-type-4",
+            "symbol": "🎅🏽",
+            "category": "people",
+            "url": "https://emojipedia.org/father-christmas-type-4/"
+          },
+          "father-christmas-type-5": {
+            "parent": "father-christmas",
+            "fullName": "Santa Claus: Medium-Dark Skin Tone",
+            "name": "father-christmas-type-5",
+            "symbol": "🎅🏾",
+            "category": "people",
+            "url": "https://emojipedia.org/father-christmas-type-5/"
+          },
+          "father-christmas-type-6": {
+            "parent": "father-christmas",
+            "fullName": "Santa Claus: Dark Skin Tone",
+            "name": "father-christmas-type-6",
+            "symbol": "🎅🏿",
+            "category": "people",
+            "url": "https://emojipedia.org/father-christmas-type-6/"
+          }
+        },
+        "themes": {
+          "apple": "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/father-christmas_1f385.png"
+        },
+        "shortname": "santa"
+      },
+      "father-christmas-type-1-2": {
+        "parent": "father-christmas",
+        "fullName": "Santa Claus: Light Skin Tone",
+        "name": "father-christmas-type-1-2",
+        "symbol": "🎅🏻",
+        "category": "people",
+        "url": "https://emojipedia.org/father-christmas-type-1-2/",
+        "unicode": "1f385-1f3fb",
+        "shortnames": [
+          "father-christmas-type-1-2"
+        ],
+        "modifiers": {},
+        "themes": {
+          "apple": "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/father-christmas_emoji-modifier-fitzpatrick-type-1-2_1f385-1f3fb_1f3fb.png"
+        },
+        "shortname": "father-christmas-type-1-2"
+      },
+      "father-christmas-type-3": {
+        "parent": "father-christmas",
+        "fullName": "Santa Claus: Medium-Light Skin Tone",
+        "name": "father-christmas-type-3",
+        "symbol": "🎅🏼",
+        "category": "people",
+        "url": "https://emojipedia.org/father-christmas-type-3/",
+        "unicode": "1f385-1f3fc",
+        "shortnames": [
+          "father-christmas-type-3"
+        ],
+        "modifiers": {},
+        "themes": {
+          "apple": "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/father-christmas_emoji-modifier-fitzpatrick-type-3_1f385-1f3fc_1f3fc.png"
+        },
+        "shortname": "father-christmas-type-3"
+      },
+      "father-christmas-type-4": {
+        "parent": "father-christmas",
+        "fullName": "Santa Claus: Medium Skin Tone",
+        "name": "father-christmas-type-4",
+        "symbol": "🎅🏽",
+        "category": "people",
+        "url": "https://emojipedia.org/father-christmas-type-4/",
+        "unicode": "1f385-1f3fd",
+        "shortnames": [
+          "father-christmas-type-4"
+        ],
+        "modifiers": {},
+        "themes": {
+          "apple": "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/father-christmas_emoji-modifier-fitzpatrick-type-4_1f385-1f3fd_1f3fd.png"
+        },
+        "shortname": "father-christmas-type-4"
+      },
+      "father-christmas-type-5": {
+        "parent": "father-christmas",
+        "fullName": "Santa Claus: Medium-Dark Skin Tone",
+        "name": "father-christmas-type-5",
+        "symbol": "🎅🏾",
+        "category": "people",
+        "url": "https://emojipedia.org/father-christmas-type-5/",
+        "unicode": "1f385-1f3fe",
+        "shortnames": [
+          "father-christmas-type-5"
+        ],
+        "modifiers": {},
+        "themes": {
+          "apple": "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/father-christmas_emoji-modifier-fitzpatrick-type-5_1f385-1f3fe_1f3fe.png"
+        },
+        "shortname": "father-christmas-type-5"
+      },
+      "father-christmas-type-6": {
+        "parent": "father-christmas",
+        "fullName": "Santa Claus: Dark Skin Tone",
+        "name": "father-christmas-type-6",
+        "symbol": "🎅🏿",
+        "category": "people",
+        "url": "https://emojipedia.org/father-christmas-type-6/",
+        "unicode": "1f385-1f3ff",
+        "shortnames": [
+          "father-christmas-type-6"
+        ],
+        "modifiers": {},
+        "themes": {
+          "apple": "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/father-christmas_emoji-modifier-fitzpatrick-type-6_1f385-1f3ff_1f3ff.png"
+        },
+        "shortname": "father-christmas-type-6"
+      }
+    }
+  }
+}

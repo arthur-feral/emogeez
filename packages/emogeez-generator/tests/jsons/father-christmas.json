@@ -1,0 +1,56 @@
+{
+  "symbol": "🎅",
+  "name": "father-christmas",
+  "fullName": "Santa Claus",
+  "category": "people",
+  "unicode": "1f385",
+  "shortnames": [
+    "santa"
+  ],
+  "modifiers": {
+    "father-christmas-type-1-2": {
+      "parent": "father-christmas",
+      "fullName": "Santa Claus: Light Skin Tone",
+      "name": "father-christmas-type-1-2",
+      "symbol": "🎅🏻",
+      "category": "people",
+      "url": "https://emojipedia.org/father-christmas-type-1-2/"
+    },
+    "father-christmas-type-3": {
+      "parent": "father-christmas",
+      "fullName": "Santa Claus: Medium-Light Skin Tone",
+      "name": "father-christmas-type-3",
+      "symbol": "🎅🏼",
+      "category": "people",
+      "url": "https://emojipedia.org/father-christmas-type-3/"
+    },
+    "father-christmas-type-4": {
+      "parent": "father-christmas",
+      "fullName": "Santa Claus: Medium Skin Tone",
+      "name": "father-christmas-type-4",
+      "symbol": "🎅🏽",
+      "category": "people",
+      "url": "https://emojipedia.org/father-christmas-type-4/"
+    },
+    "father-christmas-type-5": {
+      "parent": "father-christmas",
+      "fullName": "Santa Claus: Medium-Dark Skin Tone",
+      "name": "father-christmas-type-5",
+      "symbol": "🎅🏾",
+      "category": "people",
+      "url": "https://emojipedia.org/father-christmas-type-5/"
+    },
+    "father-christmas-type-6": {
+      "parent": "father-christmas",
+      "fullName": "Santa Claus: Dark Skin Tone",
+      "name": "father-christmas-type-6",
+      "symbol": "🎅🏿",
+      "category": "people",
+      "url": "https://emojipedia.org/father-christmas-type-6/"
+    }
+  },
+  "themes": {
+    "apple": "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/father-christmas_1f385.png"
+  },
+  "shortname": "santa"
+}

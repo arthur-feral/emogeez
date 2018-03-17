@@ -1,0 +1,50 @@
+{
+  "/Users/arthurferal/Web/emojis-sprite-generator/tests/tmp/images/apple/people/father-christmas-type-1-2.png": {
+    "height": 48,
+    "width": 48,
+    "x": 48,
+    "y": 48
+  },
+  "/Users/arthurferal/Web/emojis-sprite-generator/tests/tmp/images/apple/people/father-christmas-type-3.png": {
+    "height": 48,
+    "width": 48,
+    "x": 96,
+    "y": 0
+  },
+  "/Users/arthurferal/Web/emojis-sprite-generator/tests/tmp/images/apple/people/father-christmas-type-4.png": {
+    "height": 48,
+    "width": 48,
+    "x": 96,
+    "y": 48
+  },
+  "/Users/arthurferal/Web/emojis-sprite-generator/tests/tmp/images/apple/people/father-christmas-type-5.png": {
+    "height": 48,
+    "width": 48,
+    "x": 0,
+    "y": 96
+  },
+  "/Users/arthurferal/Web/emojis-sprite-generator/tests/tmp/images/apple/people/father-christmas-type-6.png": {
+    "height": 48,
+    "width": 48,
+    "x": 48,
+    "y": 96
+  },
+  "/Users/arthurferal/Web/emojis-sprite-generator/tests/tmp/images/apple/people/father-christmas.png": {
+    "height": 48,
+    "width": 48,
+    "x": 0,
+    "y": 48
+  },
+  "/Users/arthurferal/Web/emojis-sprite-generator/tests/tmp/images/apple/people/grinning-face.png": {
+    "height": 48,
+    "width": 48,
+    "x": 0,
+    "y": 0
+  },
+  "/Users/arthurferal/Web/emojis-sprite-generator/tests/tmp/images/apple/people/winking-face.png": {
+    "height": 48,
+    "width": 48,
+    "x": 48,
+    "y": 0
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "people": {
+    "symbol": "😃",
+    "url": "https://emojipedia.org/people/",
+    "name": "people",
+    "fullName": "Smileys & People",
+    "emojis": [
+      {
+        "symbol": "😀",
+        "url": "https://emojipedia.org/grinning-face/",
+        "name": "grinning-face",
+        "fullName": "Grinning Face",
+        "category": "people"
+      },
+      {
+        "symbol": "😉",
+        "url": "https://emojipedia.org/winking-face/",
+        "name": "winking-face",
+        "fullName": "Winking Face",
+        "category": "people"
+      },
+      {
+        "symbol": "🎅",
+        "url": "https://emojipedia.org/father-christmas/",
+        "name": "father-christmas",
+        "fullName": "Santa Claus",
+        "category": "people"
+      }
+    ]
+  }
+}
