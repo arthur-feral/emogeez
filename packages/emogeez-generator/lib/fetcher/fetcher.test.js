@@ -82,7 +82,7 @@ describe('Fetcher', () => {
 
   describe('fetchEmoji', () => {
     it('calls fetchEmoji', async () => {
-      const result = await fetcher.fetchEmoji(categoryEmojis[0]);
+      let result = await fetcher.fetchEmoji(categoryEmojis[0]);
       expect(fetchEmojiSuccessSpy.callCount).to.equal(1);
       expect(fetchEmojiSuccessSpy.args[0][0]).to.deep.equal({
         'category': 'people',
@@ -92,6 +92,28 @@ describe('Fetcher', () => {
         'url': 'https://emojipedia.org/grinning-face/',
       });
       expect(fetchEmojiSuccessSpy.args[0][1]).to.equal(emojiHTML1);
+
+      result = await fetcher.fetchEmoji(categoryEmojis[1]);
+      expect(fetchEmojiSuccessSpy.callCount).to.equal(2);
+      expect(fetchEmojiSuccessSpy.args[1][0]).to.deep.equal({
+        'category': 'people',
+        'symbol': '😉',
+        'fullName': 'Winking Face',
+        'name': 'winking-face',
+        'url': 'https://emojipedia.org/winking-face/',
+      });
+      expect(fetchEmojiSuccessSpy.args[1][1]).to.equal(emojiHTML2);
+
+      result = await fetcher.fetchEmoji(categoryEmojis[2]);
+      expect(fetchEmojiSuccessSpy.callCount).to.equal(3);
+      expect(fetchEmojiSuccessSpy.args[2][0]).to.deep.equal({
+        'symbol': '🎅',
+        'name': 'father-christmas',
+        'fullName': 'Santa Claus',
+        'category': 'people',
+        'url': 'https://emojipedia.org/father-christmas/',
+      });
+      expect(fetchEmojiSuccessSpy.args[2][1]).to.equal(emojiHTML3);
     });
   });
 

@@ -20,10 +20,20 @@ describe('Constants', () => {
     expect(constants.FETCHER_FETCH_IMAGE_ERROR).to.equal('FETCHER_FETCH_IMAGE_ERROR');
     expect(constants.FETCHER_FETCH_IMAGE_SUCCESS).to.equal('FETCHER_FETCH_IMAGE_SUCCESS');
 
+    expect(constants.PARSER_PARSE_CATEGORIES_ERROR).to.equal('PARSER_PARSE_CATEGORIES_ERROR');
     expect(constants.PARSER_PARSE_CATEGORIES_SUCCESS).to.equal('PARSER_PARSE_CATEGORIES_SUCCESS');
+    expect(constants.PARSER_PARSE_CATEGORY_ERROR).to.equal('PARSER_PARSE_CATEGORY_ERROR');
     expect(constants.PARSER_PARSE_CATEGORY_SUCCESS).to.equal('PARSER_PARSE_CATEGORY_SUCCESS');
+    expect(constants.PARSER_PARSE_EMOJI_ERROR).to.equal('PARSER_PARSE_EMOJI_ERROR');
+    expect(constants.PARSER_PARSE_EMOJI_SUCCESS).to.equal('PARSER_PARSE_EMOJI_SUCCESS');
     expect(constants.PARSER_FOUND_MODIFIERS).to.equal('PARSER_FOUND_MODIFIERS');
     expect(constants.PARSER_FOUND_THEME).to.equal('PARSER_FOUND_THEME');
+
+    expect(constants.HTML_CATEGORIES_SELECTOR).to.equal('body div.container div.sidebar div.block:first-child');
+    expect(constants.HTML_EMOJIS_SELECTOR).to.equal('body div.container div.content ul.emoji-list');
+    expect(constants.HTML_EMOJI_SHORTNAMES).to.equal('body div.container div.content article ul.shortcodes li');
+    expect(constants.HTML_EMOJI_MODIFIERS).to.equal('body div.container div.content article section.modifiers ul li');
+    expect(constants.HTML_EMOJI_THEMES).to.equal('body div.container div.content article section.vendor-list ul li .vendor-rollout-target');
 
 
     expect(constants.EXTENTIONS).to.deep.equal({

@@ -17,10 +17,20 @@ export const FETCHER_FETCH_EMOJI_SUCCESS = 'FETCHER_FETCH_EMOJI_SUCCESS';
 export const FETCHER_FETCH_IMAGE_ERROR = 'FETCHER_FETCH_IMAGE_ERROR';
 export const FETCHER_FETCH_IMAGE_SUCCESS = 'FETCHER_FETCH_IMAGE_SUCCESS';
 
+export const PARSER_PARSE_CATEGORIES_ERROR = 'PARSER_PARSE_CATEGORIES_ERROR';
 export const PARSER_PARSE_CATEGORIES_SUCCESS = 'PARSER_PARSE_CATEGORIES_SUCCESS';
+export const PARSER_PARSE_CATEGORY_ERROR = 'PARSER_PARSE_CATEGORY_ERROR';
 export const PARSER_PARSE_CATEGORY_SUCCESS = 'PARSER_PARSE_CATEGORY_SUCCESS';
+export const PARSER_PARSE_EMOJI_ERROR = 'PARSER_PARSE_EMOJI_ERROR';
+export const PARSER_PARSE_EMOJI_SUCCESS = 'PARSER_PARSE_EMOJI_SUCCESS';
 export const PARSER_FOUND_MODIFIERS = 'PARSER_FOUND_MODIFIERS';
 export const PARSER_FOUND_THEME = 'PARSER_FOUND_THEME';
+
+export const HTML_CATEGORIES_SELECTOR = 'body div.container div.sidebar div.block:first-child';
+export const HTML_EMOJIS_SELECTOR = 'body div.container div.content ul.emoji-list';
+export const HTML_EMOJI_SHORTNAMES = 'body div.container div.content article ul.shortcodes li';
+export const HTML_EMOJI_MODIFIERS = 'body div.container div.content article section.modifiers ul li';
+export const HTML_EMOJI_THEMES = 'body div.container div.content article section.vendor-list ul li .vendor-rollout-target';
 
 export const EXTENTIONS = {
   sass: 'scss',
