@@ -7,6 +7,7 @@ import {
 import {
   saveFile,
 } from '../utils';
+import logger from '../logger';
 import {
   BASE_URL,
   APP_READY,
@@ -79,7 +80,6 @@ export default (superagent, config, emitter) => {
     });
   };
   emitter.on(APP_READY, fetchCategories);
-
 
   /**
    * Once we parsed the index file containing all categories

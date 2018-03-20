@@ -38,3 +38,19 @@ emitter.emit(APP_START);
 emitter.on(APP_DONE, () => {
   process.exit(0);
 });
+
+process.on('SIGINT', function () {
+  process.exit(2);
+});
+
+process.on('uncaughtException', (error) => {
+  logger.error('Uncaught Exception...');
+  logger.error(error.stack);
+  process.exit(99);
+});
+
+process.on('error', (error) => {
+  logger.error(error.message);
+  logger.error(error.stack);
+  process.exit(99);
+});
