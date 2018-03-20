@@ -15,7 +15,7 @@ nyc-reports
 lerna-debug.log
 yarn-*.log
 
-dist/*
+**/dist/*
 emojis/*
 tests/tmp
 tmp/
