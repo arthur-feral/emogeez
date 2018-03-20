@@ -5,7 +5,7 @@ import sinon from 'sinon';
 import EventEmitter from 'eventemitter3';
 import Configuration from './Configuration';
 import Config from './config';
-import { APP_READY } from '../constants';
+import { APP_READY, APP_START } from '../constants';
 
 const emitter = new EventEmitter();
 
@@ -14,6 +14,10 @@ const appReadySpy = sinon.spy();
 emitter.on(APP_READY, appReadySpy);
 
 describe('Config', () => {
+  beforeEach(() => {
+    emitter.removeListener(APP_START);
+    appReadySpy.reset();
+  });
   it('returns default config if no custom param given', () => {
     conf = Config({
       preproc: 'sass',
@@ -44,9 +48,13 @@ describe('Config', () => {
     }));
   });
 
-  it('emit APP_READY', async () => {
+  it('emit APP_READY', (done) => {
     expect(appReadySpy.callCount).to.equal(0);
-    conf = await Config({}, emitter);
-    expect(appReadySpy.callCount).to.equal(1);
+    conf = Config({}, emitter);
+    emitter.emit(APP_START);
+    setTimeout(() => {
+      expect(appReadySpy.callCount).to.equal(1);
+      done();
+    }, 100);
   });
 });

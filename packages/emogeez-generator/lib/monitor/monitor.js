@@ -20,7 +20,6 @@ import {
   PARSER_PARSE_CATEGORY_ERROR,
   PARSER_PARSE_EMOJI_ERROR,
   PARSER_PARSE_IMAGE_ERROR,
-  APP_READY,
   PARSER_FOUND_THEME,
 } from '../constants';
 import logger from '../logger';

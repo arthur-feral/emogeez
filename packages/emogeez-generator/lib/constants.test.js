@@ -32,6 +32,15 @@ describe('Constants', () => {
     expect(constants.PARSER_FOUND_THEME).to.equal('PARSER_FOUND_THEME');
     expect(constants.PARSER_PARSED_ALL_IMAGES).to.equal('PARSER_PARSED_ALL_IMAGES');
 
+    expect(constants.COLLECTOR_COLLECT_DONE).to.equal('COLLECTOR_COLLECT_DONE');
+
+    expect(constants.GENERATOR_GENERATE_SPRITE_SUCCESS).to.equal('GENERATOR_GENERATE_SPRITE_SUCCESS');
+    expect(constants.GENERATOR_GENERATE_SPRITE_ERROR).to.equal('GENERATOR_GENERATE_SPRITE_ERROR');
+    expect(constants.GENERATOR_GENERATE_STYLE_SUCCESS).to.equal('GENERATOR_GENERATE_STYLE_SUCCESS');
+    expect(constants.GENERATOR_GENERATE_STYLE_ERROR).to.equal('GENERATOR_GENERATE_STYLE_ERROR');
+    expect(constants.GENERATOR_GENERATE_THEMES_SUCCESS).to.equal('GENERATOR_GENERATE_THEMES_SUCCESS');
+    expect(constants.GENERATOR_GENERATE_THEMES_ERROR).to.equal('GENERATOR_GENERATE_THEMES_ERROR');
+
     expect(constants.HTML_CATEGORIES_SELECTOR).to.equal('body div.container div.sidebar div.block:first-child');
     expect(constants.HTML_EMOJIS_SELECTOR).to.equal('body div.container div.content ul.emoji-list');
     expect(constants.HTML_EMOJI_SHORTNAMES).to.equal('body div.container div.content article ul.shortcodes li');
