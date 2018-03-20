@@ -7,7 +7,7 @@
     "dev": "node ./index.js",
     "transpile": "$(npm bin)/babel . --out-dir dist --ignore cache,tests,node_modules,nyc-reports,dist,*.test.js",
     "prepublish": "yarn run test",
-    "test": "NODE_ENV=test TEMP_FILES_PATH=tests/tmp nyc --check-coverage --report-dir=${CIRCLE_ARTIFACTS:-'./nyc-reports'} --reporter=lcov yarn run mocha",
+    "test": "NODE_ENV=test TEMP_FILES_PATH=tests/tmp nyc --check-coverage --lines 85 --report-dir=${CIRCLE_ARTIFACTS:-'./nyc-reports'} --reporter=lcov yarn run mocha",
     "mocha": "NODE_ENV=test TEMP_FILES_PATH=tests/tmp mocha --compilers js:babel-register -r tests/bootstrap.js -r babel-polyfill $(find lib -name '*.test.js')",
     "clean": "rm -r tmp/**/*"
   },
