@@ -1,8 +1,9 @@
-process.stdin.resume();
+//process.stdin.resume();
 
 import commander from 'commander';
 import superagent from 'superagent';
 
+import logger from './lib/logger';
 import Config from './lib/config/config';
 import Fetcher from './lib/fetcher/fetcher';
 import Parser from './lib/parser/parser';
@@ -37,24 +38,30 @@ const monitor = Monitor(config, emitter);
 const generators = Generators(config, emitter);
 const collector = Collector(config, emitter);
 
+const stopAndExit = (status, error) => {
+  if (error) {
+    logger.error(error.message);
+    logger.error(error.stack);
+  }
+
+  //process.stdin.pause();
+  process.exit(status);
+};
+
 emitter.emit(APP_START);
 
 emitter.on(APP_DONE, () => {
-  process.exit(0);
+  stopAndExit(0);
 });
 
 process.on('SIGINT', function () {
-  process.exit(2);
+  stopAndExit(1);
 });
 
 process.on('uncaughtException', (error) => {
-  logger.error('Uncaught Exception...');
-  logger.error(error.stack);
-  process.exit(99);
+  stopAndExit(1, error);
 });
 
 process.on('error', (error) => {
-  logger.error(error.message);
-  logger.error(error.stack);
-  process.exit(99);
+  stopAndExit(1, error);
 });

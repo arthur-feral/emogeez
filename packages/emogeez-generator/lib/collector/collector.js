@@ -114,6 +114,7 @@ export default (config, emitter) => {
 
     if (store.emojisTotal === store.emojisScrapped && store.imagesTotal === (store.imagesComputed - store.imagesFailedCount)) {
       logger.success('📡 Collecting data: ✅');
+      logger.success('\n');
       emitter.emit(PARSER_PARSED_ALL_IMAGES);
     }
   };
@@ -224,7 +225,7 @@ export default (config, emitter) => {
     let themeData = {};
 
     emojisNames.map((emojiName) => {
-      const emoji = omit(emojis[emojiName], 'url', 'themes', 'modifiers');
+      const emoji = omit(store.emojis[emojiName], 'url', 'themes', 'modifiers');
 
       if (!has(emoji, 'parent')) {
         themeData = {

@@ -1,0 +1,413 @@
+$emojiCharSize: 48px;
+
+[class^="emojis-"], [class*=" emojis-"] {
+    background: transparent url("emojis/emojipedia/emojipedia.png") 0 0 no-repeat;
+    display: inline-block;
+    height: $emojiCharSize;
+    background-size: 576px 576px;
+    width: $emojiCharSize;
+    vertical-align: middle;
+}
+
+.emojis-rolling-on-the-floor-laughing {
+    background-position: 48px 0px;
+}
+.emojis-grinning-face-with-star-eyes {
+    background-position: 384px 144px;
+}
+.emojis-face-with-one-eyebrow-raised {
+    background-position: 0px 48px;
+}
+.emojis-drooling-face {
+    background-position: 48px 48px;
+}
+.emojis-shocked-face-with-exploding-head {
+    background-position: 96px 0px;
+}
+.emojis-grinning-face-with-one-large-and-one-small-eye {
+    background-position: 96px 48px;
+}
+.emojis-serious-face-with-symbols-covering-mouth {
+    background-position: 0px 96px;
+}
+.emojis-nauseated-face {
+    background-position: 48px 96px;
+}
+.emojis-face-with-open-mouth-vomiting {
+    background-position: 96px 96px;
+}
+.emojis-sneezing-face {
+    background-position: 144px 0px;
+}
+.emojis-face-with-cowboy-hat {
+    background-position: 144px 48px;
+}
+.emojis-clown-face {
+    background-position: 144px 96px;
+}
+.emojis-lying-face {
+    background-position: 0px 144px;
+}
+.emojis-face-with-finger-covering-closed-lips {
+    background-position: 48px 144px;
+}
+.emojis-smiling-face-with-smiling-eyes-and-hand-covering-mouth {
+    background-position: 96px 144px;
+}
+.emojis-face-with-monocle {
+    background-position: 144px 144px;
+}
+.emojis-prince {
+    background-position: 192px 0px;
+}
+.emojis-person-with-headscarf {
+    background-position: 192px 48px;
+}
+.emojis-bearded-person {
+    background-position: 192px 96px;
+}
+.emojis-man-in-tuxedo {
+    background-position: 192px 144px;
+}
+.emojis-pregnant-woman {
+    background-position: 0px 192px;
+}
+.emojis-breast-feeding {
+    background-position: 48px 192px;
+}
+.emojis-mother-christmas {
+    background-position: 96px 192px;
+}
+.emojis-woman-mage {
+    background-position: 144px 192px;
+}
+.emojis-man-mage {
+    background-position: 192px 192px;
+}
+.emojis-woman-fairy {
+    background-position: 240px 0px;
+}
+.emojis-man-fairy {
+    background-position: 240px 48px;
+}
+.emojis-woman-vampire {
+    background-position: 240px 96px;
+}
+.emojis-man-vampire {
+    background-position: 240px 144px;
+}
+.emojis-merwoman {
+    background-position: 240px 192px;
+}
+.emojis-merman {
+    background-position: 0px 240px;
+}
+.emojis-woman-elf {
+    background-position: 48px 240px;
+}
+.emojis-man-elf {
+    background-position: 96px 240px;
+}
+.emojis-woman-genie {
+    background-position: 144px 240px;
+}
+.emojis-man-genie {
+    background-position: 192px 240px;
+}
+.emojis-woman-zombie {
+    background-position: 240px 240px;
+}
+.emojis-man-zombie {
+    background-position: 288px 0px;
+}
+.emojis-face-palm {
+    background-position: 288px 48px;
+}
+.emojis-shrug {
+    background-position: 288px 96px;
+}
+.emojis-man-dancing {
+    background-position: 288px 144px;
+}
+.emojis-woman-in-steamy-room {
+    background-position: 288px 192px;
+}
+.emojis-man-in-steamy-room {
+    background-position: 288px 240px;
+}
+.emojis-selfie {
+    background-position: 0px 288px;
+}
+.emojis-hand-with-index-and-middle-fingers-crossed {
+    background-position: 48px 288px;
+}
+.emojis-left-facing-fist {
+    background-position: 96px 288px;
+}
+.emojis-right-facing-fist {
+    background-position: 144px 288px;
+}
+.emojis-raised-back-of-hand {
+    background-position: 192px 288px;
+}
+.emojis-i-love-you-hand-sign {
+    background-position: 240px 288px;
+}
+.emojis-palms-up-together {
+    background-position: 288px 288px;
+}
+.emojis-handshake {
+    background-position: 336px 0px;
+}
+.emojis-brain {
+    background-position: 336px 48px;
+}
+.emojis-scarf {
+    background-position: 336px 96px;
+}
+.emojis-gloves {
+    background-position: 336px 144px;
+}
+.emojis-coat {
+    background-position: 336px 192px;
+}
+.emojis-socks {
+    background-position: 336px 240px;
+}
+.emojis-billed-cap {
+    background-position: 336px 288px;
+}
+.emojis-gorilla {
+    background-position: 0px 336px;
+}
+.emojis-fox-face {
+    background-position: 48px 336px;
+}
+.emojis-zebra-face {
+    background-position: 96px 336px;
+}
+.emojis-giraffe-face {
+    background-position: 144px 336px;
+}
+.emojis-rhinoceros {
+    background-position: 192px 336px;
+}
+.emojis-hedgehog {
+    background-position: 240px 336px;
+}
+.emojis-bat {
+    background-position: 288px 336px;
+}
+.emojis-eagle {
+    background-position: 336px 336px;
+}
+.emojis-duck {
+    background-position: 384px 0px;
+}
+.emojis-owl {
+    background-position: 384px 48px;
+}
+.emojis-lizard {
+    background-position: 384px 96px;
+}
+.emojis-sauropod {
+    background-position: 0px 0px;
+}
+.emojis-t-rex {
+    background-position: 384px 192px;
+}
+.emojis-shark {
+    background-position: 384px 240px;
+}
+.emojis-shrimp {
+    background-position: 384px 288px;
+}
+.emojis-squid {
+    background-position: 384px 336px;
+}
+.emojis-butterfly {
+    background-position: 0px 384px;
+}
+.emojis-cricket {
+    background-position: 48px 384px;
+}
+.emojis-wilted-flower {
+    background-position: 96px 384px;
+}
+.emojis-kiwifruit {
+    background-position: 144px 384px;
+}
+.emojis-coconut {
+    background-position: 192px 384px;
+}
+.emojis-avocado {
+    background-position: 240px 384px;
+}
+.emojis-potato {
+    background-position: 288px 384px;
+}
+.emojis-carrot {
+    background-position: 336px 384px;
+}
+.emojis-cucumber {
+    background-position: 384px 384px;
+}
+.emojis-broccoli {
+    background-position: 432px 0px;
+}
+.emojis-peanuts {
+    background-position: 432px 48px;
+}
+.emojis-croissant {
+    background-position: 432px 96px;
+}
+.emojis-baguette-bread {
+    background-position: 432px 144px;
+}
+.emojis-pretzel {
+    background-position: 432px 192px;
+}
+.emojis-pancakes {
+    background-position: 432px 240px;
+}
+.emojis-cut-of-meat {
+    background-position: 432px 288px;
+}
+.emojis-bacon {
+    background-position: 432px 336px;
+}
+.emojis-hot-dog {
+    background-position: 432px 384px;
+}
+.emojis-sandwich {
+    background-position: 0px 432px;
+}
+.emojis-taco {
+    background-position: 48px 432px;
+}
+.emojis-burrito {
+    background-position: 96px 432px;
+}
+.emojis-bowl-with-spoon {
+    background-position: 144px 432px;
+}
+.emojis-green-salad {
+    background-position: 192px 432px;
+}
+.emojis-canned-food {
+    background-position: 240px 432px;
+}
+.emojis-dumpling {
+    background-position: 288px 432px;
+}
+.emojis-fortune-cookie {
+    background-position: 336px 432px;
+}
+.emojis-takeout-box {
+    background-position: 384px 432px;
+}
+.emojis-pie {
+    background-position: 432px 432px;
+}
+.emojis-glass-of-milk {
+    background-position: 480px 0px;
+}
+.emojis-clinking-glasses {
+    background-position: 480px 48px;
+}
+.emojis-tumbler-glass {
+    background-position: 480px 96px;
+}
+.emojis-cup-with-straw {
+    background-position: 480px 144px;
+}
+.emojis-chopsticks {
+    background-position: 480px 192px;
+}
+.emojis-spoon {
+    background-position: 480px 240px;
+}
+.emojis-woman-climbing {
+    background-position: 480px 288px;
+}
+.emojis-man-climbing {
+    background-position: 480px 336px;
+}
+.emojis-woman-in-lotus-position {
+    background-position: 480px 384px;
+}
+.emojis-man-in-lotus-position {
+    background-position: 480px 432px;
+}
+.emojis-person-doing-cartwheel {
+    background-position: 0px 480px;
+}
+.emojis-wrestlers {
+    background-position: 48px 480px;
+}
+.emojis-water-polo {
+    background-position: 96px 480px;
+}
+.emojis-handball {
+    background-position: 144px 480px;
+}
+.emojis-juggling {
+    background-position: 192px 480px;
+}
+.emojis-first-place-medal {
+    background-position: 240px 480px;
+}
+.emojis-second-place-medal {
+    background-position: 288px 480px;
+}
+.emojis-third-place-medal {
+    background-position: 336px 480px;
+}
+.emojis-boxing-glove {
+    background-position: 384px 480px;
+}
+.emojis-martial-arts-uniform {
+    background-position: 432px 480px;
+}
+.emojis-sled {
+    background-position: 480px 480px;
+}
+.emojis-curling-stone {
+    background-position: 528px 0px;
+}
+.emojis-drum-with-drumsticks {
+    background-position: 528px 48px;
+}
+.emojis-scooter {
+    background-position: 528px 96px;
+}
+.emojis-motor-scooter {
+    background-position: 528px 144px;
+}
+.emojis-flying-saucer {
+    background-position: 528px 192px;
+}
+.emojis-orange-heart {
+    background-position: 528px 240px;
+}
+.emojis-black-heart {
+    background-position: 528px 288px;
+}
+.emojis-octagonal-sign {
+    background-position: 528px 336px;
+}
+.emojis-rainbow-flag {
+    background-position: 528px 384px;
+}
+.emojis-pirate-flag {
+    background-position: 528px 432px;
+}
+.emojis-flag-for-england {
+    background-position: 528px 480px;
+}
+.emojis-flag-for-scotland {
+    background-position: 0px 528px;
+}
+.emojis-flag-for-wales {
+    background-position: 48px 528px;
+}
