@@ -11,6 +11,17 @@
     "lerna-publish": "lerna publish"
   },
   "devDependencies": {
-    "lerna": "^2.9.0"
+    "lerna": "^2.9.0",
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.20.0",
+    "babel-env": "^2.4.1",
+    "babel-plugin-transform-class-properties": "6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-airbnb": "^2.4.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-register": "^6.18.0",
+    "nyc": "^11.3.0",
+    "mocha": "^3.2.0"
   }
 }
