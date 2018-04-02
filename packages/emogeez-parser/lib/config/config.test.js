@@ -2,42 +2,61 @@ require('../../tests/bootstrap');
 
 import {
   expect,
+  assert,
 } from 'chai';
-import {
-  size,
-} from 'lodash';
-import Configurator from './config';
+import Config from './config';
 
-const emojisData = require('../../tests/json/emojis.json');
-
-const config1 = {
+const config1 = Config({
   blackList: [],
-};
-const configurator1 = Configurator(config1, emojisData);
+});
 
-const config2 = {
+const packageJSON = require('../../package.json');
+const version = packageJSON.version;
+
+const config2 = Config({
   blackList: [
     'grinning-face',
     'kiss',
     'reversed-hand-with-middle-finger-extended',
   ],
-};
-const configurator2 = Configurator(config2, emojisData);
+});
 
-describe('Configurator', () => {
-  describe('no blackList', () => {
-    it('map data', () => {
-      expect(size(configurator1.emojis)).to.equal(2022);
-      expect(configurator1.codePoints.length).to.equal(2022);
-      expect(size(configurator1.codePointEmoji)).to.equal(2022);
+describe('Config', () => {
+  it('get a default config', () => {
+    expect(Config(config1)).to.deep.equal({
+      blackList: [],
+      theme: 'apple',
+      themesUrl: `//cdn.jsdelivr.net/gh/arthur-feral/emogeez-generator@${version}/emojis`,
     });
   });
 
-  describe('with blackList', () => {
-    it('map data', () => {
-      expect(size(configurator2.emojis)).to.equal(2009);
-      expect(configurator2.codePoints.length).to.equal(2009);
-      expect(size(configurator2.codePointEmoji)).to.equal(2009);
+  describe('custom config', () => {
+    it('returns custom config', () => {
+      expect(Config(config2)).to.deep.equal({
+        blackList: [
+          'grinning-face',
+          'kiss',
+          'reversed-hand-with-middle-finger-extended',
+        ],
+        theme: 'apple',
+        themesUrl: `//cdn.jsdelivr.net/gh/arthur-feral/emogeez-generator@${version}/emojis`,
+      });
+
+      expect(Config({
+        blackList: [
+          'grinning-face',
+          'reversed-hand-with-middle-finger-extended',
+        ],
+        theme: 'themeName',
+        themesUrl: `urlToCustomThemes`,
+      })).to.deep.equal({
+        blackList: [
+          'grinning-face',
+          'reversed-hand-with-middle-finger-extended',
+        ],
+        theme: 'themeName',
+        themesUrl: `urlToCustomThemes`,
+      });
     });
   });
 });

@@ -2,6 +2,7 @@
   "name": "emogeez-parser",
   "version": "0.1.0",
   "description": "A toolbox for parsing emojis in texts.",
+  "main": "dist/index.js",
   "scripts": {
     "transpile": "$(npm bin)/babel . --out-dir dist --ignore cache,tests,node_modules,nyc-reports,dist,*.test.js",
     "prepublish": "yarn run test",
@@ -24,7 +25,8 @@
   "dependencies": {
     "emoji-aware": "^3.0.3",
     "eslint-config-iadvize": "^1.1.0",
-    "store": "^1.3.20"
+    "store": "^1.3.20",
+    "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
@@ -37,10 +39,10 @@
     "babel-preset-env": "^1.6.1",
     "babel-register": "^6.18.0",
     "chai": "^3.5.0",
-    "nyc": "^11.3.0",
-    "sinon": "^1.17.6",
     "eslint": "^4.14.0",
-    "mocha": "^3.2.0"
+    "mocha": "^3.2.0",
+    "nyc": "^11.3.0",
+    "sinon": "^1.17.6"
   },
   "nyc": {
     "exclude": [

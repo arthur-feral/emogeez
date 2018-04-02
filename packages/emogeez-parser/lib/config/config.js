@@ -1,48 +1,23 @@
 import {
-  forEach,
+  get,
 } from 'lodash';
+import {
+  DEFAULT_THEME_NAME,
+  DEFAULT_THEMES_URL,
+} from '../constants';
 
-export default (config, emojisData) => {
-  const blackList = config.blackList || [];
-  let emojis = {};
-  let codePoints = [];
-  let codePointEmoji = {};
+export default (config) => {
+  const packageJSON = require('../../package.json');
 
-  forEach(emojisData, (category) => {
-    forEach(category.emojis, (emoji) => {
-      if (blackList.indexOf(emoji.name) === -1) {
-        emojis = {
-          ...emojis,
-          [emoji.name]: emoji,
-        };
-
-        codePointEmoji = {
-          ...codePointEmoji,
-          [emoji.unicode]: emoji.name,
-        };
-
-        codePoints.push(emoji.unicode);
-
-        forEach(emoji.modifiers, (modifier) => {
-          emojis = {
-            ...emojis,
-            [modifier.name]: modifier,
-          };
-
-          codePointEmoji = {
-            ...codePointEmoji,
-            [modifier.unicode]: modifier.name,
-          };
-
-          codePoints.push(modifier.unicode);
-        });
-      }
-    });
-  });
+  const defaultConfig = {
+    blackList: [],
+    theme: DEFAULT_THEME_NAME,
+    themesUrl: DEFAULT_THEMES_URL.replace('{{version}}', packageJSON.version),
+  };
 
   return {
-    emojis,
-    codePoints,
-    codePointEmoji,
+    blackList: get(config, 'blackList', defaultConfig.blackList),
+    theme: get(config, 'theme', defaultConfig.theme),
+    themesUrl: get(config, 'themesUrl', defaultConfig.themesUrl),
   };
 };
