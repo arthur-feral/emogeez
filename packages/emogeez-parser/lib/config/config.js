@@ -6,6 +6,11 @@ import {
   DEFAULT_THEMES_URL,
 } from '../constants';
 
+/**
+ *
+ * @param config
+ * @return {Config}
+ */
 export default (config) => {
   const packageJSON = require('../../package.json');
 

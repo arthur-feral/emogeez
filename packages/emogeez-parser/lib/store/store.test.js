@@ -3,41 +3,60 @@ require('../../tests/bootstrap');
 import {
   expect,
 } from 'chai';
+import sinon from 'sinon';
 import {
   size,
 } from 'lodash';
 import Configurator from '../config/config';
+import Store from './store';
+import Http from '../http/http';
 
-const emojisData = require('../../tests/json/emojis.json');
+const emojisData = require('../../tests/json/apple.json');
+const config = Configurator();
+const http = Http(config);
+let store;
 
-const config1 = {
-  blackList: [],
-};
-const configurator1 = Configurator(config1);
+const httpGetStub = sinon.stub();
 
-const config2 = {
-  blackList: [
-    'grinning-face',
-    'kiss',
-    'reversed-hand-with-middle-finger-extended',
-  ],
-};
-const configurator2 = Configurator(config2, emojisData);
-
-describe('Configurator', () => {
-  describe('no blackList', () => {
-    it('map data', () => {
-      expect(size(configurator1.emojis)).to.equal(2022);
-      expect(configurator1.codePoints.length).to.equal(2022);
-      expect(size(configurator1.codePointEmoji)).to.equal(2022);
+describe('Store', () => {
+  describe('fetchTheme', () => {
+    it('fetch the data', () => {
+      store = Store(config, {
+        get: httpGetStub.resolves({}),
+      });
+      store.fetchTheme('themeName');
+      expect(httpGetStub.callCount).to.equal(1);
+      expect(httpGetStub.args[0][0]).to.equal('themeName');
     });
   });
 
-  describe('with blackList', () => {
-    it('map data', () => {
-      expect(size(configurator2.emojis)).to.equal(2009);
-      expect(configurator2.codePoints.length).to.equal(2009);
-      expect(size(configurator2.codePointEmoji)).to.equal(2009);
+  describe('parse', () => {
+    describe('without blacklist', () => {
+      it('store all emojis', () => {
+        store = Store(config, http);
+        store.parse('apple', emojisData);
+        expect(size(store.getEmojis('apple'))).to.equal(1955);
+        expect(size(store.getCategories('apple'))).to.equal(8);
+        expect(store.getCodePoints('apple').length).to.equal(1955);
+        expect(size(store.getCodePointsToEmojis('apple'))).to.equal(1955);
+      });
+    });
+
+    describe('with blacklist', () => {
+      it('store  blacklisted emojis', () => {
+        store = Store({
+          blackList: [
+            'grinning-face',
+            'kiss',
+            'reversed-hand-with-middle-finger-extended',
+          ],
+        }, http);
+        store.parse('apple', emojisData);
+        expect(size(store.getEmojis('apple'))).to.equal(1947);
+        expect(size(store.getCategories('apple'))).to.equal(8);
+        expect(store.getCodePoints('apple').length).to.equal(1947);
+        expect(size(store.getCodePointsToEmojis('apple'))).to.equal(1947);
+      });
     });
   });
 });
