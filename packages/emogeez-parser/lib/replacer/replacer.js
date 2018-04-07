@@ -1,5 +1,6 @@
 import {
   forEach,
+  has,
 } from 'lodash';
 
 const {
@@ -9,7 +10,7 @@ const {
 
 const SHORT_NAME_REGEXP = /:([a-z0-9-]+):/mg;
 
-export default (configurator) => {
+export default (config, store) => {
 
   /**
    * replace aliases to shortname
@@ -18,17 +19,14 @@ export default (configurator) => {
    */
   const aliasesToShortnames = (text) => text.replace(ALIASES_REGEXP, (fullMatch, prevLimit, emoji) => `${prevLimit}:${ALIASES_MAP[emoji]}:`);
 
-  const shortnamesToUTF8 = (text) => {
+  const shortnamesToUTF8 = (theme, text) => {
     let newText = aliasesToShortnames(text);
 
     newText = newText.replace(SHORT_NAME_REGEXP, (match, word) => {
       let result = match;
-      if (_.has(shortnameToUtf8.apple, word)) {
-        result = shortnameToUtf8.apple[word];
-      }
 
-      if (_.has(shortnameToUtf8[theme], word)) {
-        result = shortnameToUtf8[theme][word];
+      if (has(store.getShortnameToUtf8(theme), word)) {
+        result = store.getShortnameToUtf8(theme)[word];
       }
 
       return result;

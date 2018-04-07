@@ -7,27 +7,30 @@ import {
 import {
   find,
 } from 'lodash';
-import Matcher from './matcher';
-import Configurator from '../config/config';
+import Config from '../config/config';
+import Store from '../store/store';
+import Http from '../http/http';
 
-const config = {
-  blackList: [],
-};
-const emojis = require('../../tests/json/emojis.json');
-const configurator = Configurator(config, emojis);
+const emojisData = require('../../tests/json/apple.json');
+const config = Config();
+const http = Http(config);
+const store = Store(config, http);
+store.setTheme('apple', emojisData);
+import Matcher from './matcher';
+
 const {
   getNames,
   hasEmojis,
-} = Matcher(configurator);
+} = Matcher(store);
 
-const grinning = emojis.people.emojis['grinning-face'].symbol;
-const grin = emojis.people.emojis['grinning-face-with-smiling-eyes'].symbol;
-const $thumbsup = find(emojis.people.emojis, e => e.name === 'thumbs-up-sign');
+const grinning = store.getEmojis('apple')['grinning-face'].symbol;
+const grin = store.getEmojis('apple')['grinning-face-with-smiling-eyes'].symbol;
+const $thumbsup = find(store.getEmojis('apple'), e => e.name === 'thumbs-up-sign');
 const thumbsup = $thumbsup.symbol;
 const thumbsupWhite = $thumbsup.modifiers['thumbs-up-sign-type-1-2'].symbol;
-const kiss = find(emojis.people.emojis, e => e.name === 'kiss').symbol;
-const womanWithBunnyEars = find(emojis.people.emojis, e => e.name === 'woman-with-bunny-ears').symbol;
-const family = find(emojis.people.emojis, e => e.name === 'family-man-woman-girl-boy').symbol;
+const kiss = find(store.getEmojis('apple'), e => e.name === 'kiss').symbol;
+const womanWithBunnyEars = find(store.getEmojis('apple'), e => e.name === 'woman-with-bunny-ears').symbol;
+const family = find(store.getEmojis('apple'), e => e.name === 'family-man-woman-girl-boy').symbol;
 
 const simpleText1 = '';
 const simpleText2 = 'hello!';
@@ -47,36 +50,36 @@ const emojisText7 = `${family}`;
 describe('Matcher', () => {
   describe('getNames', () => {
     it('return emojis names from the text', () => {
-      expect(getNames(emojisText1)).to.deep.equal(['grinning-face']);
-      expect(getNames(emojisText2)).to.deep.equal([
+      expect(getNames('apple', emojisText1)).to.deep.equal(['grinning-face']);
+      expect(getNames('apple', emojisText2)).to.deep.equal([
         'grinning-face',
         'grinning-face-with-smiling-eyes',
       ]);
-      expect(getNames(emojisText3)).to.deep.equal(['thumbs-up-sign']);
-      expect(getNames(emojisText4)).to.deep.equal(['thumbs-up-sign-type-1-2']);
-      expect(getNames(emojisText5)).to.deep.equal(['kiss']);
-      expect(getNames(emojisText6)).to.deep.equal(['woman-with-bunny-ears']);
-      expect(getNames(emojisText7)).to.deep.equal(['family-man-woman-girl-boy']);
+      expect(getNames('apple', emojisText3)).to.deep.equal(['thumbs-up-sign']);
+      expect(getNames('apple', emojisText4)).to.deep.equal(['thumbs-up-sign-type-1-2']);
+      expect(getNames('apple', emojisText5)).to.deep.equal(['kiss']);
+      expect(getNames('apple', emojisText6)).to.deep.equal(['woman-with-bunny-ears']);
+      expect(getNames('apple', emojisText7)).to.deep.equal(['family-man-woman-girl-boy']);
     });
   });
 
   describe('hasEmojis', () => {
     it('return false for a text without emojis', () => {
-      assert.isFalse(hasEmojis(simpleText1));
-      assert.isFalse(hasEmojis(simpleText2));
-      assert.isFalse(hasEmojis(simpleText3));
-      assert.isFalse(hasEmojis(simpleText4));
-      assert.isFalse(hasEmojis(simpleText5));
+      assert.isFalse(hasEmojis('apple', simpleText1));
+      assert.isFalse(hasEmojis('apple', simpleText2));
+      assert.isFalse(hasEmojis('apple', simpleText3));
+      assert.isFalse(hasEmojis('apple', simpleText4));
+      assert.isFalse(hasEmojis('apple', simpleText5));
     });
 
     it('return true for a text with emojis', () => {
-      assert.isTrue(hasEmojis(emojisText1));
-      assert.isTrue(hasEmojis(emojisText2));
-      assert.isTrue(hasEmojis(emojisText3));
-      assert.isTrue(hasEmojis(emojisText4));
-      assert.isTrue(hasEmojis(emojisText5));
-      assert.isTrue(hasEmojis(emojisText6));
-      assert.isTrue(hasEmojis(emojisText7));
+      assert.isTrue(hasEmojis('apple', emojisText1));
+      assert.isTrue(hasEmojis('apple', emojisText2));
+      assert.isTrue(hasEmojis('apple', emojisText3));
+      assert.isTrue(hasEmojis('apple', emojisText4));
+      assert.isTrue(hasEmojis('apple', emojisText5));
+      assert.isTrue(hasEmojis('apple', emojisText6));
+      assert.isTrue(hasEmojis('apple', emojisText7));
     });
   });
 });
