@@ -40,6 +40,7 @@
     "babel-register": "^6.18.0",
     "chai": "^3.5.0",
     "eslint": "^4.14.0",
+    "fetch-mock": "^6.3.0",
     "mocha": "^3.2.0",
     "nyc": "^11.3.0",
     "sinon": "4.5.0"
