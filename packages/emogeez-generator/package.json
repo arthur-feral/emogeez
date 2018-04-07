@@ -1,6 +1,6 @@
 {
   "name": "emogeez-generator",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Build an emojis sprite and stylesheet file from emojis datas collected from both emojipedia.org and unicode.org website",
   "scripts": {
     "start": "yarn run transpile && TEMP_FILES_PATH=tmp node ./dist/index.js",
@@ -55,11 +55,11 @@
     "babel-preset-env": "^1.6.1",
     "babel-register": "^6.18.0",
     "chai": "^3.5.0",
+    "eslint": "^4.14.0",
+    "mocha": "^3.2.0",
     "nyc": "^11.3.0",
     "sinon": "^1.17.6",
-    "superagent-mock": "3.7.0",
-    "eslint": "^4.14.0",
-    "mocha": "^3.2.0"
+    "superagent-mock": "3.7.0"
   },
   "nyc": {
     "exclude": [
