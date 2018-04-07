@@ -17,12 +17,14 @@ export default (config, http) => {
   let codePoints = {};
   let codePointEmoji = {};
   let shortnameToUtf8 = {};
+  let codepointsToNames = {};
 
   const getEmojis = (theme = config.theme) => emojis[theme];
   const getCategories = (theme = config.theme) => categories[theme];
   const getCodePoints = (theme = config.theme) => codePoints[theme];
   const getCodePointsToEmojis = (theme = config.theme) => codePointEmoji[theme];
   const getShortnameToUtf8 = (theme = config.theme) => shortnameToUtf8[theme];
+  const getCodepointsToNames = (theme = config.theme) => codepointsToNames[theme];
 
   const parse = (theme, emojisData) => {
     emojis[theme] = {};
@@ -30,6 +32,7 @@ export default (config, http) => {
     codePoints[theme] = [];
     codePointEmoji[theme] = {};
     shortnameToUtf8[theme] = {};
+    codepointsToNames[theme] = {};
     forEach(emojisData, (category) => {
       categories[theme][category.name] = category;
 
@@ -38,6 +41,7 @@ export default (config, http) => {
           emojis[theme][emoji.name] = emoji;
           codePointEmoji[theme][emoji.unicode] = emoji.name;
           shortnameToUtf8[theme][emoji.shortname] = emoji.symbol;
+          codepointsToNames[theme][emoji.unicode] = emoji.name;
           codePoints[theme].push(emoji.unicode);
 
           forEach(emoji.modifiers, (modifier) => {
@@ -45,6 +49,7 @@ export default (config, http) => {
               emojis[theme][modifier.name] = modifier;
               codePointEmoji[theme][modifier.unicode] = modifier.name;
               shortnameToUtf8[theme][modifier.shortname] = modifier.symbol;
+              codepointsToNames[theme][modifier.unicode] = modifier.name;
               codePoints[theme].push(modifier.unicode);
             }
           });
@@ -69,5 +74,6 @@ export default (config, http) => {
     getCodePoints,
     getCodePointsToEmojis,
     getShortnameToUtf8,
+    getCodepointsToNames,
   };
 }

@@ -16,10 +16,12 @@ store.setTheme('apple', emojisData);
 const {
   aliasesToShortnames,
   shortnamesToUTF8,
+  utf8ToShortnames,
 } = Replacer(config, store);
 
 const grinningFace = store.getEmojis('apple')['grinning-face'].symbol;
 const specialEmoji = store.getEmojis('apple')['couple-with-heart-woman-woman'].symbol;
+const specialEmoji2 = store.getEmojis('apple')['father-christmas-type-3'].symbol;
 describe('Replacer', () => {
   describe('aliasesToShortnames', () => {
     it('replace an alias to shortname', () => {
@@ -81,6 +83,52 @@ describe('Replacer', () => {
 
         expect(shortnamesToUTF8('apple', str)).to.equal(`你好，找文章${grinningFace}`);
         expect(shortnamesToUTF8('apple', str2)).to.equal(`、パリ郊外のアニエールにあるルイ･${grinningFace}`);
+      });
+    });
+  });
+
+  describe('#utf8ToShortnames', () => {
+    describe('string with simple emoji', () => {
+      it('replace utf8 emoji with shortname', () => {
+        const newString = utf8ToShortnames('apple', grinningFace);
+        expect(newString).to.equal(':grinning:');
+      });
+    });
+
+    describe('string with special emoji', () => {
+      it('replace utf8 with shortname', () => {
+        const newString = utf8ToShortnames('apple', specialEmoji);
+        expect(newString).to.equal(':couple-with-heart-woman-woman:');
+      });
+    });
+
+    describe('string with some special emojis and some text', () => {
+      it('replace utf8 with shortnames', () => {
+        const newString = utf8ToShortnames('apple', `bonjour ! ${specialEmoji} ça va ? ${specialEmoji2} hehe`);
+        const expectedString = [
+          'bonjour !',
+          ':couple-with-heart-woman-woman:',
+          'ça va ?',
+          ':father-christmas-type-3:',
+          'hehe',
+        ].join(' ');
+        expect(newString).to.equal(expectedString);
+      });
+    });
+
+    describe('with chinese and japanese chars', () => {
+      it('should not fail, or at least return the same string', () => {
+        const str = '你好，找文章';
+        const str2 = '你好找文章';
+        const str3 = '、パリ郊外のアニエールにあるルイ';
+        const str4 = '、パリ郊外のアニエールにあるルイ･';
+        const str5 = `、パリ郊外のアニエールにあるルイ･${grinningFace}`;
+
+        expect(utf8ToShortnames('apple', str)).to.equal('你好，找文章');
+        expect(utf8ToShortnames('apple', str2)).to.equal('你好找文章');
+        expect(utf8ToShortnames('apple', str3)).to.equal('、パリ郊外のアニエールにあるルイ');
+        expect(utf8ToShortnames('apple', str4)).to.equal('、パリ郊外のアニエールにあるルイ･');
+        expect(utf8ToShortnames('apple', str5)).to.equal('、パリ郊外のアニエールにあるルイ･:grinning:');
       });
     });
   });

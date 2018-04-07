@@ -1,7 +1,13 @@
 import {
   forEach,
   has,
+  map,
 } from 'lodash';
+import {
+  getUnicode,
+} from '../utils';
+
+const split = require('emoji-aware').split;
 
 const {
   ALIASES_MAP,
@@ -35,8 +41,37 @@ export default (config, store) => {
 
     return newText;
   };
+
+  /**
+   * replace emoji with shortname in a string
+   * @param {string} theme
+   * @param {string} text
+   * @returns {string}
+   */
+  const utf8ToShortnames = (theme, text) => {
+    let textSplitted = split(text);
+
+    if (textSplitted === false) {
+      return aliasesToShortnames(text);
+    }
+
+    textSplitted = map(textSplitted, (char) => {
+      const codepoint = getUnicode(char);
+      const name = store.getCodepointsToNames(theme)[codepoint];
+      if (name) {
+        const shortname = store.getEmojis(theme)[name].shortname;
+        return `:${shortname}:`;
+      }
+
+      return char;
+    });
+
+    return textSplitted.join('');
+  };
+
   return {
     aliasesToShortnames,
     shortnamesToUTF8,
+    utf8ToShortnames,
   };
 };
