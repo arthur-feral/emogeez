@@ -1,0 +1,21 @@
+{
+  "extends": [
+    "iadvize"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "tests/*.test.js"
+      ],
+      "globals": {
+        "_": true,
+        "specs": true,
+        "describe": true,
+        "expect": true,
+        "it": true,
+        "chai": true,
+        "before": true,
+      }
+    }
+  ]
+}

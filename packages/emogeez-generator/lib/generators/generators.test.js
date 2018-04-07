@@ -1,3 +1,4 @@
+require('../../tests/bootstrap');
 import {
   reduce,
   map,

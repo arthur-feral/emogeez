@@ -1,3 +1,5 @@
+require('../../tests/bootstrap');
+
 import {
   map,
 } from 'lodash';
