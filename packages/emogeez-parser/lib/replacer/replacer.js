@@ -16,7 +16,7 @@ const {
 
 const SHORT_NAME_REGEXP = /:([a-z0-9-]+):/mg;
 
-export default (config, store) => {
+export default (store) => {
 
   /**
    * replace aliases to shortname

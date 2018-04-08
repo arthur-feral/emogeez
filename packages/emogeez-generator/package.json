@@ -15,7 +15,7 @@
   "engines": {
     "node": ">=9.2.0"
   },
-  "homepage": "https://github.com/iadvize/emogeez/packages/emogeez-generator#readme",
+  "homepage": "https://github.com/arthur-feral/emogeez/tree/master/packages/emogeez-generator",
   "keywords": [
     "emoji",
     "emojis",

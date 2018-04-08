@@ -11,7 +11,7 @@ Once the generator's work is done, you find the generated files into the specifi
 For each themes, you will find a .json, .png and .sass or .less.
 
 #### The PNG
-[apple.png](https://github.com/iadvize/emogeez-generator/blob/master/emojis/apple/apple.png)
+[apple.png](https://github.com/arthur-feral/emogeez/raw/master/packages/emogeez-generator/emojis/apple/apple.png)
 
 #### The Stylesheet
 The emojis positions are stored in this stylesheet. Each emoji has a classname based on his shortname and prefixed by the user (default `emojis-`).

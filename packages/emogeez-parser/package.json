@@ -13,7 +13,7 @@
   "engines": {
     "node": ">=9.2.0"
   },
-  "homepage": "https://github.com/iadvize/emogeez/packages/emogeez-parser#readme",
+  "homepage": "https://github.com/arthur-feral/emogeez/tree/master/packages/emogeez-parser",
   "keywords": [
     "emoji",
     "emojis",
