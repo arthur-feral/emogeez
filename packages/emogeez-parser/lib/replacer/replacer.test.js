@@ -14,98 +14,100 @@ const store = Store(config, http);
 store.setTheme('apple', emojisData);
 
 const {
-  aliasesToShortnames,
-  shortnamesToUTF8,
-  utf8ToShortnames,
+  aliasesToNames,
+  toUTF8,
+  utf8ToNames,
+  namesToHTML,
+  UTF8ToHTML,
 } = Replacer(store);
 
-const grinningFace = store.getNameToUtf8('apple', 'grinning-face');
-const specialEmoji = store.getNameToUtf8('apple', 'couple-with-heart-woman-woman');
-const specialEmoji2 = store.getNameToUtf8('apple', 'father-christmas-type-3');
+const grinningFace = store.toUTF8('apple', 'grinning-face');
+const specialEmoji = store.toUTF8('apple', 'couple-with-heart-woman-woman');
+const specialEmoji2 = store.toUTF8('apple', 'father-christmas-type-3');
 
 describe('Replacer', () => {
-  describe('aliasesToShortnames', () => {
+  describe('aliasesToNames', () => {
     it('replace an alias to shortname', () => {
-      const newString = aliasesToShortnames('hello :)');
+      const newString = aliasesToNames('hello :)');
       expect(newString).to.equal('hello :slightly-smiling-face:');
     });
 
     it('should not detect aliases in words', () => {
-      const newString = aliasesToShortnames('http://test.com/ :/\n<3\nhttp:/\n:\\n;brushed');
-      expect(newString).to.equal('http://test.com/ :confused:\n:heart:\nhttp:/\n:\\n;brushed');
+      const newString = aliasesToNames('http://test.com/ :/\n<3\nhttp:/\n:\\n;brushed');
+      expect(newString).to.equal('http://test.com/ :confused-face:\n:heavy-black-heart:\nhttp:/\n:\\n;brushed');
     });
 
     it('replace many aliases in string', () => {
-      const newString = aliasesToShortnames('sorry :/ :-|');
-      expect(newString).to.equal('sorry :confused: :neutral-face:');
+      const newString = aliasesToNames('sorry :/ :-|');
+      expect(newString).to.equal('sorry :confused-face: :neutral-face:');
     });
   });
 
-  describe('shortnamesToUTF8', () => {
-    describe('alias begin like a shorname', () => {
-      it('should not break the shortname', () => {
-        const newString = shortnamesToUTF8('apple', ':grinning:');
-        expect(newString).to.equal(`${grinningFace}`);
-      });
-    });
-
+  describe('toUTF8', () => {
     describe('simple shortname', () => {
       it('replace shortname with utf8', () => {
-        const newString = shortnamesToUTF8('apple', ':grinning:');
+        const newString = toUTF8('apple', ':grinning-face:');
         expect(newString).to.equal(`${grinningFace}`);
       });
     });
 
     describe('string with multiple shortnames', () => {
       it('replace shortname with utf8', () => {
-        const newString = shortnamesToUTF8('apple', ':D :grinning: :couple-with-heart-woman-woman:');
+        const newString = toUTF8('apple', ':D :grinning-face: :couple-with-heart-woman-woman:');
         expect(newString).to.equal(`${grinningFace} ${grinningFace} ${specialEmoji}`);
       });
     });
 
     describe('string with multiple shortnames following each other', () => {
       it('replace shortname with utf8', () => {
-        const newString = shortnamesToUTF8('apple', ':grinning::couple-with-heart-woman-woman:');
+        const newString = toUTF8('apple', ':grinning-face::couple-with-heart-woman-woman:');
         expect(newString).to.equal(`${grinningFace}${specialEmoji}`);
       });
     });
 
     describe('string with multiple aliases following each other', () => {
       it('dont replace aliases with utf8', () => {
-        const newString = shortnamesToUTF8('apple', ':D:D');
+        const newString = toUTF8('apple', ':D:D');
         expect(newString).to.equal(':D:D');
       });
     });
 
     describe('with chinese and japanese chars', () => {
       it('should not fail, or at least return the same string', () => {
-        const str = '你好，找文章:grinning:';
-        const str2 = '、パリ郊外のアニエールにあるルイ･:grinning:';
+        const str = '你好，找文章:grinning-face:';
+        const str2 = '、パリ郊外のアニエールにあるルイ･:grinning-face:';
 
-        expect(shortnamesToUTF8('apple', str)).to.equal(`你好，找文章${grinningFace}`);
-        expect(shortnamesToUTF8('apple', str2)).to.equal(`、パリ郊外のアニエールにあるルイ･${grinningFace}`);
+        expect(toUTF8('apple', str)).to.equal(`你好，找文章${grinningFace}`);
+        expect(toUTF8('apple', str2)).to.equal(`、パリ郊外のアニエールにあるルイ･${grinningFace}`);
       });
     });
   });
 
-  describe('#utf8ToShortnames', () => {
+  describe('#utf8ToNames', () => {
     describe('string with simple emoji', () => {
       it('replace utf8 emoji with shortname', () => {
-        const newString = utf8ToShortnames('apple', grinningFace);
-        expect(newString).to.equal(':grinning:');
+        const newString = utf8ToNames('apple', grinningFace);
+        expect(newString).to.equal(':grinning-face:');
+      });
+    });
+
+    describe('do something', () => {
+      it('do something', () => {
+        const newString = utf8ToNames('apple', 'hey :)');
+        expect(newString).to.equal('hey :)');
       });
     });
 
     describe('string with special emoji', () => {
       it('replace utf8 with shortname', () => {
-        const newString = utf8ToShortnames('apple', specialEmoji);
+        const newString = utf8ToNames('apple', specialEmoji);
         expect(newString).to.equal(':couple-with-heart-woman-woman:');
       });
     });
 
     describe('string with some special emojis and some text', () => {
       it('replace utf8 with shortnames', () => {
-        const newString = utf8ToShortnames('apple', `bonjour ! ${specialEmoji} ça va ? ${specialEmoji2} hehe`);
+        const newString = utf8ToNames('apple', `bonjour ! ${specialEmoji} ça va ? ${specialEmoji2} hehe`);
         const expectedString = [
           'bonjour !',
           ':couple-with-heart-woman-woman:',
@@ -125,12 +127,32 @@ describe('Replacer', () => {
         const str4 = '、パリ郊外のアニエールにあるルイ･';
         const str5 = `、パリ郊外のアニエールにあるルイ･${grinningFace}`;
 
-        expect(utf8ToShortnames('apple', str)).to.equal('你好，找文章');
-        expect(utf8ToShortnames('apple', str2)).to.equal('你好找文章');
-        expect(utf8ToShortnames('apple', str3)).to.equal('、パリ郊外のアニエールにあるルイ');
-        expect(utf8ToShortnames('apple', str4)).to.equal('、パリ郊外のアニエールにあるルイ･');
-        expect(utf8ToShortnames('apple', str5)).to.equal('、パリ郊外のアニエールにあるルイ･:grinning:');
+        expect(utf8ToNames('apple', str)).to.equal('你好，找文章');
+        expect(utf8ToNames('apple', str2)).to.equal('你好找文章');
+        expect(utf8ToNames('apple', str3)).to.equal('、パリ郊外のアニエールにあるルイ');
+        expect(utf8ToNames('apple', str4)).to.equal('、パリ郊外のアニエールにあるルイ･');
+        expect(utf8ToNames('apple', str5)).to.equal('、パリ郊外のアニエールにあるルイ･:grinning-face:');
       });
+    });
+  });
+
+  describe('namesToHTML', () => {
+    it('replace emojis names to html', () => {
+      let text = 'hello :grinning-face: how are you?';
+      let result = namesToHTML('apple', text, (emoji) => {
+        return `<span class="emoji-${emoji.name}"></span>`;
+      });
+      expect(result).to.equal('hello <span class="emoji-grinning-face"></span> how are you?');
+    });
+  });
+
+  describe('UTF8ToHTML', () => {
+    it('replace emojis names to html', () => {
+      let text = 'hello 🙂 :grinning-face: how are you? :)';
+      let result = UTF8ToHTML('apple', text, (emoji) => {
+        return `<span class="emoji-${emoji.name}"></span>`;
+      });
+      expect(result).to.equal('hello <span class="emoji-slightly-smiling-face"></span> <span class="emoji-grinning-face"></span> how are you? :)');
     });
   });
 });

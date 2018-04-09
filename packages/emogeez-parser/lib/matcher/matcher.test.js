@@ -23,13 +23,13 @@ const {
   hasEmojis,
 } = Matcher(store);
 
-const grinning = store.getNameToUtf8('apple', 'grinning-face');
-const grin = store.getNameToUtf8('apple', 'grinning-face-with-smiling-eyes');
-const thumbsup = store.getNameToUtf8('apple', 'thumbs-up-sign');
-const thumbsupWhite = store.getNameToUtf8('apple', 'thumbs-up-sign-type-1-2');
-const kiss = store.getNameToUtf8('apple', 'kiss-mark');
-const womanWithBunnyEars = store.getNameToUtf8('apple', 'woman-with-bunny-ears');
-const family = store.getNameToUtf8('apple', 'family-man-woman-girl-boy');
+const grinning = store.toUTF8('apple', 'grinning-face');
+const grin = store.toUTF8('apple', 'grinning-face-with-smiling-eyes');
+const thumbsup = store.toUTF8('apple', 'thumbs-up-sign');
+const thumbsupWhite = store.toUTF8('apple', 'thumbs-up-sign-type-1-2');
+const kiss = store.toUTF8('apple', 'kiss-mark');
+const womanWithBunnyEars = store.toUTF8('apple', 'woman-with-bunny-ears');
+const family = store.toUTF8('apple', 'family-man-woman-girl-boy');
 
 const simpleText1 = '';
 const simpleText2 = 'hello!';

@@ -9,9 +9,7 @@ import {
 const split = require('emoji-aware').split;
 
 export default ({
-  getEmojis,
-  getCodePoints,
-  getCodepointToName,
+  getNameFromCodepoint,
 }) => {
 
   /**
@@ -22,7 +20,7 @@ export default ({
   const getNames = (themeName, text) => {
     const chars = split(text);
     return reduce(chars, (result, char) => {
-      const name = getCodepointToName(themeName)[getUnicode(char)];
+      const name = getNameFromCodepoint(themeName, getUnicode(char));
       if (!isUndefined(name)) {
         return [
           ...result,
@@ -45,7 +43,7 @@ export default ({
 
     return chars.filter(char => {
       const charUnicode = getUnicode(char);
-      const emojiName = getCodepointToName(themeName)[charUnicode];
+      const emojiName = getNameFromCodepoint(themeName, charUnicode);
 
       return !isUndefined(emojiName);
     }).length !== 0;

@@ -2,6 +2,7 @@ require('../../tests/bootstrap');
 
 import {
   expect,
+  assert,
 } from 'chai';
 import sinon from 'sinon';
 import {
@@ -22,18 +23,38 @@ const httpGetStub = sinon.stub();
 
 describe('Store', () => {
   describe('getters', () => {
-    describe('getThemeEmojis', () => {
+    describe('getEmojis', () => {
       it('returns the emojis list for a theme', () => {
-        const emojis = store.getThemeEmojis('apple');
+        const emojis = store.getEmojis('apple');
         const emojisNames = keys(emojis);
         expect(size(emojisNames)).to.deep.equal(1955);
+      });
+    });
+
+    describe('hasEmoji', () => {
+      it('returns the emojis list for a theme', () => {
+        assert.isTrue(store.hasEmoji('apple', 'grinning-face'));
+        assert.isFalse(store.hasEmoji('apple', 'not-an-emoji'));
       });
     });
 
     describe('getEmojiByName', () => {
       it('returns the emoji named name', () => {
         const emoji = store.getEmojiByName('apple', 'grinning-face');
-        expect(emoji).to.not.be.undefined;
+        expect(emoji)
+          .to.deep.equal({
+          category: 'people',
+          fullName: 'Grinning Face',
+          name: 'grinning-face',
+          shortname: 'grinning',
+          shortnames: [
+            'grinning',
+          ],
+          symbol: '😀',
+          unicode: '1f600',
+        });
+        const emoji2 = store.getEmojiByName('apple', 'unknown-emoji');
+        expect(emoji2).to.be.undefined;
       });
     });
 
@@ -52,55 +73,17 @@ describe('Store', () => {
       });
     });
 
-    describe('getCodePoints', () => {
-      it('returns the codepoints list for a theme', () => {
-        const codepoints = store.getCodePoints('apple');
-        expect(size(codepoints)).to.deep.equal(1955);
-      });
-    });
-
-    describe('getShortnameToName', () => {
-      it('returns the emoji name from a shortname', () => {
-        const name = store.getShortnameToName('apple')['grinning'];
-        expect(name).to.deep.equal('grinning-face');
-      });
-    });
-
-    describe('getShortnameToUtf8', () => {
-      it('returns the emoji utf8 from a shortname', () => {
-        const utf8 = store.getShortnameToUtf8('apple')['grinning'];
-        expect(utf8).to.deep.equal(emojisData['people']['emojis'][0].symbol);
-      });
-    });
-
-    describe('getNameToUtf8', () => {
-      it('returns the emoji utf8 from a name', () => {
-        const utf8 = store.getNameToUtf8('apple', 'grinning-face');
-        expect(utf8).to.deep.equal(emojisData['people']['emojis'][0].symbol);
-      });
-    });
-
-    describe('getCodepointToName', () => {
+    describe('getNameFromCodepoint', () => {
       it('returns the emoji name from a codepoint', () => {
-        const utf8 = store.getCodepointToName('apple')['1f600'];
-        expect(utf8).to.deep.equal('grinning-face');
+        const name = store.getNameFromCodepoint('apple', '1f600');
+        expect(name).to.equal('grinning-face');
       });
     });
 
-    describe('getEmojiByShortname', () => {
-      it('returns the emoji by  shortname', () => {
-        expect(store.getEmojiByShortname('apple', 'grinning'))
-          .to.deep.equal({
-          category: 'people',
-          fullName: 'Grinning Face',
-          name: 'grinning-face',
-          shortname: 'grinning',
-          shortnames: [
-            'grinning',
-          ],
-          symbol: '😀',
-          unicode: '1f600',
-        });
+    describe('toUTF8', () => {
+      it('returns the emoji utf8 from a name', () => {
+        const utf8 = store.toUTF8('apple', 'grinning-face');
+        expect(utf8).to.deep.equal(emojisData['people']['emojis'][0].symbol);
       });
     });
   });
@@ -122,11 +105,9 @@ describe('Store', () => {
         store = Store(config, http);
         store.setTheme('apple', emojisData);
 
-        const emojis = store.getThemeEmojis('apple');
+        const emojis = store.getEmojis('apple');
         expect(size(emojis)).to.equal(1955);
         expect(size(store.getCategories('apple'))).to.equal(8);
-        expect(store.getCodePoints('apple').length).to.equal(1955);
-        expect(size(store.getCodepointToName('apple'))).to.equal(1955);
       });
     });
 
@@ -140,10 +121,8 @@ describe('Store', () => {
           ],
         }, http);
         store.setTheme('apple', emojisData);
-        expect(size(store.getThemeEmojis('apple'))).to.equal(1947);
+        expect(size(store.getEmojis('apple'))).to.equal(1947);
         expect(size(store.getCategories('apple'))).to.equal(8);
-        expect(store.getCodePoints('apple').length).to.equal(1947);
-        expect(size(store.getCodepointToName('apple'))).to.equal(1947);
       });
     });
   });

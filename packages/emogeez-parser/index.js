@@ -12,7 +12,6 @@ export default (configuration) => {
   const replacer = Replacer(store);
 
   return {
-    store,
     matcher,
     replacer,
   };
