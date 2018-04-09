@@ -17,11 +17,12 @@ const {
   aliasesToShortnames,
   shortnamesToUTF8,
   utf8ToShortnames,
-} = Replacer(config, store);
+} = Replacer(store);
 
-const grinningFace = store.getEmojis('apple')['grinning-face'].symbol;
-const specialEmoji = store.getEmojis('apple')['couple-with-heart-woman-woman'].symbol;
-const specialEmoji2 = store.getEmojis('apple')['father-christmas-type-3'].symbol;
+const grinningFace = store.getNameToUtf8('apple', 'grinning-face');
+const specialEmoji = store.getNameToUtf8('apple', 'couple-with-heart-woman-woman');
+const specialEmoji2 = store.getNameToUtf8('apple', 'father-christmas-type-3');
+
 describe('Replacer', () => {
   describe('aliasesToShortnames', () => {
     it('replace an alias to shortname', () => {

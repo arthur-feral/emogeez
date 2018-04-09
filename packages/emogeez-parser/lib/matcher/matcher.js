@@ -11,7 +11,7 @@ const split = require('emoji-aware').split;
 export default ({
   getEmojis,
   getCodePoints,
-  getCodePointsToEmojis,
+  getCodepointToName,
 }) => {
 
   /**
@@ -22,7 +22,7 @@ export default ({
   const getNames = (themeName, text) => {
     const chars = split(text);
     return reduce(chars, (result, char) => {
-      const name = getCodePointsToEmojis(themeName)[getUnicode(char)];
+      const name = getCodepointToName(themeName)[getUnicode(char)];
       if (!isUndefined(name)) {
         return [
           ...result,
@@ -45,7 +45,7 @@ export default ({
 
     return chars.filter(char => {
       const charUnicode = getUnicode(char);
-      const emojiName = getCodePointsToEmojis(themeName)[charUnicode];
+      const emojiName = getCodepointToName(themeName)[charUnicode];
 
       return !isUndefined(emojiName);
     }).length !== 0;
