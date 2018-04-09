@@ -16,8 +16,5 @@ lerna-debug.log
 yarn-*.log
 
 **/dist/*
-emojis/*
-tests/tmp
-tmp/
 
 
