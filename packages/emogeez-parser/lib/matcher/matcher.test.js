@@ -10,27 +10,26 @@ import {
 import Config from '../config/config';
 import Store from '../store/store';
 import Http from '../http/http';
+import Matcher from './matcher';
 
 const emojisData = require('../../tests/json/apple.json');
 const config = Config();
 const http = Http(config);
 const store = Store(config, http);
 store.setTheme('apple', emojisData);
-import Matcher from './matcher';
 
 const {
   getNames,
   hasEmojis,
 } = Matcher(store);
 
-const grinning = store.getEmojis('apple')['grinning-face'].symbol;
-const grin = store.getEmojis('apple')['grinning-face-with-smiling-eyes'].symbol;
-const $thumbsup = find(store.getEmojis('apple'), e => e.name === 'thumbs-up-sign');
-const thumbsup = $thumbsup.symbol;
-const thumbsupWhite = $thumbsup.modifiers['thumbs-up-sign-type-1-2'].symbol;
-const kiss = find(store.getEmojis('apple'), e => e.name === 'kiss').symbol;
-const womanWithBunnyEars = find(store.getEmojis('apple'), e => e.name === 'woman-with-bunny-ears').symbol;
-const family = find(store.getEmojis('apple'), e => e.name === 'family-man-woman-girl-boy').symbol;
+const grinning = store.getNameToUtf8('apple', 'grinning-face');
+const grin = store.getNameToUtf8('apple', 'grinning-face-with-smiling-eyes');
+const thumbsup = store.getNameToUtf8('apple', 'thumbs-up-sign');
+const thumbsupWhite = store.getNameToUtf8('apple', 'thumbs-up-sign-type-1-2');
+const kiss = store.getNameToUtf8('apple', 'kiss-mark');
+const womanWithBunnyEars = store.getNameToUtf8('apple', 'woman-with-bunny-ears');
+const family = store.getNameToUtf8('apple', 'family-man-woman-girl-boy');
 
 const simpleText1 = '';
 const simpleText2 = 'hello!';
@@ -57,7 +56,7 @@ describe('Matcher', () => {
       ]);
       expect(getNames('apple', emojisText3)).to.deep.equal(['thumbs-up-sign']);
       expect(getNames('apple', emojisText4)).to.deep.equal(['thumbs-up-sign-type-1-2']);
-      expect(getNames('apple', emojisText5)).to.deep.equal(['kiss']);
+      expect(getNames('apple', emojisText5)).to.deep.equal(['kiss-mark']);
       expect(getNames('apple', emojisText6)).to.deep.equal(['woman-with-bunny-ears']);
       expect(getNames('apple', emojisText7)).to.deep.equal(['family-man-woman-girl-boy']);
     });
