@@ -26,7 +26,7 @@ describe('Config', () => {
     expect(Config(config1)).to.deep.equal({
       blackList: [],
       theme: 'apple',
-      themesUrl: `//cdn.jsdelivr.net/gh/arthur-feral/emogeez-generator@${version}/emojis`,
+      themesUrl: `https://cdn.jsdelivr.net/gh/arthur-feral/emogeez@v${version}/emogeez-generator/emojis`,
     });
   });
 
@@ -39,7 +39,7 @@ describe('Config', () => {
           'reversed-hand-with-middle-finger-extended',
         ],
         theme: 'apple',
-        themesUrl: `//cdn.jsdelivr.net/gh/arthur-feral/emogeez-generator@${version}/emojis`,
+        themesUrl: `https://cdn.jsdelivr.net/gh/arthur-feral/emogeez@v${version}/emogeez-generator/emojis`,
       });
 
       expect(Config({
