@@ -69,8 +69,8 @@ export default (store) => {
     return textSplitted.join('');
   };
 
-  const shortnamesToHTML = (theme, text, HTMLrenderer) => {
-    if (!HTMLrenderer || !isFunction(HTMLrenderer)) {
+  const shortnamesToHTML = (theme, text, HTMLRenderer) => {
+    if (!HTMLRenderer || !isFunction(HTMLRenderer)) {
       throw new Error('Missing HTML template to use utf8ToHTML');
     }
 
@@ -78,7 +78,7 @@ export default (store) => {
       let matched = match;
       const emoji = store.getEmojiByShortname(theme, shortname);
       if (emoji) {
-        matched = HTMLrenderer(emoji);
+        matched = HTMLRenderer(emoji);
       } else {
         return matched;
       }
@@ -91,11 +91,11 @@ export default (store) => {
    * replace shortname with image tag in a string
    * @param {string} theme
    * @param {string} text
-   * @param {boolean} HTMLTemplate
+   * @param {boolean} HTMLRenderer
    * @returns {string}
    */
-  const utf8ToHTML = (theme, text, HTMLTemplate) =>
-    shortnamesToHTML(theme, utf8ToShortnames(theme, text), HTMLTemplate);
+  const utf8ToHTML = (theme, text, HTMLRenderer) =>
+    shortnamesToHTML(theme, utf8ToShortnames(theme, text), HTMLRenderer);
 
   return {
     aliasesToShortnames,
