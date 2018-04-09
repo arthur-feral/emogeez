@@ -21,7 +21,7 @@ describe('http', () => {
     it('fetch the themeName json data', async () => {
       const result = await http.get('apple');
       expect(fetchMocked.lastCall()[0])
-        .to.equal(`https://cdn.jsdelivr.net/gh/arthur-feral/emogeez@v${packageJSON.version}/emogeez-generator/emojis/apple/apple.json`);
+        .to.equal(`https://cdn.jsdelivr.net/gh/arthur-feral/emogeez@${packageJSON.version}/packages/emogeez-generator/emojis/apple/apple.json`);
 
       expect(result).to.deep.equal(emojisData);
     });
