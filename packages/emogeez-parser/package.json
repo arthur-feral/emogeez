@@ -20,7 +20,7 @@
     "parser",
     "parsing"
   ],
-  "author": "Arthur Féral, iAdvize<arthur.feral@iadvize.com>",
+  "author": "Arthur Féral, iAdvize<arthur.feral@hotmail.fr>",
   "license": "MIT",
   "dependencies": {
     "emoji-aware": "^3.0.3",

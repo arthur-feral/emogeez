@@ -187,7 +187,7 @@ export default (config, emitter) => {
       const themeSpriteDestination = `${themeSpritePath}/${themeName}.png`;
       fse.mkdirpSync(themeSpritePath);
 
-      Spritesmith.run({src: emojisFilePath}, function handleResult (err, result) {
+      Spritesmith.run({ src: emojisFilePath }, function handleResult(err, result) {
         const {
           properties,
           coordinates,
@@ -197,7 +197,7 @@ export default (config, emitter) => {
         try {
           fs.writeFileSync(themeSpriteDestination, image);
           resolve({ properties, coordinates });
-        }catch(error) {
+        } catch (error) {
           reject(error);
         }
       });
