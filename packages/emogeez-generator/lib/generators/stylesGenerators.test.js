@@ -9,17 +9,15 @@ import {
 import fs from 'fs-extra';
 import EventEmitter from 'eventemitter3';
 import StylesGenerator from './stylesGenerators';
-
-const baseConfig = {
-  destination: `emojis`,
-  size: 48,
-  fromCache: false,
-  prefix: 'emojis',
-  preproc: 'sass',
-};
+import {
+  DEFAULT_CONFIG_PARAMS,
+} from '../config/config';
 
 const emitter = new EventEmitter();
-const sassGenerator = StylesGenerator(baseConfig, emitter);
+const sassGenerator = StylesGenerator({
+  ...DEFAULT_CONFIG_PARAMS,
+  themesUrl: 'emojis',
+}, emitter);
 const coordinatesJSON = require(`${process.cwd()}/tests/jsons/coordinates.json`);
 const emojisFullPeopleJSON = require(`${process.cwd()}/tests/jsons/emojisFullForCategory.json`);
 const emojisNames = map(emojisFullPeopleJSON.people.emojis, e => e.name);

@@ -6,18 +6,21 @@ import logger from '../logger';
 import {
   APP_READY, APP_START,
   ERROR,
+  DEFAULT_THEMES_URL,
 } from '../constants';
 import fse from 'fs-extra';
 import jimp from 'jimp';
 import Configuration from './Configuration';
+import packageJSON from '../../package.json';
 
 /**
  * default config
  * @name DEFAULT_CONFIG_PARAMS
  * @type {Object}
  */
-const DEFAULT_CONFIG_PARAMS = {
+export const DEFAULT_CONFIG_PARAMS = {
   destination: 'emojis',
+  themesUrl: DEFAULT_THEMES_URL.replace('{{version}}', packageJSON.version),
   size: 48,
   cache: false,
   prefix: 'emojis',

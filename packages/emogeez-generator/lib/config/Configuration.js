@@ -25,6 +25,7 @@ export default class Configuration {
     cache,
     prefix,
     preproc,
+    themesUrl,
   }) {
     assign(this, {
       destination,
@@ -32,6 +33,7 @@ export default class Configuration {
       cache,
       prefix,
       preproc,
+      themesUrl,
     });
   }
 }
