@@ -6,6 +6,7 @@
   "scripts": {
     "transpile": "$(npm bin)/babel . --out-dir dist --ignore cache,tests,node_modules,nyc-reports,dist,*.test.js",
     "prepublish": "yarn run test",
+    "postinstall": "yarn run transpile",
     "lint:js": "eslint lib tests --ext .js",
     "test": "NODE_ENV=test nyc --check-coverage --lines 85 --report-dir=${CIRCLE_ARTIFACTS:-'./nyc-reports'} --reporter=lcov yarn run mocha",
     "mocha": "NODE_ENV=test mocha --compilers js:babel-register -r tests/bootstrap.js -r babel-polyfill $(find lib -name '*.test.js')"
