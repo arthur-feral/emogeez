@@ -5,7 +5,7 @@
   "author": "Arthur Féral, iAdvize <arthur.feral@hotmail.fr>",
   "license": "MIT",
   "scripts": {
-    "test": "echo \"no tests yet\"",
+    "test": "./scripts/test.sh",
     "bootstrap": "yarn",
     "lerna-bootstrap": "lerna bootstrap",
     "lerna-publish": "lerna publish --force-publish=*"

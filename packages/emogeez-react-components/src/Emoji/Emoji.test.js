@@ -3,7 +3,7 @@ import ReactTestUtils from 'react-dom/test-utils';
 import {
   expect,
 } from 'chai';
-import Emoji, { CLASSNAMES } from './Emoji';
+import Emoji, { CLASSNAMES } from './Emoji.js';
 
 const renderComponentIntoDOM = (props = {}) => ReactTestUtils.renderIntoDocument(
   <Emoji {...props} />,
@@ -31,6 +31,6 @@ describe('Emoji', () => {
       className: 'customClass',
     });
     const emoji = ReactTestUtils.findRenderedDOMComponentWithClass(component, CLASSNAMES.container);
-    expect(emoji.attributes.alt).to.equal('grinning-face');
+    expect(emoji.attributes.alt.value).to.equal('grinning-face');
   });
 });
