@@ -25,6 +25,7 @@ commander
   .version(packagejson.version)
   .usage('[options] [value]')
   .option('-d, --destination [path]', 'Path for generated files')
+  .option('-t, --themesUrl [path]', 'Url to image sprite in the style file')
   .option('-s, --size [size]', 'The sprite\'s height')
   .option('--preproc [preprocessor type]', 'the css preprocessor type (less, sass etc...)')
   .option('-p, --prefix [prefix]', 'The classnames prefix')

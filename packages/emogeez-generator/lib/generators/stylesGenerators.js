@@ -60,7 +60,7 @@ export default (config) => {
    * @returns {*|Promise}
    */
   return (themeName, emojisNames, properties, coordinates) => {
-    const spritePath = `${config.destination}/${themeName}/${themeName}.png`;
+    const spritePath = `${config.themesUrl}/${themeName}/${themeName}.png`;
     const coordinatesArray = map(coordinates, c => c);
     let sassContent = generateBase(config.prefix, spritePath, properties.width, properties.height, config.size) + os.EOL;
 

@@ -6,7 +6,12 @@ import sinon from 'sinon';
 import EventEmitter from 'eventemitter3';
 import Configuration from './Configuration';
 import Config from './config';
-import { APP_READY, APP_START } from '../constants';
+import {
+  APP_READY,
+  APP_START,
+  DEFAULT_THEMES_URL,
+} from '../constants';
+import packageJSON from '../../package.json';
 
 const emitter = new EventEmitter();
 
@@ -26,6 +31,7 @@ describe('Config', () => {
 
     expect(conf).to.deep.equal({
       destination: 'emojis',
+      themesUrl: DEFAULT_THEMES_URL.replace('{{version}}', packageJSON.version),
       size: 48,
       cache: false,
       prefix: 'emojis',
@@ -42,6 +48,7 @@ describe('Config', () => {
     }, emitter);
     expect(conf).to.deep.equal(new Configuration({
       destination: 'emojis',
+      themesUrl: DEFAULT_THEMES_URL.replace('{{version}}', packageJSON.version),
       size: 64,
       cache: true,
       prefix: 'prefix',
