@@ -16,5 +16,4 @@ lerna-debug.log
 yarn-*.log
 
 **/dist/*
-
-
+packages/emogeez-react-components/.storybook/build

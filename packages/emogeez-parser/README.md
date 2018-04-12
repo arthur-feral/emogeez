@@ -47,6 +47,21 @@ The default thème.
 The url when all emojis themes are hosted. 
 **Default** the emogeez-generator repository. (the size of each emojis are 48px)
 
+
+store
+-
+It stores the emojis data. You can use it to load more themes
+
+#### fetchTheme
+It fetch theme from cdn or the url you provide
+**arguments**
+- `theme` {string} the theme name check the emogeez-generator for full list
+- `data` {object} the json containing emojis data for the theme
+
+#### setTheme
+You set your theme manually
+same args as fetchTheme
+
 replacer
 -
 The tools provided by `replacer` should be used to replace emojis with what you want.

@@ -9,13 +9,15 @@ module.exports = function (baseConfig, env) {
   const config = genDefaultConfig(baseConfig, env);
 
   config.devtool = '#cheap-source-map';
+  const babelLoader = config.module.rules[0];
+  babelLoader.query.cacheDirectory = path.resolve('./.storybook/build/cache/babel');
 
   config.module.rules.push({
     test: /\.scss$/,
     loaders: [require.resolve('style-loader'), require.resolve('css-loader'), require.resolve('sass-loader')],
     include: [
       path.resolve(__dirname, '../'),
-      //path.resolve(__dirname, '../node_modules/emogeez-generator/emojis/apple/apple.scss'),
+      path.resolve(__dirname, '../node_modules/emogeez-generator/emojis/apple/apple.scss'),
     ],
   });
 
