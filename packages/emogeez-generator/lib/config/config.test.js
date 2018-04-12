@@ -11,7 +11,6 @@ import {
   APP_START,
   DEFAULT_THEMES_URL,
 } from '../constants';
-import packageJSON from '../../package.json';
 
 const emitter = new EventEmitter();
 
@@ -27,11 +26,11 @@ describe('Config', () => {
   it('returns default config if no custom param given', () => {
     conf = Config({
       preproc: 'sass',
-    }, emitter);
+    }, emitter, '0.1.0');
 
     expect(conf).to.deep.equal({
       destination: 'emojis',
-      themesUrl: DEFAULT_THEMES_URL.replace('{{version}}', packageJSON.version),
+      themesUrl: DEFAULT_THEMES_URL.replace('{{version}}', '0.1.0'),
       size: 48,
       cache: false,
       prefix: 'emojis',
@@ -45,10 +44,10 @@ describe('Config', () => {
       cache: true,
       prefix: 'prefix',
       preproc: 'less',
-    }, emitter);
+    }, emitter, '0.1.0');
     expect(conf).to.deep.equal(new Configuration({
       destination: 'emojis',
-      themesUrl: DEFAULT_THEMES_URL.replace('{{version}}', packageJSON.version),
+      themesUrl: DEFAULT_THEMES_URL.replace('{{version}}', '0.1.0'),
       size: 64,
       cache: true,
       prefix: 'prefix',
@@ -58,11 +57,11 @@ describe('Config', () => {
 
   it('emit APP_READY', (done) => {
     expect(appReadySpy.callCount).to.equal(0);
-    conf = Config({}, emitter);
+    conf = Config({}, emitter, '0.1.0');
     emitter.emit(APP_START);
     setTimeout(() => {
       expect(appReadySpy.callCount).to.equal(1);
       done();
-    }, 100);
+    }, 1000);
   });
 });

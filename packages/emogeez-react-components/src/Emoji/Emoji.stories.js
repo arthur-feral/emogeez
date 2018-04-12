@@ -1,3 +1,6 @@
+import {
+  keys,
+} from 'lodash';
 import './_emoji.scss';
 import Emoji from './Emoji';
 import { withKnobs, select } from '@storybook/addon-knobs';
@@ -10,7 +13,8 @@ const stories = storiesOf('Emoji', module)
   .addDecorator(centered);
 
 export const defaultStory = {
-  name: select('name', ),
+  name: 'grinning-face',
+  //name: select('name', names, 'grinning-face'),
   symbol: '😀',
 };
 

@@ -1,3 +1,5 @@
+import { DEFAULT_THEMES_URL } from '../constants';
+
 require('../../tests/bootstrap');
 
 import {
@@ -9,14 +11,15 @@ import {
 import fs from 'fs-extra';
 import EventEmitter from 'eventemitter3';
 import StylesGenerator from './stylesGenerators';
-import {
-  DEFAULT_CONFIG_PARAMS,
-} from '../config/config';
 
 const emitter = new EventEmitter();
 const sassGenerator = StylesGenerator({
-  ...DEFAULT_CONFIG_PARAMS,
+  destination: 'emojis',
   themesUrl: 'emojis',
+  size: 48,
+  cache: false,
+  prefix: 'emojis',
+  preproc: 'sass',
 }, emitter);
 const coordinatesJSON = require(`${process.cwd()}/tests/jsons/coordinates.json`);
 const emojisFullPeopleJSON = require(`${process.cwd()}/tests/jsons/emojisFullForCategory.json`);

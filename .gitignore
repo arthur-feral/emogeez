@@ -17,3 +17,6 @@ yarn-*.log
 
 **/dist/*
 packages/emogeez-react-components/.storybook/build
+packages/emogeez-generator/tmp/html
+packages/emogeez-generator/tmp/images
+packages/emogeez-generator/tmp/jsons

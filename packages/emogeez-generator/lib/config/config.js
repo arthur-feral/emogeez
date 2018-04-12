@@ -11,21 +11,6 @@ import {
 import fse from 'fs-extra';
 import jimp from 'jimp';
 import Configuration from './Configuration';
-import packageJSON from '../../package.json';
-
-/**
- * default config
- * @name DEFAULT_CONFIG_PARAMS
- * @type {Object}
- */
-export const DEFAULT_CONFIG_PARAMS = {
-  destination: 'emojis',
-  themesUrl: DEFAULT_THEMES_URL.replace('{{version}}', packageJSON.version),
-  size: 48,
-  cache: false,
-  prefix: 'emojis',
-  preproc: 'sass',
-};
 
 const AVAILABLE_PREPROCESSORS = ['sass', 'less'];
 const TEMP_FILES_PATH = process.env.TEMP_FILES_PATH;
@@ -37,8 +22,23 @@ const BASE_IMAGE_PATH = `${IMAGES_PATH}/base.png`;
  * @name configure
  * @param {Object} commander
  * @param {Object} emitter
+ * @param {string} version
  */
-export default (commander, emitter) => {
+export default (commander, emitter, version) => {
+  /**
+   * default config
+   * @name DEFAULT_CONFIG_PARAMS
+   * @type {Object}
+   */
+  const DEFAULT_CONFIG_PARAMS = {
+    destination: 'emojis',
+    themesUrl: DEFAULT_THEMES_URL.replace('{{version}}', version),
+    size: 48,
+    cache: false,
+    prefix: 'emojis',
+    preproc: 'sass',
+  };
+
   logger.sameLine('⚙️ Configuring app: ♻️');
   let config = {};
 
