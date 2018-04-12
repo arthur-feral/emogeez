@@ -14,7 +14,7 @@ import {
 import GeneratorFactory from './generators';
 
 const baseConfig = {
-  destination: 'tmp/emojis',
+  destination: 'tests/tmp/emojis',
   size: 48,
   fromCache: false,
   prefix: 'emojis',
@@ -33,6 +33,7 @@ emitter.on('GENERATOR_GENERATE_SPRITE_SUCCESS', generateSpriteSuccessSpy);
 emitter.on('GENERATOR_GENERATE_STYLE_SUCCESS', generateStyleSuccessSpy);
 
 const tempPath = `${process.cwd()}/${process.env.TEMP_FILES_PATH}`;
+console.log(tempPath);
 const imagesPath = `${process.cwd()}/tests/images`;
 const tmpImagesPath = `${tempPath}/images`;
 
