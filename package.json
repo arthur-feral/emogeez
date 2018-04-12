@@ -8,7 +8,7 @@
     "test": "./scripts/test.sh",
     "bootstrap": "yarn",
     "lerna-bootstrap": "lerna bootstrap",
-    "lerna-publish": "lerna publish --force-publish=*"
+    "lerna-publish": "lerna publish"
   },
   "devDependencies": {
     "lerna": "^2.9.0",

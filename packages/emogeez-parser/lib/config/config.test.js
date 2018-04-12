@@ -8,10 +8,7 @@ import Config from './config';
 
 const config1 = Config({
   blackList: [],
-});
-
-const packageJSON = require('../../package.json');
-const version = packageJSON.version;
+}, '0.1.0');
 
 const config2 = Config({
   blackList: [
@@ -19,14 +16,14 @@ const config2 = Config({
     'kiss',
     'reversed-hand-with-middle-finger-extended',
   ],
-});
+}, '0.1.0');
 
 describe('Config', () => {
   it('get a default config', () => {
     expect(Config(config1)).to.deep.equal({
       blackList: [],
       theme: 'apple',
-      themesUrl: `https://cdn.jsdelivr.net/gh/arthur-feral/emogeez@${version}/packages/emogeez-generator/emojis`,
+      themesUrl: `https://cdn.jsdelivr.net/gh/arthur-feral/emogeez@0.1.0/packages/emogeez-generator/emojis`,
     });
   });
 
@@ -39,7 +36,7 @@ describe('Config', () => {
           'reversed-hand-with-middle-finger-extended',
         ],
         theme: 'apple',
-        themesUrl: `https://cdn.jsdelivr.net/gh/arthur-feral/emogeez@${version}/packages/emogeez-generator/emojis`,
+        themesUrl: `https://cdn.jsdelivr.net/gh/arthur-feral/emogeez@0.1.0/packages/emogeez-generator/emojis`,
       });
 
       expect(Config({
