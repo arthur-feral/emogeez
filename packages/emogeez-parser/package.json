@@ -4,7 +4,7 @@
   "description": "A toolbox for parsing emojis in texts.",
   "main": "dist/index.js",
   "scripts": {
-    "transpile": "$(npm bin)/babel . --out-dir dist --ignore cache,tests,node_modules,nyc-reports,dist,*.test.js",
+    "transpile": "$(npm bin)/babel . --out-dir dist --ignore cache,tests,node_modules,nyc-reports,dist,*.test.js && node ./scripts/build.js",
     "prepublish": "yarn run test",
     "postinstall": "yarn run transpile",
     "lint:js": "eslint lib tests --ext .js",

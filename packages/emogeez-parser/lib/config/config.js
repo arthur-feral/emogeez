@@ -8,16 +8,15 @@ import {
 
 /**
  *
- * @param config
+ * @param {object} config
+ * @param {string} version
  * @return {Config}
  */
-export default (config) => {
-  const packageJSON = require('../../package.json');
-
+export default (config, version) => {
   const defaultConfig = {
     blackList: [],
     theme: DEFAULT_THEME_NAME,
-    themesUrl: DEFAULT_THEMES_URL.replace('{{version}}', packageJSON.version),
+    themesUrl: DEFAULT_THEMES_URL.replace('{{version}}', version),
   };
 
   return {

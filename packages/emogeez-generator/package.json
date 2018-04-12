@@ -3,7 +3,7 @@
   "version": "0.8.1",
   "description": "Build an emojis sprite and stylesheet file from emojis datas collected from both emojipedia.org and unicode.org website",
   "scripts": {
-    "start": "yarn run transpile && TEMP_FILES_PATH=tmp node ./dist/index.js",
+    "start": "TEMP_FILES_PATH=tmp node ./dist/index.js",
     "dev": "node ./index.js",
     "transpile": "$(npm bin)/babel . --out-dir dist --ignore cache,tests,node_modules,nyc-reports,dist,*.test.js",
     "prepublish": "yarn run test",
