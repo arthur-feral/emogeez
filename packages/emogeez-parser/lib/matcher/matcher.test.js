@@ -21,6 +21,8 @@ store.setTheme('apple', emojisData);
 const {
   getNames,
   hasEmojis,
+  hasOnlyEmojis,
+  hasOnlyOneEmoji,
 } = Matcher(store);
 
 const grinning = store.toUTF8('apple', 'grinning-face');
@@ -79,6 +81,42 @@ describe('Matcher', () => {
       assert.isTrue(hasEmojis('apple', emojisText5));
       assert.isTrue(hasEmojis('apple', emojisText6));
       assert.isTrue(hasEmojis('apple', emojisText7));
+    });
+  });
+
+  describe('hasOnlyEmojis', () => {
+    it('returns true if the text contains only emojis', () => {
+      assert.isFalse(hasOnlyEmojis('apple', simpleText1));
+      assert.isFalse(hasOnlyEmojis('apple', simpleText2));
+      assert.isFalse(hasOnlyEmojis('apple', simpleText3));
+      assert.isFalse(hasOnlyEmojis('apple', simpleText4));
+      assert.isFalse(hasOnlyEmojis('apple', simpleText5));
+
+      assert.isTrue(hasOnlyEmojis('apple', emojisText1));
+      assert.isTrue(hasOnlyEmojis('apple', emojisText2));
+      assert.isTrue(hasOnlyEmojis('apple', emojisText3));
+      assert.isTrue(hasOnlyEmojis('apple', emojisText4));
+      assert.isTrue(hasOnlyEmojis('apple', emojisText5));
+      assert.isFalse(hasOnlyEmojis('apple', emojisText6));
+      assert.isTrue(hasOnlyEmojis('apple', emojisText7));
+    });
+  });
+
+  describe('hasOnlyOneEmoji', () => {
+    it('returns true if the text contains only one emoji', () => {
+      assert.isFalse(hasOnlyOneEmoji('apple', simpleText1));
+      assert.isFalse(hasOnlyOneEmoji('apple', simpleText2));
+      assert.isFalse(hasOnlyOneEmoji('apple', simpleText3));
+      assert.isFalse(hasOnlyOneEmoji('apple', simpleText4));
+      assert.isFalse(hasOnlyOneEmoji('apple', simpleText5));
+
+      assert.isTrue(hasOnlyOneEmoji('apple', emojisText1));
+      assert.isFalse(hasOnlyOneEmoji('apple', emojisText2));
+      assert.isTrue(hasOnlyOneEmoji('apple', emojisText3));
+      assert.isTrue(hasOnlyOneEmoji('apple', emojisText4));
+      assert.isTrue(hasOnlyOneEmoji('apple', emojisText5));
+      assert.isFalse(hasOnlyOneEmoji('apple', emojisText6));
+      assert.isTrue(hasOnlyOneEmoji('apple', emojisText7));
     });
   });
 });
