@@ -49,6 +49,7 @@ describe('Constants', () => {
     expect(constants.DEFAULT_THEMES_URL).to.equal('https://cdn.jsdelivr.net/gh/arthur-feral/emogeez@latest/packages/emogeez-generator/emojis');
 
     expect(constants.EXTENTIONS).to.deep.equal({
+      css: 'css',
       sass: 'scss',
       less: 'less',
     });

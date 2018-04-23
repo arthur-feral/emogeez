@@ -46,6 +46,7 @@ export const HTML_EMOJI_THEMES = 'body div.container div.content article section
 export const DEFAULT_THEMES_URL = 'https://cdn.jsdelivr.net/gh/arthur-feral/emogeez@latest/packages/emogeez-generator/emojis';
 
 export const EXTENTIONS = {
+  css: 'css',
   sass: 'scss',
   less: 'less',
 };

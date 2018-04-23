@@ -1,5 +1,3 @@
-import { DEFAULT_THEMES_URL } from '../constants';
-
 require('../../tests/bootstrap');
 
 import {
@@ -13,7 +11,7 @@ import EventEmitter from 'eventemitter3';
 import StylesGenerator from './stylesGenerators';
 
 const emitter = new EventEmitter();
-const sassGenerator = StylesGenerator({
+const stylesGenerator = StylesGenerator({
   destination: 'emojis',
   themesUrl: 'emojis',
   size: 48,
@@ -25,16 +23,20 @@ const coordinatesJSON = require(`${process.cwd()}/tests/jsons/coordinates.json`)
 const emojisFullPeopleJSON = require(`${process.cwd()}/tests/jsons/emojisFullForCategory.json`);
 const emojisNames = map(emojisFullPeopleJSON.people.emojis, e => e.name);
 const sassResult = fs.readFileSync(`tests/styles/apple_.scss`, 'utf8');
+const cssResult = fs.readFileSync(`tests/styles/apple_.css`, 'utf8');
 
 describe('StylesGenerator', () => {
   describe('generateStyle', () => {
     it('generate the stylesheet file', async () => {
-      const result = await sassGenerator('apple', emojisNames, {
+      const result = await stylesGenerator('apple', emojisNames, {
         width: 144,
         height: 144,
       }, coordinatesJSON);
 
-      expect(result).to.equal(sassResult);
+      expect(result).to.deep.equal({
+        css: cssResult,
+        sass: sassResult,
+      });
     });
   });
 });
