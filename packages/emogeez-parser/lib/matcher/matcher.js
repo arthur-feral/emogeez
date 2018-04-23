@@ -1,6 +1,7 @@
 import {
   isUndefined,
   reduce,
+  isString,
 } from 'lodash';
 import {
   getUnicode,
@@ -49,8 +50,66 @@ export default ({
     }).length !== 0;
   };
 
+  /**
+   * return true if the text contains only emojis as chars
+   * IMPORTANT the emojis in the text must be utf8 encoded (not shortnames)
+   * @param {string} themeName
+   * @param {string} text
+   * @return {*}
+   */
+  const hasOnlyEmojis = (themeName, text) => {
+    if (!isString(text)) {
+      return false;
+    }
+
+    if (!text.length) {
+      return false;
+    }
+
+    const chars = split(text);
+
+    const emojis = chars.filter(char => {
+      const charUnicode = getUnicode(char);
+      const emojiName = getNameFromCodepoint(themeName, charUnicode);
+
+      return !isUndefined(emojiName);
+    });
+
+    return (chars && (chars.length === emojis.length));
+  };
+
+  /**
+   * return true if the text contains only one emoji
+   * IMPORTANT the emojis in the text must be utf8 encoded (not shortnames)
+   * @param {string} themeName
+   * @param {string} text
+   * @return {*}
+   */
+  const hasOnlyOneEmoji = (themeName, text) => {
+    if (!isString(text)) {
+      return false;
+    }
+
+    if (!text.length) {
+      return false;
+    }
+
+    const chars = split(text);
+
+    const emojis = chars.filter(char => {
+      const charUnicode = getUnicode(char);
+      const emojiName = getNameFromCodepoint(themeName, charUnicode);
+
+      return !isUndefined(emojiName);
+    });
+
+    return (chars && (chars.length === emojis.length)) && emojis.length === 1;
+  };
+
   return {
     hasEmojis,
     getNames,
+    hasOnlyEmojis,
+    hasOnlyOneEmoji,
   };
 }
