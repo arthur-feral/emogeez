@@ -1,0 +1,56 @@
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import { noop } from 'lodash';
+import Emoji from '../Emoji/Emoji';
+
+const COMPONENT_NAME = 'emojisCategory';
+export const CLASSNAMES = {
+  container: `${COMPONENT_NAME}Container`,
+  categoryTitle: `${COMPONENT_NAME}Title`,
+  categoryEmojis: `${COMPONENT_NAME}Emojis`,
+  categoryTitleSymbol: `${COMPONENT_NAME}TitleSymbol`,
+  categoryTitleName: `${COMPONENT_NAME}TitleName`,
+};
+
+export default class EmojisCategory extends Component {
+  static propTypes = {
+    emojis: PropTypes.array,
+    name: PropTypes.string,
+    symbol: PropTypes.string,
+    onClickEmoji: PropTypes.func,
+  };
+
+  onClickEmoji = (name, symbol, event) => {
+    this.props.onClickEmoji(name, symbol, event);
+  };
+
+  render() {
+    const {
+      className,
+      name,
+      symbol,
+      emojis,
+    } = this.props;
+
+    return (
+      <div className={classNames(className, CLASSNAMES.container)}>
+        <div className={CLASSNAMES.categoryTitle}>
+          <Emoji name={emojis[0].name}
+                 symbol={emojis[0].symbol}
+          />
+          <span className={CLASSNAMES.categoryTitleName}>{name}</span>
+        </div>
+        <div className={CLASSNAMES.categoryEmojis}>
+          {emojis.map(emoji => (
+            <Emoji key={emoji.name}
+                   name={emoji.name}
+                   symbol={emoji.symbol}
+                   onClick={this.onClickEmoji}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
+}
