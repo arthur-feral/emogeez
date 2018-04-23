@@ -9,14 +9,13 @@ import {
 /**
  *
  * @param {object} config
- * @param {string} version
  * @return {Config}
  */
-export default (config, version) => {
+export default (config) => {
   const defaultConfig = {
     blackList: [],
     theme: DEFAULT_THEME_NAME,
-    themesUrl: DEFAULT_THEMES_URL.replace('{{version}}', version),
+    themesUrl: DEFAULT_THEMES_URL,
   };
 
   return {
