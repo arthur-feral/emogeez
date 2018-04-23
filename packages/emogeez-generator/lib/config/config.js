@@ -22,9 +22,8 @@ const BASE_IMAGE_PATH = `${IMAGES_PATH}/base.png`;
  * @name configure
  * @param {Object} commander
  * @param {Object} emitter
- * @param {string} version
  */
-export default (commander, emitter, version) => {
+export default (commander, emitter) => {
   /**
    * default config
    * @name DEFAULT_CONFIG_PARAMS
@@ -32,7 +31,7 @@ export default (commander, emitter, version) => {
    */
   const DEFAULT_CONFIG_PARAMS = {
     destination: 'emojis',
-    themesUrl: DEFAULT_THEMES_URL.replace('{{version}}', version),
+    themesUrl: DEFAULT_THEMES_URL,
     size: 48,
     cache: false,
     prefix: 'emojis',

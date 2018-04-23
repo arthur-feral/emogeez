@@ -239,15 +239,18 @@ export default (config, emitter) => {
    */
   const generateStyle = (themeName, emojisNames, properties, coordinates) => {
     return new Promise((resolve, reject) => {
-      const styleFile = stylesGenerator(themeName, emojisNames, properties, coordinates);
+      const styleFiles = stylesGenerator(themeName, emojisNames, properties, coordinates);
       const filePath = `${config.destination}/${themeName}`;
-      const fileName = `${themeName}.${EXTENTIONS[config.preproc]}`;
-      const completePath = `${filePath}/${fileName}`;
+      const fileNameCss = `${themeName}.${EXTENTIONS.css}`;
+      const completePathCss = `${filePath}/${fileNameCss}`;
+      const fileNamePreproc = `${themeName}.${EXTENTIONS[config.preproc]}`;
+      const completePathPreproc = `${filePath}/${fileNamePreproc}`;
 
       try {
         fse.mkdirpSync(filePath);
-        fs.writeFileSync(completePath, styleFile, 'utf8');
-        return resolve(completePath);
+        fs.writeFileSync(completePathCss, styleFiles.css, 'utf8');
+        fs.writeFileSync(completePathPreproc, styleFiles[config.preproc], 'utf8');
+        return resolve(completePathPreproc);
       } catch (error) {
         return reject(error);
       }

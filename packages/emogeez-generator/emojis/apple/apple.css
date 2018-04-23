@@ -1,11 +1,9 @@
-$emojiCharSize: 48px;
-
 [class^="emojis-"], [class*=" emojis-"] {
     background: transparent url("https://cdn.jsdelivr.net/gh/arthur-feral/emogeez@latest/packages/emogeez-generator/emojis/apple/apple.png") 0 0 no-repeat;
     display: inline-block;
-    height: $emojiCharSize;
+    height: 48px;
     background-size: 2160px 2112px;
-    width: $emojiCharSize;
+    width: 48px;
     vertical-align: middle;
 }
 

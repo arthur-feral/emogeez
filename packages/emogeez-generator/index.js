@@ -31,9 +31,8 @@ commander
   .option('-p, --prefix [prefix]', 'The classnames prefix')
   .option('-c, --cache', 'Force cache use (use last cached html and images) Dont use it if you want last released emojis')
   .parse(process.argv);
-const { version } = require('./version.json');
 
-const config = Config(commander, emitter, version);
+const config = Config(commander, emitter);
 const fetcher = Fetcher(superagent, config, emitter);
 const parser = Parser(config, emitter);
 const monitor = Monitor(config, emitter);
