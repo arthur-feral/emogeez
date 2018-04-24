@@ -14,8 +14,7 @@ import appleJSON from '../../node_modules/emogeez-generator/emojis/apple/apple.j
 const stories = storiesOf('EmojisCategory', module)
   .addDecorator(withKnobs)
   .addDecorator(withStyle({
-    width: 300,
-    height: 300,
+//    width: 300,
   }))
   .addDecorator(centered);
 

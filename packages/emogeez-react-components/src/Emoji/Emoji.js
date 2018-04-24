@@ -32,7 +32,7 @@ export default class Emoji extends Component {
     } = this.props;
 
     return (
-      <span
+      <button
         className={classNames(CLASSNAMES.container, className, `emojis-${name}`)}
         draggable="false"
         onClick={this.onClick}
