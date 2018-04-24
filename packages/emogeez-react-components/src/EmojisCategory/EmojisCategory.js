@@ -31,6 +31,10 @@ export default class EmojisCategory extends Component {
     this.props.onClickEmoji(name, symbol, event);
   };
 
+  getDOMNode() {
+    return this.domNode;
+  }
+
   render() {
     const {
       className,
@@ -40,7 +44,11 @@ export default class EmojisCategory extends Component {
     } = this.props;
 
     return (
-      <div className={classNames(className, CLASSNAMES.container)}>
+      <div
+        ref={(node) => {
+          this.domNode = node;
+        }}
+        className={classNames(className, CLASSNAMES.container)}>
         <div className={CLASSNAMES.categoryTitle}>
           {/*
             <Emoji name={emojis[0].name}
