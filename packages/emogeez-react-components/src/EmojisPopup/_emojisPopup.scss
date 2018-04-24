@@ -5,60 +5,14 @@ $colorGreen: #1bc74e;
 .emojisPopupContainer {
     width: 26rem;
     height: $popupHeight;
-    border: 1px solid #c5c9cf;
     padding: 0;
     background-color: #fff;
     border-radius: 5px;
-    box-shadow: 0 6px 12px 0 rgba(38, 40, 45, .2);
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: stretch;
-
-    &.top {
-        .emojisPopupArrow {
-            border-bottom-color: rgb(197, 201, 207);
-            border-left-color: rgb(197, 201, 207);
-            left: 50%;
-            bottom: 0;
-            margin-left: -5px;
-            margin-bottom: -6px;
-        }
-    }
-
-    &.right {
-        .emojisPopupArrow {
-            border-left-color: rgb(197, 201, 207);
-            border-top-color: rgb(197, 201, 207);
-            left: 0;
-            top: 50%;
-            margin-left: -6px;
-            margin-top: -5px;
-        }
-    }
-
-    &.bottom {
-        .emojisPopupArrow {
-            border-top-color: rgb(197, 201, 207);
-            border-right-color: rgb(197, 201, 207);
-            right: 50%;
-            top: 0;
-            margin-right: -5px;
-            margin-top: -6px;
-        }
-    }
-
-    &.left {
-        .emojisPopupArrow {
-            border-right-color: rgb(197, 201, 207);
-            border-bottom-color: rgb(197, 201, 207);
-            right: 0;
-            bottom: 50%;
-            margin-right: -6px;
-            margin-top: -5px;
-        }
-    }
 
     .emojisPopupCategoriesContainer {
         height: $popupHeight - $categoriesListHeight;
@@ -75,17 +29,6 @@ $colorGreen: #1bc74e;
         &:last-child {
             margin-bottom: 0;
         }
-    }
-
-    .emojisPopupArrow {
-        display: block;
-        width: 1rem;
-        height: 1rem;
-        border: 1px solid transparent;
-        transform: rotate(-45deg);
-        position: absolute;
-        box-sizing: content-box;
-        background-color: white;
     }
 
     .emojisPopupCategories {

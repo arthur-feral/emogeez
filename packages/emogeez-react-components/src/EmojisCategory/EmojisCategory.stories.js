@@ -3,7 +3,6 @@ import {
 } from 'lodash';
 import './_emojisCategory.scss';
 import EmojisCategory from './EmojisCategory';
-import { withKnobs, select } from '@storybook/addon-knobs';
 import centered from '@storybook/addon-centered';
 import withStyle from '../../.storybook/decorators/withStyle';
 
@@ -12,10 +11,6 @@ import { storiesOf } from '@storybook/react';
 import appleJSON from '../../node_modules/emogeez-generator/emojis/apple/apple.json';
 
 const stories = storiesOf('EmojisCategory', module)
-  .addDecorator(withKnobs)
-  .addDecorator(withStyle({
-//    width: 300,
-  }))
   .addDecorator(centered);
 
 export const defaultStory = {

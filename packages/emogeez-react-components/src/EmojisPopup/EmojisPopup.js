@@ -10,7 +10,6 @@ const COMPONENT_NAME = 'emojisPopup';
 export const CLASSNAMES = {
   container: `${COMPONENT_NAME}Container`,
   category: `${COMPONENT_NAME}Category`,
-  popupArrow: `${COMPONENT_NAME}Arrow`,
   categoriesContainer: `${COMPONENT_NAME}CategoriesContainer`,
   emojiCategory: `${COMPONENT_NAME}EmojiCategory`,
   categories: `${COMPONENT_NAME}Categories`,
@@ -51,14 +50,10 @@ export default class EmojisPopup extends Component {
   static propTypes = {
     categories: PropTypes.array,
     onClickEmoji: PropTypes.func,
-    position: PropTypes.oneOf([
-      'top', 'bottom', 'left', 'right',
-    ]),
   };
 
   static defaultProps = {
     categories: [],
-    position: 'top',
     onClickEmoji: noop,
   };
 
@@ -133,12 +128,18 @@ export default class EmojisPopup extends Component {
     const {
       className,
       categories,
-      position,
     } = this.props;
 
     return (
-      <div className={classNames(className, CLASSNAMES.container, position)}>
+      <div
+        onClick={(event) => {
+          event.stopPropagation();
+          event.preventDefault();
+        }}
+        className={classNames(className, CLASSNAMES.container)}
+      >
         <div
+          key="categoryList"
           ref={(node) => {
             this.categoriesList = node;
           }}
@@ -147,12 +148,11 @@ export default class EmojisPopup extends Component {
         >
           {
             categories.map((category) => (
-              <div>
+              <div key={category.name}>
                 <EmojisCategory
                   ref={(node) => {
                     this.categories[category.name] = node;
                   }}
-                  key={category.name}
                   className={CLASSNAMES.category}
                   name={category.name}
                   symbol={category.symbol}
@@ -162,10 +162,9 @@ export default class EmojisPopup extends Component {
             ))
           }
         </div>
-        <div className={CLASSNAMES.categories}>
+        <div key="categoryTabs" className={CLASSNAMES.categories}>
           {categories.map(this.renderCategoryTab)}
         </div>
-        <div className={CLASSNAMES.popupArrow} />
       </div>
     );
   }

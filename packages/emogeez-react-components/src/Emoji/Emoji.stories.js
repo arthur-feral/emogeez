@@ -1,5 +1,5 @@
 import {
-  keys,
+  map,
 } from 'lodash';
 import './_emoji.scss';
 import Emoji from './Emoji';
@@ -12,16 +12,10 @@ const stories = storiesOf('Emoji', module)
   .addDecorator(withKnobs)
   .addDecorator(centered);
 
-export const defaultStory = {
-  name: 'grinning-face',
-  //name: select('name', names, 'grinning-face'),
-  symbol: '😀',
-};
-
 stories.add('Default', () => {
   const props = {
-    ...defaultStory,
-    className: 'touloulou',
+    name: select('name', map(emojis, emoji => emoji.name), 'grinning-face'),
+    symbol: '😀',
   };
 
   return (

@@ -48,7 +48,8 @@ export default class EmojisCategory extends Component {
         ref={(node) => {
           this.domNode = node;
         }}
-        className={classNames(className, CLASSNAMES.container)}>
+        className={classNames(className, CLASSNAMES.container)}
+      >
         <div className={CLASSNAMES.categoryTitle}>
           {/*
             <Emoji name={emojis[0].name}
@@ -59,11 +60,12 @@ export default class EmojisCategory extends Component {
         </div>
         <div className={CLASSNAMES.categoryEmojis}>
           {emojis.map(emoji => (
-            <Emoji key={emoji.name}
-                   className={CLASSNAMES.emoji}
-                   name={emoji.name}
-                   symbol={emoji.symbol}
-                   onClick={this.onClickEmoji}
+            <Emoji
+              key={emoji.name}
+              className={CLASSNAMES.emoji}
+              name={emoji.name}
+              symbol={emoji.symbol}
+              onClick={this.onClickEmoji}
             />
           ))}
         </div>
