@@ -11,6 +11,7 @@ const renderComponentIntoDOM = (props = {}) => ReactTestUtils.renderIntoDocument
 
 const story = {
   name: 'grinning-face',
+  symbol: 'symbol',
 };
 
 describe('Emoji', () => {
@@ -31,6 +32,6 @@ describe('Emoji', () => {
       className: 'customClass',
     });
     const emoji = ReactTestUtils.findRenderedDOMComponentWithClass(component, CLASSNAMES.container);
-    expect(emoji.attributes.alt.value).to.equal('grinning-face');
+    expect(emoji.attributes.alt.value).to.equal('symbol');
   });
 });
