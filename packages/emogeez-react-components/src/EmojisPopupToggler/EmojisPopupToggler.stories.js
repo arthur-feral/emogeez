@@ -1,22 +1,19 @@
 import {
-  keys,
+  map,
 } from 'lodash';
-import './_emojisCategory.scss';
-import EmojisCategory from './EmojisCategory';
+import './_emojisPopupToggler.scss';
+import EmojisPopupToggler from './EmojisPopupToggler';
 import centered from '@storybook/addon-centered';
-import withStyle from '../../.storybook/decorators/withStyle';
 
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import appleJSON from '../../node_modules/emogeez-generator/emojis/apple/apple.json';
 
-const stories = storiesOf('EmojisCategory', module)
+const stories = storiesOf('EmojisPopupToggler', module)
   .addDecorator(centered);
 
 export const defaultStory = {
-  name: appleJSON.people.name,
-  symbol: appleJSON.people.symbol,
-  emojis: appleJSON.people.emojis,
+  categories: map(appleJSON, category => category),
 };
 
 stories.add('Default', () => {
@@ -25,6 +22,6 @@ stories.add('Default', () => {
   };
 
   return (
-    <EmojisCategory {...props} />
+    <EmojisPopupToggler {...props} />
   );
 });

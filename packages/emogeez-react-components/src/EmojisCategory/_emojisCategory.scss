@@ -1,0 +1,38 @@
+.emojisCategoryContainer {
+
+    .emojisCategoryTitle {
+        border-bottom: 1px solid #c5c9cf;
+        margin-bottom: 0.5rem;
+    }
+
+    //.emojisCategoryTitleSymbol {
+    //
+    //}
+
+    .emojisCategoryTitleName {
+        font-size: 1.3rem;
+        color: #707689;
+        text-transform: capitalize;
+    }
+
+    .emojisCategoryEmojis {
+
+    }
+
+    .emojisCategoryEmoji {
+        cursor: pointer;
+        background-color: white;
+        border: 5px solid white;
+        border-radius: 5px;
+        transition: border-color .2s ease,
+        background-color .2s ease;
+        -webkit-box-sizing: content-box;
+        -moz-box-sizing: content-box;
+        box-sizing: content-box;
+
+        &:hover {
+            border-color: #f4f4f5;
+            background-color: #f4f4f5;
+        }
+    }
+}

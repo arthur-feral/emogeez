@@ -1,0 +1,90 @@
+$popupHeight: 24.5rem;
+$categoriesListHeight: 3.6rem;
+$colorGreen: #1bc74e;
+
+.emojisPopupContainer {
+    width: 26rem;
+    height: $popupHeight;
+    padding: 0;
+    background-color: #fff;
+    border-radius: 5px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+
+    .emojisPopupCategoriesContainer {
+        height: $popupHeight - $categoriesListHeight;
+        padding: 1rem 1rem 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .emojisPopupCategory {
+        margin-bottom: 0.5rem;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    .emojisPopupCategories {
+        border-top: 1px solid #c5c9cf;
+        background-color: white;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        padding: 1rem;
+        z-index: 1;
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
+
+    .emojisPopupEmojiCategory {
+        position: relative;
+        display: flex;
+
+        button {
+            background-color: transparent;
+            border: 0;
+            padding: 0;
+            margin: 0 0.6rem;
+            cursor: pointer;
+        }
+
+        .emojisPopupEmojiCategoryIcon {
+            width: 16px;
+            height: 16px;
+            fill: #707689;
+        }
+
+        .emojisPopupEmojiCategoryDot {
+            position: absolute;
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            background-color: transparent;
+            border-radius: 50%;
+            bottom: -4px;
+            left: 50%;
+            margin-left: -2px;
+        }
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        &.selected {
+            .emojisPopupEmojiCategoryIcon {
+                fill: $colorGreen;
+            }
+
+            .emojisPopupEmojiCategoryDot {
+                background-color: $colorGreen;
+            }
+        }
+    }
+}

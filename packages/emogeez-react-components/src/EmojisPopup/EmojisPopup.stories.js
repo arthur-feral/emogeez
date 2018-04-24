@@ -1,30 +1,30 @@
 import {
-  keys,
+  map,
 } from 'lodash';
-import './_emojisCategory.scss';
-import EmojisCategory from './EmojisCategory';
+import './_emojisPopup.scss';
+import EmojisPopup from './EmojisPopup';
+import { withKnobs, select } from '@storybook/addon-knobs';
 import centered from '@storybook/addon-centered';
-import withStyle from '../../.storybook/decorators/withStyle';
 
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import appleJSON from '../../node_modules/emogeez-generator/emojis/apple/apple.json';
 
-const stories = storiesOf('EmojisCategory', module)
+const stories = storiesOf('EmojisPopup', module)
+  .addDecorator(withKnobs)
   .addDecorator(centered);
 
 export const defaultStory = {
-  name: appleJSON.people.name,
-  symbol: appleJSON.people.symbol,
-  emojis: appleJSON.people.emojis,
+  categories: map(appleJSON, category => category),
 };
 
 stories.add('Default', () => {
   const props = {
     ...defaultStory,
+    position: select('position', ['top', 'left', 'bottom', 'right'], 'top'),
   };
 
   return (
-    <EmojisCategory {...props} />
+    <EmojisPopup {...props} />
   );
 });

@@ -1,0 +1,58 @@
+.emojisPopupTogglerContainer {
+    position: relative;
+
+    .emojisPopupTogglerPopupWrapper {
+        animation-duration: 0.3s;
+        border: 1px solid #c5c9cf;
+        box-shadow: 0 6px 12px 0 rgba(38, 40, 45, .2);
+        animation-fill-mode: both;
+        animation-name: slideInDown;
+        display: none;
+        visibility: hidden;
+        position: absolute;
+
+        &.opened {
+            display: flex;
+            visibility: visible;
+        }
+    }
+
+    .emojisPopupTogglerArrow {
+        display: block;
+        width: 1rem;
+        height: 1rem;
+        border: 1px solid #C5C9CF;
+        transform: rotate(-45deg);
+        position: absolute;
+        box-sizing: content-box;
+        background-color: white;
+    }
+
+    .emojisPopupTogglerPopup {
+
+    }
+
+    .emojisPopupTogglerButton {
+        background-color: transparent;
+        border: 0;
+        padding: 0;
+        margin: 0 0.6rem;
+        cursor: pointer;
+    }
+
+    .emojisPopupTogglerIcon {
+        width: 16px;
+        height: 16px;
+        fill: #707689;
+    }
+}
+
+@keyframes slideInDown {
+    0% {
+        transform: translate3d(0, -15px, 0);
+    }
+
+    100% {
+        transform: translate3d(0, 0, 0);
+    }
+}
