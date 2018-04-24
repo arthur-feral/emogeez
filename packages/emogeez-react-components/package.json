@@ -1,6 +1,6 @@
 {
   "name": "emogeez-react-components",
-  "version": "0.11.2",
+  "version": "0.12.0",
   "description": "A toolbox for emojis rendering.",
   "main": "dist/index.js",
   "scripts": {
@@ -28,8 +28,8 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "css-loader": "^0.28.11",
-    "prop-types": "^15.6.1",
     "lodash": "^4.17.5",
+    "prop-types": "^15.6.1",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
     "sass-loader": "^6.0.7",
