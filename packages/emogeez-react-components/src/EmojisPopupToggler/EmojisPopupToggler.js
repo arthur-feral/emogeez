@@ -50,7 +50,10 @@ export default class EmojisPopupToggler extends Component {
   }
 
   componentDidMount() {
-    document.addEventListener('click', this.handleClickOutside);
+    document.addEventListener(
+      'click',
+      this.handleClickOutside,
+    );
   }
 
   componentDidUpdate() {
@@ -66,7 +69,7 @@ export default class EmojisPopupToggler extends Component {
 
   componentWillUnmount() {
     document.removeEventListener(
-      `click.${CLASSNAMES.container}`,
+      'click',
       this.handleClickOutside,
     );
   }
