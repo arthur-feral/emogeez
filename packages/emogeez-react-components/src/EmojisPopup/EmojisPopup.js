@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { noop, forEach } from 'lodash';
 import EmojisCategory from '../EmojisCategory/EmojisCategory';
-import Emoji from '../Emoji/Emoji';
+
+import icons from '../Icons/Icons';
 
 const COMPONENT_NAME = 'emojisPopup';
 export const CLASSNAMES = {
@@ -13,6 +14,7 @@ export const CLASSNAMES = {
   categoriesContainer: `${COMPONENT_NAME}CategoriesContainer`,
   emojiCategory: `${COMPONENT_NAME}EmojiCategory`,
   categories: `${COMPONENT_NAME}Categories`,
+  emojiCategoryIcon: `${COMPONENT_NAME}EmojiCategoryIcon`,
   emojiCategoryDot: `${COMPONENT_NAME}EmojiCategoryDot`,
 };
 
@@ -93,7 +95,7 @@ export default class EmojisPopup extends Component {
         bottom: node.getDOMNode().offsetTop + node.getDOMNode().offsetHeight,
       };
 
-      this.categoriesTabs[node.props.name].className = this.categoriesTabs[node.props.name].className.replace('selected', '');
+      this.categoriesTabs[node.props.name].className = this.categoriesTabs[node.props.name].className.replace(' selected', '');
 
       if (top > box.top && top < box.bottom) {
         this.categoriesTabs[node.props.name].className += ' selected';
@@ -102,6 +104,29 @@ export default class EmojisPopup extends Component {
 
     // prevent from scrolling the window when we scroll the emojis list
     event.stopPropagation();
+  };
+
+  renderCategoryTab = (category, index) => {
+    const Icon = icons[category.name];
+
+    return (
+      <span
+        ref={(node) => {
+          this.categoriesTabs[category.name] = node;
+        }}
+        key={category.emojis[0].name}
+        className={classNames(CLASSNAMES.emojiCategory, { selected: index === 0 })}
+      >
+        <button
+          onClick={() => {
+            this.onClickCategory(category.name);
+          }}
+        >
+          <Icon className={CLASSNAMES.emojiCategoryIcon} />
+        </button>
+        <span className={CLASSNAMES.emojiCategoryDot} />
+      </span>
+    );
   };
 
   render() {
@@ -138,26 +163,7 @@ export default class EmojisPopup extends Component {
           }
         </div>
         <div className={CLASSNAMES.categories}>
-          {
-            categories.map((category, index) => (
-              <span
-                ref={(node) => {
-                  this.categoriesTabs[category.name] = node;
-                }}
-                key={category.emojis[0].name}
-                className={classNames(CLASSNAMES.emojiCategory, { selected: index === 0 })}
-              >
-                <Emoji
-                  name={category.emojis[0].name}
-                  symbol={category.emojis[0].symbol}
-                  onClick={() => {
-                    this.onClickCategory(category.name);
-                  }}
-                />
-                <span className={CLASSNAMES.emojiCategoryDot} />
-              </span>
-            ))
-          }
+          {categories.map(this.renderCategoryTab)}
         </div>
         <div className={CLASSNAMES.popupArrow} />
       </div>
