@@ -1,6 +1,6 @@
 {
   "name": "emogeez-react-components",
-  "version": "0.11.1",
+  "version": "0.11.2",
   "description": "A toolbox for emojis rendering.",
   "main": "dist/index.js",
   "scripts": {
@@ -54,7 +54,7 @@
     "babel-register": "^6.18.0",
     "babel-runtime": "^6.26.0",
     "chai": "^3.5.0",
-    "emogeez-generator": "^0.10.0",
+    "emogeez-generator": "^0.11.2",
     "emogeez-parser": "^0.11.1",
     "eslint": "^4.14.0",
     "jsdom": "^11.7.0",

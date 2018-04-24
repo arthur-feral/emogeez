@@ -188,18 +188,23 @@ export default (config, emitter) => {
       fse.mkdirpSync(themeSpritePath);
 
       Spritesmith.run({ src: emojisFilePath }, function handleResult(err, result) {
-        const {
-          properties,
-          coordinates,
-          image,
-        } = result;
+        if(err) {
+          reject(err);
+        } else {
+          const {
+            properties,
+            coordinates,
+            image,
+          } = result;
 
-        try {
-          fs.writeFileSync(themeSpriteDestination, image);
-          resolve({ properties, coordinates });
-        } catch (error) {
-          reject(error);
+          try {
+            fs.writeFileSync(themeSpriteDestination, image);
+            resolve({ properties, coordinates });
+          } catch (error) {
+            reject(error);
+          }
         }
+
       });
       // spritesmith.createImages(emojisFilePath, function handleImages(err, images) {
       //   const result = spritesmith.processImages(images);
