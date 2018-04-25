@@ -1,6 +1,6 @@
 {
   "name": "emogeez-generator",
-  "version": "0.13.0",
+  "version": "0.13.1",
   "description": "Build an emojis sprite and stylesheet file from emojis datas collected from both emojipedia.org and unicode.org website",
   "scripts": {
     "start": "TEMP_FILES_PATH=tmp node ./dist/index.js",
