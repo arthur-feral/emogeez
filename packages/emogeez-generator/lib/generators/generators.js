@@ -4,6 +4,7 @@ import {
   map,
   omit,
   keys,
+  size,
   reduce,
 } from 'lodash';
 import {
@@ -31,7 +32,8 @@ const PngQuant = require('pngquant');
 const pngOptimizer = new PngQuant([192, '--quality', '60-80', '--nofs', '-']);
 const Spritesmith = require('spritesmith');
 const spritesmith = new Spritesmith();
-const MAX_IMAGES_TO_PROCESS_AT_TIME = 1;
+const MAX_IMAGES_TO_PROCESS_AT_TIME = 5;
+const MAX_SPRITES_TO_PROCESS_AT_TIME = 1;
 
 const TEMP_FILES_PATH = process.env.TEMP_FILES_PATH;
 const IMAGES_PATH = `${TEMP_FILES_PATH}/images`;
@@ -40,8 +42,12 @@ const BASE_IMAGE_PATH = `${IMAGES_PATH}/base.png`;
 export default (config, emitter) => {
   const stylesGenerator = StylesGenerator(config, emitter);
   let imagesToProcess = [];
-  //let spritesToProcess = [];
   let imagesProcessing = 0;
+
+  let spritesToProcess = [];
+  let spritesProcessing = 0;
+
+  let themesToGenerate = 0;
 
   /**
    *
@@ -125,6 +131,17 @@ export default (config, emitter) => {
     }
   };
 
+  const tryProcessingSprite = () => {
+    spritesProcessing -= 1;
+
+    if (spritesProcessing < MAX_SPRITES_TO_PROCESS_AT_TIME) {
+      if (spritesToProcess.length) {
+        const args = spritesToProcess.shift();
+        generateSprite.apply(null, args);
+      }
+    }
+  };
+
   const queueImageProcessing = (emoji, themeName) => {
     if (imagesProcessing < MAX_IMAGES_TO_PROCESS_AT_TIME) {
       generateImage(emoji, themeName);
@@ -133,47 +150,25 @@ export default (config, emitter) => {
     }
   };
 
-  // const generateSprites = (themes) => {
-  //   logger.sameLine('🌈 Generating themes files: ♻️');
-  //   map(
-  //     themes,
-  //     (theme, themeName) => {
-  //       spritesToProcess.push([themeName, theme]);
-  //     },
-  //   );
-  //
-  //   tryProcessingSprite();
-  // };
-  /**
-   *
-   * @param {object} themes
-   */
-  const generateSprites = (themes) => {
-    logger.sameLine('🌈 Generating themes files: ♻️');
-    const apple = {
-      apple: themes['apple'],
-    };
-    return Promise.all(
-      map(
-        themes,
-        (theme, themeName) => generateSprite(themeName, theme),
-      ),
-    ).then(() => {
-      logger.success('🌈 Generating themes files: ✅');
-      emitter.emit(GENERATOR_GENERATE_THEMES_SUCCESS);
-    });
+  const queueSpriteProcessing = (themeName, theme) => {
+    if (spritesProcessing < MAX_SPRITES_TO_PROCESS_AT_TIME) {
+      generateSprite(themeName, theme);
+    } else {
+      spritesToProcess.push([themeName, theme]);
+    }
   };
 
-  // const tryProcessingSprite = () => {
-  //   if (spritesToProcess.length) {
-  //     const args = spritesToProcess.shift();
-  //     logger.info(`[Generator] Building sprite for ${args[0]}`);
-  //     generateSprite.apply(null, args);
-  //   } else {
-  //     logger.success('🌈 Generating themes files: ✅');
-  //     emitter.emit(GENERATOR_GENERATE_THEMES_SUCCESS);
-  //   }
-  // };
+  const generateSprites = (themes) => {
+    logger.sameLine('🌈 Generating themes files: ♻️');
+    themesToGenerate = size(themes);
+
+    map(
+      themes,
+      (theme, themeName) => {
+        queueSpriteProcessing(themeName, theme);
+      },
+    );
+  };
 
   /**
    *
@@ -181,6 +176,8 @@ export default (config, emitter) => {
    * @param {object} theme hashmap [emojiName] => imageUrlForTheme
    */
   const generateSprite = (themeName, theme) => {
+    imagesProcessing += 1;
+
     return new Promise((resolve, reject) => {
       const emojisFilePath = map(theme, imageUrl => imageUrl);
       const themeSpritePath = `${config.destination}/${themeName}`;
@@ -188,7 +185,7 @@ export default (config, emitter) => {
       fse.mkdirpSync(themeSpritePath);
 
       Spritesmith.run({ src: emojisFilePath }, function handleResult(err, result) {
-        if(err) {
+        if (err) {
           reject(err);
         } else {
           const {
@@ -231,7 +228,7 @@ export default (config, emitter) => {
       emitter.emit(GENERATOR_GENERATE_SPRITE_SUCCESS, themeName, keys(theme), properties, coordinates);
     }).catch((error) => {
       logger.error(`[Generator] ${error}`);
-      emitter.emit(GENERATOR_GENERATE_SPRITE_ERROR, error);
+      emitter.emit(GENERATOR_GENERATE_SPRITE_ERROR, error, themeName, theme);
     });
   };
 
@@ -269,13 +266,20 @@ export default (config, emitter) => {
   emitter.on(COLLECTOR_COLLECT_DONE, generateSprites);
   emitter.on(FETCHER_FETCH_IMAGE_SUCCESS, queueImageProcessing);
   emitter.on(PARSER_PARSE_IMAGE_SUCCESS, tryProcessingImage);
+  emitter.emit(GENERATOR_GENERATE_SPRITE_ERROR, (error, themeName, theme) => {
+    queueSpriteProcessing(themeName, theme);
+  });
   emitter.on(PARSER_PARSE_IMAGE_ERROR, (error, emoji, themeName) => {
-    emitter.emit(ERROR, error);
     imagesToProcess.push([emoji, themeName]);
   });
   emitter.on(GENERATOR_GENERATE_SPRITE_SUCCESS, (themeName, emojisNames, properties, coordinates) => {
     generateStyle(themeName, emojisNames, properties, coordinates);
-    //tryProcessingSprite();
+    tryProcessingSprite();
+    themesToGenerate -= 1;
+    if (themesToGenerate === 0) {
+      logger.success('🌈 Generating themes files: ✅');
+      emitter.emit(GENERATOR_GENERATE_THEMES_SUCCESS);
+    }
   });
 
   return {
