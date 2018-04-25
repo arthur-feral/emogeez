@@ -66,12 +66,12 @@ export default (config) => {
   return (themeName, emojisNames, properties, coordinates) => {
     const spritePath = `${config.themesUrl}/${themeName}/${themeName}.png`;
     const coordinatesArray = map(coordinates, c => c);
-    let preprocContent = generateBase(baseTemplate, config.prefix, spritePath, properties.width, properties.height, config.size) + os.EOL;
-    let cssContent = generateBase(baseTemplateCss, config.prefix, spritePath, properties.width, properties.height, config.size) + os.EOL;
+    let preprocContent = generateBase(baseTemplate, config.prefix, spritePath, properties.width / 2, properties.height / 2, config.size) + os.EOL;
+    let cssContent = generateBase(baseTemplateCss, config.prefix, spritePath, properties.width / 2, properties.height / 2, config.size) + os.EOL;
 
     emojisNames.map((emojiName, index) => {
-      preprocContent += generateEmoji(emojiTemplate, config.prefix, emojiName, coordinatesArray[index].x, coordinatesArray[index].y);
-      cssContent += generateEmoji(emojiTemplateCss, config.prefix, emojiName, coordinatesArray[index].x, coordinatesArray[index].y);
+      preprocContent += generateEmoji(emojiTemplate, config.prefix, emojiName, coordinatesArray[index].x / 2, coordinatesArray[index].y / 2);
+      cssContent += generateEmoji(emojiTemplateCss, config.prefix, emojiName, coordinatesArray[index].x / 2, coordinatesArray[index].y / 2);
     });
 
     return {
