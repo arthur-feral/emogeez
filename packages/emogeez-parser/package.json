@@ -1,6 +1,6 @@
 {
   "name": "emogeez-parser",
-  "version": "0.11.1",
+  "version": "0.13.2",
   "description": "A toolbox for parsing emojis in texts.",
   "main": "dist/index.js",
   "scripts": {
@@ -30,6 +30,7 @@
     "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
+    "babel": "^6.23.0",
     "babel-cli": "^6.18.0",
     "babel-core": "^6.20.0",
     "babel-env": "^2.4.1",

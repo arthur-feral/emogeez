@@ -1,6 +1,6 @@
 {
   "name": "emogeez-generator",
-  "version": "0.13.1",
+  "version": "0.13.2",
   "description": "Build an emojis sprite and stylesheet file from emojis datas collected from both emojipedia.org and unicode.org website",
   "scripts": {
     "start": "TEMP_FILES_PATH=tmp node ./dist/index.js",
@@ -46,6 +46,7 @@
     "superagent-throttle": "0.2.5"
   },
   "devDependencies": {
+    "babel": "^6.23.0",
     "babel-cli": "^6.18.0",
     "babel-core": "^6.20.0",
     "babel-env": "^2.4.1",
