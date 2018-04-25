@@ -14,6 +14,7 @@ const stories = storiesOf('EmojisPopupToggler', module)
 stories.add('Default', () => {
   const props = {
     categories: map(apple, category => category),
+    onClickEmoji: console.log,
   };
 
   return (

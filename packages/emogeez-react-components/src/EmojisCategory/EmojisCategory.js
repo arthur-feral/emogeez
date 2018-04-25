@@ -27,8 +27,8 @@ export default class EmojisCategory extends Component {
     onClickEmoji: noop,
   };
 
-  onClickEmoji = (name, symbol, event) => {
-    this.props.onClickEmoji(name, symbol, event);
+  onClickEmoji = (emoji, event) => {
+    this.props.onClickEmoji(emoji, event);
   };
 
   getDOMNode() {
@@ -63,8 +63,7 @@ export default class EmojisCategory extends Component {
             <Emoji
               key={emoji.name}
               className={CLASSNAMES.emoji}
-              name={emoji.name}
-              symbol={emoji.symbol}
+              emoji={emoji}
               onClick={this.onClickEmoji}
             />
           ))}

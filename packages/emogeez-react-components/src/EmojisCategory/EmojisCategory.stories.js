@@ -6,7 +6,7 @@ import EmojisCategory from './EmojisCategory';
 import centered from '@storybook/addon-centered';
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import appleJSON from '../../node_modules/emogeez-generator/emojis/apple/apple.json';
+import appleJSON from 'emogeez-generator/emojis/apple/apple.json';
 
 const stories = storiesOf('EmojisCategory', module)
   .addDecorator(centered);
@@ -20,6 +20,7 @@ export const defaultStory = {
 stories.add('Default', () => {
   const props = {
     ...defaultStory,
+    onClickEmoji: console.log,
   };
 
   return (

@@ -7,7 +7,7 @@ import centered from '@storybook/addon-centered';
 
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import apple from '../../node_modules/emogeez-generator/emojis/apple/apple.json';
+import apple from 'emogeez-generator/emojis/apple/apple.json';
 
 const stories = storiesOf('EmojisPopup', module)
   .addDecorator(centered);
@@ -15,6 +15,7 @@ const stories = storiesOf('EmojisPopup', module)
 stories.add('Default', () => {
   const props = {
     categories: map(apple, category => category),
+    onClickEmoji: console.log,
   };
 
   return (
