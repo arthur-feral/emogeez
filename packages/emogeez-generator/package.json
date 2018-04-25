@@ -46,6 +46,7 @@
     "superagent-throttle": "0.2.5"
   },
   "devDependencies": {
+    "babel": "^6.23.0",
     "babel-cli": "^6.18.0",
     "babel-core": "^6.20.0",
     "babel-env": "^2.4.1",
