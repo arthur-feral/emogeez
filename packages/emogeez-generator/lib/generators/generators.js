@@ -61,12 +61,13 @@ export default (config, emitter) => {
     let imagePath = `${imageFolder}/${emoji.name}.png`;
     let imageRawPath = `${imageFolder}/${emoji.name}_raw.png`;
     let alreadyProcessed = true;
+    const sizeWithGoodResolution = config.size * 2;
 
     try {
       const dims = sizeOf(imagePath);
 
       // if we found the image but the dimensions are differents, then we process again
-      if (parseInt(dims.width, 10) !== parseInt(config.size, 10)) {
+      if (parseInt(dims.width, 10) !== sizeWithGoodResolution) {
         alreadyProcessed = false;
       }
     } catch (error) {
@@ -87,14 +88,14 @@ export default (config, emitter) => {
               }
 
               gm(imageRawPath)
-                .resize(null, config.size)
+                .resize(null, sizeWithGoodResolution)
                 .write(imagePath, (writeRawError) => {
                   if (writeRawError) {
                     reject(writeRawError);
                   }
 
                   const dimensions = sizeOf(imagePath);
-                  const x = Math.round((config.size - dimensions.width) / 2);
+                  const x = Math.round((sizeWithGoodResolution - dimensions.width) / 2);
 
                   gm(BASE_IMAGE_PATH)
                   // add the emoji image into the base transparent image centered

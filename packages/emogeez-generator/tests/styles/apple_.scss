@@ -4,32 +4,32 @@ $emojiCharSize: 48px;
     background: transparent url("emojis/apple/apple.png") 0 0 no-repeat;
     display: inline-block;
     height: $emojiCharSize;
-    background-size: 144px 144px;
+    background-size: 72px 72px;
     width: $emojiCharSize;
     vertical-align: middle;
 }
 
 .emojis-grinning-face {
-    background-position: -48px -48px;
+    background-position: -24px -24px;
 }
 .emojis-winking-face {
-    background-position: -96px -0px;
+    background-position: -48px -0px;
 }
 .emojis-father-christmas {
-    background-position: -96px -48px;
+    background-position: -48px -24px;
 }
 .emojis-father-christmas-type-1-2 {
-    background-position: -0px -96px;
+    background-position: -0px -48px;
 }
 .emojis-father-christmas-type-3 {
-    background-position: -48px -96px;
+    background-position: -24px -48px;
 }
 .emojis-father-christmas-type-4 {
-    background-position: -0px -48px;
+    background-position: -0px -24px;
 }
 .emojis-father-christmas-type-5 {
     background-position: -0px -0px;
 }
 .emojis-father-christmas-type-6 {
-    background-position: -48px -0px;
+    background-position: -24px -0px;
 }
