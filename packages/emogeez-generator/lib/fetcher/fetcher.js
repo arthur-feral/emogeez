@@ -27,15 +27,16 @@ import {
   PARSER_FOUND_THEME,
 } from '../constants';
 
+const RETRY_COUNT = 5;
 const tempPath = process.env.TEMP_FILES_PATH;
 const imagesPath = `${tempPath}/images`;
 const htmlPath = `${tempPath}/html`;
 
 const throttle = new Throttle({
   active: true,     // set false to pause queue
-  rate: 200,          // how many requests can be sent every `ratePer`
+  rate: 150,          // how many requests can be sent every `ratePer`
   ratePer: 1000,   // number of ms in which `rate` requests may be sent
-  concurrent: 100     // how many requests can be sent concurrently
+  concurrent: 50     // how many requests can be sent concurrently
 });
 
 /**
@@ -144,6 +145,7 @@ export default (superagent, config, emitter) => {
     return new Promise((resolve, reject) => {
       superagent.get(emoji.url)
         .use(throttle.plugin())
+        .retry(RETRY_COUNT)
         .end((error, result) => {
           if (error) {
             reject(error);
@@ -187,6 +189,7 @@ export default (superagent, config, emitter) => {
     return new Promise((resolve, reject) => {
       superagent.get(url)
         .use(throttle.plugin())
+        .retry(RETRY_COUNT)
         .end((error, result) => {
           if (error || !result.body) {
             reject(error);
