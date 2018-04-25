@@ -8,6 +8,10 @@ import centered from '@storybook/addon-centered';
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
+import apple from '../../node_modules/emogeez-generator/emojis/apple/apple.json';
+
+const emojis = apple.people.emojis;
+
 const stories = storiesOf('Emoji', module)
   .addDecorator(withKnobs)
   .addDecorator(centered);

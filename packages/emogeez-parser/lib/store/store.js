@@ -49,7 +49,7 @@ export default (config, http) => {
   };
 
   const fetchTheme = (theme = config.theme) => {
-    http.get(theme)
+    return http.get(theme)
       .then(emojisData => setTheme(theme, emojisData));
   };
 
