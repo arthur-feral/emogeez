@@ -4,14 +4,15 @@ import {
   expect,
 } from 'chai';
 import Emoji, { CLASSNAMES } from './Emoji.js';
+import apple from 'emogeez-generator/emojis/apple/apple.json';
+const emojis = apple.people.emojis;
 
 const renderComponentIntoDOM = (props = {}) => ReactTestUtils.renderIntoDocument(
   <Emoji {...props} />,
 );
 
 const story = {
-  name: 'grinning-face',
-  symbol: 'symbol',
+  emoji: emojis[0],
 };
 
 describe('Emoji', () => {
@@ -32,6 +33,6 @@ describe('Emoji', () => {
       className: 'customClass',
     });
     const emoji = ReactTestUtils.findRenderedDOMComponentWithClass(component, CLASSNAMES.container);
-    expect(emoji.attributes.alt.value).to.equal('symbol');
+    expect(emoji.attributes.alt.value).to.equal(emojis[0].symbol);
   });
 });
