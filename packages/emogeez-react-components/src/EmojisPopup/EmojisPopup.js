@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { noop, forEach } from 'lodash';
+import { noop, take, sortBy, reverse, findIndex, forEach } from 'lodash';
+import store from 'store';
 import EmojisCategory from '../EmojisCategory/EmojisCategory';
-
 import icons from '../Icons/Icons';
 
 const COMPONENT_NAME = 'emojisPopup';
@@ -46,15 +46,31 @@ const scrollTo = function (element, to, duration) {
   animateScroll(0);
 };
 
+const loadHistory = (categories) => {
+  const history = store.get('emojis-history') || [];
+  return reverse(sortBy(history, emoji => emoji.count));
+};
+
+const getHistory = (categories) => {
+  return {
+    symbol: '',
+    name: 'history',
+    fullName: 'History',
+    emojis: loadHistory(categories),
+  };
+};
+
 export default class EmojisPopup extends Component {
   static propTypes = {
     categories: PropTypes.array,
     onClickEmoji: PropTypes.func,
+    historyLimit: PropTypes.number,
   };
 
   static defaultProps = {
     categories: [],
     onClickEmoji: noop,
+    historyLimit: 28,
   };
 
   constructor(props) {
@@ -70,8 +86,20 @@ export default class EmojisPopup extends Component {
     this.categoriesListPaddingTop = parseInt(window.getComputedStyle(this.categoriesList, null).getPropertyValue('padding-top'), 10);
   }
 
-  onClickEmoji = (name, symbol, event) => {
-    this.props.onClickEmoji(name, symbol, event);
+  onClickEmoji = (emoji, event) => {
+    const history = store.get('emojis-history') || [];
+    const selected = findIndex(history, (emojiHistory) => emojiHistory.name === emoji.name);
+    if (selected === -1) {
+      history.push({
+        ...emoji,
+        count: 1,
+      });
+    } else {
+      history[selected].count += 1;
+    }
+    store.set('emojis-history', take(reverse(sortBy(history)), this.props.historyLimit));
+    this.props.onClickEmoji(emoji, event);
+    this.setState({});
   };
 
   onClickCategory = (categoryName) => {
@@ -109,7 +137,7 @@ export default class EmojisPopup extends Component {
         ref={(node) => {
           this.categoriesTabs[category.name] = node;
         }}
-        key={category.emojis[0].name}
+        key={category.name}
         className={classNames(CLASSNAMES.emojiCategory, { selected: index === 0 })}
       >
         <button
@@ -129,6 +157,8 @@ export default class EmojisPopup extends Component {
       className,
       categories,
     } = this.props;
+    const historyCategory = getHistory(categories);
+    const fullCategories = historyCategory.emojis.length ? [historyCategory].concat(categories) : categories;
 
     return (
       <div
@@ -147,7 +177,7 @@ export default class EmojisPopup extends Component {
           className={CLASSNAMES.categoriesContainer}
         >
           {
-            categories.map((category) => (
+            fullCategories.map((category) => (
               <div key={category.name}>
                 <EmojisCategory
                   ref={(node) => {
@@ -157,13 +187,14 @@ export default class EmojisPopup extends Component {
                   name={category.name}
                   symbol={category.symbol}
                   emojis={category.emojis}
+                  onClickEmoji={this.onClickEmoji}
                 />
               </div>
             ))
           }
         </div>
         <div key="categoryTabs" className={CLASSNAMES.categories}>
-          {categories.map(this.renderCategoryTab)}
+          {fullCategories.map(this.renderCategoryTab)}
         </div>
       </div>
     );

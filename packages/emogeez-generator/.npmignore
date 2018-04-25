@@ -1,2 +1,3 @@
 tmp/*
 emojis/*
+!emojis/apple/*

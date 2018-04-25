@@ -82,4 +82,5 @@ export default {
   'travel-places': Transport,
   objects: Objects,
   flags: Flags,
+  history: History,
 };

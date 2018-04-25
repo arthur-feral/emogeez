@@ -10,8 +10,7 @@ export const CLASSNAMES = {
 
 export default class Emoji extends Component {
   static propTypes = {
-    name: PropTypes.string.isRequired,
-    symbol: PropTypes.string,
+    emoji: PropTypes.object.isRequired,
     onClick: PropTypes.func,
   };
 
@@ -21,14 +20,16 @@ export default class Emoji extends Component {
 
   onClick = (event) => {
     event.preventDefault();
-    this.props.onClick(this.props.name, this.props.symbol, event);
+    this.props.onClick(this.props.emoji, event);
   };
 
   render() {
     const {
       className,
-      name,
-      symbol,
+      emoji: {
+        name,
+        symbol,
+      },
     } = this.props;
 
     return (
