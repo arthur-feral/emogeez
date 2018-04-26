@@ -42,6 +42,11 @@ export default class EmojisCategory extends Component {
     this.emojisNodes = {};
     this.modifierNodes = {};
     this.closePanel = this.closePanel.bind(this);
+    this.renderEmojis = this.renderEmojis.bind(this);
+    this.popupModifier = {
+      isModifiersPanelOpened: false,
+      modifierPanelName: '',
+    };
   }
 
   componentDidMount() {
@@ -53,11 +58,12 @@ export default class EmojisCategory extends Component {
   }
 
   closePanel() {
-    if (canClose) {
-      this.setState({
-        isModifiersPanelOpened: false,
-        modifierPanelName: '',
-      });
+    if (canClose && this.popupModifier.isModifiersPanelOpened) {
+      const popup = this.modifierNodes[this.popupModifier.modifierPanelName].getDOMNode();
+      if (popup) {
+        popup.className = popup.className.replace(' isOpened', '');
+        this.popupModifier.isModifiersPanelOpened = false;
+      }
     }
   }
 
@@ -66,21 +72,21 @@ export default class EmojisCategory extends Component {
     event.preventDefault();
     const hasModifiers = has(emoji, 'modifiers');
 
-    if (hasModifiers && !this.state.isModifiersPanelOpened) {
-      this.setState({
-        isModifiersPanelOpened: true,
-        modifierPanelName: emoji.name,
-      }, () => {
-        canClose = false;
-        placeModifiersPopup(
-          this.modifierNodes[emoji.name].getDOMNode(),
-          this.emojisNodes[emoji.name].getDOMNode(),
-          this.DOMNode,
-        );
-        setTimeout(() => {
-          canClose = true;
-        }, 500);
-      });
+    if (hasModifiers && !this.popupModifier.isModifiersPanelOpened) {
+      this.popupModifier.modifierPanelName = emoji.name;
+      const popup = this.modifierNodes[this.popupModifier.modifierPanelName].getDOMNode();
+      popup.className = `${popup.className} isOpened`;
+      this.popupModifier.isModifiersPanelOpened = true;
+
+      canClose = false;
+      placeModifiersPopup(
+        this.modifierNodes[emoji.name].getDOMNode(),
+        this.emojisNodes[emoji.name].getDOMNode(),
+        this.DOMNode,
+      );
+      setTimeout(() => {
+        canClose = true;
+      }, 500);
     } else {
       this.props.onClickEmoji(emoji, event);
       canClose = true;
@@ -92,7 +98,7 @@ export default class EmojisCategory extends Component {
     return this.DOMNode;
   }
 
-  renderEmojis(emojis, isModifiersPanelOpened, modifierPanelName) {
+  renderEmojis(emojis) {
     return emojis.map(emoji => {
       const hasModifier = has(emoji, 'modifiers');
 
@@ -116,9 +122,7 @@ export default class EmojisCategory extends Component {
                 ref={(node) => {
                   this.modifierNodes[emoji.name] = node;
                 }}
-                className={classNames(CLASSNAMES.modifiers, {
-                  isOpened: (isModifiersPanelOpened && (modifierPanelName === emoji.name)),
-                })}
+                className={CLASSNAMES.modifiers}
                 key={`${CLASSNAMES.modifiers}${emoji.name}`}
                 emoji={emoji}
                 onClickEmoji={this.onClickEmoji}
@@ -136,10 +140,6 @@ export default class EmojisCategory extends Component {
       name,
       emojis,
     } = this.props;
-    const {
-      modifierPanelName,
-      isModifiersPanelOpened,
-    } = this.state;
 
     return (
       <div
@@ -152,7 +152,7 @@ export default class EmojisCategory extends Component {
           <span className={CLASSNAMES.categoryTitleName}>{name}</span>
         </div>
         <div className={CLASSNAMES.categoryEmojis}>
-          {this.renderEmojis(emojis, isModifiersPanelOpened, modifierPanelName)}
+          {this.renderEmojis(emojis)}
         </div>
       </div>
     );

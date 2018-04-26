@@ -28,6 +28,18 @@ export default class EmojiModifiers extends Component {
     return this.DOMNode;
   }
 
+  shouldComponentUpdate(nextProps) {
+    if (this.props.emoji !== nextProps.emoji) {
+      return true;
+    }
+
+    if (this.props.onClickEmoji !== nextProps.onClickEmoji) {
+      return true;
+    }
+
+    return false;
+  }
+
   render() {
     const {
       className,
