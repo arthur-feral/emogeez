@@ -23,6 +23,7 @@ export default class EmojisPopupToggler extends Component {
     categories: PropTypes.array,
     onClickEmoji: PropTypes.func,
     isOpened: PropTypes.bool,
+    historyLimit: PropTypes.number,
     onOpen: PropTypes.func,
     onClose: PropTypes.func,
   };
@@ -31,6 +32,7 @@ export default class EmojisPopupToggler extends Component {
     categories: [],
     onClickEmoji: noop,
     isOpened: false,
+    historyLimit: 21,
     onOpen: noop,
     onClose: noop,
   };
@@ -38,16 +40,14 @@ export default class EmojisPopupToggler extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      isOpened: props.isOpened,
-    };
-
     this.container = null;
     this.popup = null;
     this.arrow = null;
     this.toggler = null;
+    this.emojisPopup = null;
     this.handleClickOutside = this.handleClickOutside.bind(this);
     this.onClickButton = this.onClickButton.bind(this);
+    this.isOpened = props.isOpened;
   }
 
   componentDidMount() {
@@ -55,17 +55,6 @@ export default class EmojisPopupToggler extends Component {
       'click',
       this.handleClickOutside,
     );
-  }
-
-  componentDidUpdate() {
-    if (this.state.isOpened) {
-      const $popup = this.popup;
-      const $toggler = this.toggler;
-      const $arrow = this.arrow;
-      if ($popup && $toggler && $arrow) {
-        placeEmojiPopup($popup, $toggler, MARGIN_POPUP, $arrow);
-      }
-    }
   }
 
   componentWillUnmount() {
@@ -82,7 +71,7 @@ export default class EmojisPopupToggler extends Component {
    */
   handleClickOutside(event) {
     const domNode = this.container;
-    if ((!domNode || !domNode.contains(event.target)) && this.state.isOpened) {
+    if ((!domNode || !domNode.contains(event.target)) && this.isOpened) {
       this.onClickButton(event);
     }
   }
@@ -107,14 +96,27 @@ export default class EmojisPopupToggler extends Component {
   onClickButton = (event) => {
     event.preventDefault();
     event.stopPropagation();
+    const $popup = this.popup;
 
-    this.setState({
-      isOpened: !this.state.isOpened,
-    }, () => {
-      const { onOpen, onClose } = this.props;
-      const method = this.state.isOpened ? onOpen : onClose;
-      method.call(this);
-    });
+    this.isOpened = !this.isOpened;
+
+    $popup.className = this.isOpened ?
+      `${$popup.className} opened` :
+      $popup.className.replace(' opened', '');
+
+    this.emojisPopup.resetScroll();
+
+    if (this.isOpened) {
+      const $toggler = this.toggler;
+      const $arrow = this.arrow;
+      if ($popup && $toggler && $arrow) {
+        placeEmojiPopup($popup, $toggler, MARGIN_POPUP, $arrow);
+      }
+    }
+
+    const { onOpen, onClose } = this.props;
+    const method = this.isOpened ? onOpen : onClose;
+    method.call(this);
   };
 
   render() {
@@ -122,10 +124,8 @@ export default class EmojisPopupToggler extends Component {
       className,
       categories,
       onClickEmoji,
+      historyLimit,
     } = this.props;
-    const {
-      isOpened,
-    } = this.state;
 
     return (
       <div
@@ -135,7 +135,7 @@ export default class EmojisPopupToggler extends Component {
         className={classNames(className, CLASSNAMES.container)}
       >
         <div
-          className={classNames(CLASSNAMES.popupWrapper, { opened: isOpened })}
+          className={classNames(CLASSNAMES.popupWrapper)}
           ref={(node) => {
             this.popup = node;
           }}
@@ -148,6 +148,10 @@ export default class EmojisPopupToggler extends Component {
             className={CLASSNAMES.popupArrow}
           />
           <EmojisPopup
+            ref={(node) => {
+              this.emojisPopup = node;
+            }}
+            historyLimit={historyLimit}
             className={CLASSNAMES.popup}
             categories={categories}
             onClickEmoji={onClickEmoji}

@@ -18,6 +18,18 @@ export default class Emoji extends Component {
     onClick: noop,
   };
 
+  shouldComponentUpdate(nextProps) {
+    if (this.props.emoji !== nextProps.emoji) {
+      return true;
+    }
+
+    if (this.props.onClick !== nextProps.onClick) {
+      return true;
+    }
+
+    return false;
+  }
+
   onClick = (event) => {
     this.props.onClick(this.props.emoji, event);
   };

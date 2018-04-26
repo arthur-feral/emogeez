@@ -49,6 +49,22 @@ export default class EmojisCategory extends Component {
     };
   }
 
+  shouldComponentUpdate(nextProps) {
+    if (this.props.emojis.length !== nextProps.emojis.length) {
+      return true;
+    }
+
+    if (this.props.name !== nextProps.name) {
+      return true;
+    }
+
+    if (this.props.onClickEmoji !== nextProps.onClickEmoji) {
+      return true;
+    }
+
+    return false;
+  }
+
   componentDidMount() {
     document.addEventListener('click', this.closePanel);
   }

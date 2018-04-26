@@ -86,6 +86,22 @@ export default class EmojisPopup extends Component {
     this.categoriesListPaddingTop = parseInt(window.getComputedStyle(this.categoriesList, null).getPropertyValue('padding-top'), 10);
   }
 
+  shouldComponentUpdate(nextProps) {
+    if (this.props.categories !== nextProps.categories) {
+      return true;
+    }
+
+    if (this.props.historyLimit !== nextProps.historyLimit) {
+      return true;
+    }
+
+    if (this.props.onClickEmoji !== nextProps.onClickEmoji) {
+      return true;
+    }
+
+    return false;
+  }
+
   onClickEmoji = (emoji, event) => {
     const history = store.get('emojis-history') || [];
     const selected = findIndex(history, (emojiHistory) => emojiHistory.name === emoji.name);
@@ -151,6 +167,10 @@ export default class EmojisPopup extends Component {
       </span>
     );
   };
+
+  resetScroll() {
+    this.categoriesList.scrollTop = 0;
+  }
 
   render() {
     const {
