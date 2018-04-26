@@ -80,29 +80,14 @@ export default class EmojisPopup extends Component {
     this.categoriesListPaddingTop = 0;
     this.categories = {};
     this.categoriesTabs = {};
+    this.onClickEmoji = this.onClickEmoji.bind(this);
   }
 
   componentDidMount() {
     this.categoriesListPaddingTop = parseInt(window.getComputedStyle(this.categoriesList, null).getPropertyValue('padding-top'), 10);
   }
 
-  shouldComponentUpdate(nextProps) {
-    if (this.props.categories !== nextProps.categories) {
-      return true;
-    }
-
-    if (this.props.historyLimit !== nextProps.historyLimit) {
-      return true;
-    }
-
-    if (this.props.onClickEmoji !== nextProps.onClickEmoji) {
-      return true;
-    }
-
-    return false;
-  }
-
-  onClickEmoji = (emoji, event) => {
+  onClickEmoji(emoji, event) {
     const history = store.get('emojis-history') || [];
     const selected = findIndex(history, (emojiHistory) => emojiHistory.name === emoji.name);
     if (selected === -1) {
@@ -114,6 +99,7 @@ export default class EmojisPopup extends Component {
       history[selected].count += 1;
     }
     store.set('emojis-history', take(reverse(sortBy(history)), this.props.historyLimit));
+    this.resetScroll();
     this.props.onClickEmoji(emoji, event);
     this.setState({});
   };

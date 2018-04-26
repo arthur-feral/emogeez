@@ -47,6 +47,8 @@ export default class EmojisPopupToggler extends Component {
     this.emojisPopup = null;
     this.handleClickOutside = this.handleClickOutside.bind(this);
     this.onClickButton = this.onClickButton.bind(this);
+    this.openPopup = this.openPopup.bind(this);
+    this.closePopup = this.closePopup.bind(this);
     this.isOpened = props.isOpened;
   }
 
@@ -96,34 +98,44 @@ export default class EmojisPopupToggler extends Component {
   onClickButton = (event) => {
     event.preventDefault();
     event.stopPropagation();
+
+    if (!this.isOpened) {
+      this.openPopup();
+    } else {
+      this.closePopup();
+    }
+  };
+
+  openPopup() {
+    this.isOpened = true;
     const $popup = this.popup;
-
-    this.isOpened = !this.isOpened;
-
-    $popup.className = this.isOpened ?
-      `${$popup.className} opened` :
-      $popup.className.replace(' opened', '');
-
-    this.emojisPopup.resetScroll();
-
-    if (this.isOpened) {
-      const $toggler = this.toggler;
-      const $arrow = this.arrow;
-      if ($popup && $toggler && $arrow) {
-        placeEmojiPopup($popup, $toggler, MARGIN_POPUP, $arrow);
-      }
+    const $toggler = this.toggler;
+    const $arrow = this.arrow;
+    $popup.className = `${$popup.className} opened`;
+    if ($popup && $toggler && $arrow) {
+      placeEmojiPopup($popup, $toggler, MARGIN_POPUP, $arrow);
     }
 
-    const { onOpen, onClose } = this.props;
-    const method = this.isOpened ? onOpen : onClose;
-    method.call(this);
+    this.props.onOpen();
+  }
+
+  closePopup() {
+    this.isOpened = false;
+    const $popup = this.popup;
+    $popup.className = $popup.className.replace(' opened', '');
+    this.emojisPopup.resetScroll();
+    this.props.onClose();
+  }
+
+  onClickEmoji = (emoji, event) => {
+    this.closePopup();
+    this.props.onClickEmoji(emoji, event);
   };
 
   render() {
     const {
       className,
       categories,
-      onClickEmoji,
       historyLimit,
     } = this.props;
 
@@ -154,7 +166,7 @@ export default class EmojisPopupToggler extends Component {
             historyLimit={historyLimit}
             className={CLASSNAMES.popup}
             categories={categories}
-            onClickEmoji={onClickEmoji}
+            onClickEmoji={this.onClickEmoji}
           />
         </div>
         <button
