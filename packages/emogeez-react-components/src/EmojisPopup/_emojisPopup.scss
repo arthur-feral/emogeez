@@ -9,22 +9,22 @@ $colorGreen: #1bc74e;
     background-color: #fff;
     border-radius: 5px;
     position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: stretch;
+    //display: flex;
+    //flex-direction: column;
+    //justify-content: space-between;
+    //align-items: stretch;
+    overflow: visible;
 
     .emojisPopupCategoriesContainer {
         height: $popupHeight - $categoriesListHeight;
-        padding: 1rem 1rem 0;
-        overflow-x: hidden;
+        width: 26rem;
+        overflow-x: visible;
         overflow-y: auto;
-        display: flex;
-        flex-direction: column;
+        position: relative;
     }
 
     .emojisPopupCategory {
-        margin-bottom: 0.5rem;
+        margin: 1rem;
 
         &:last-child {
             margin-bottom: 0;

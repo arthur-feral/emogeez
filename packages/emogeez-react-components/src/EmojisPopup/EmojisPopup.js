@@ -86,6 +86,22 @@ export default class EmojisPopup extends Component {
     this.categoriesListPaddingTop = parseInt(window.getComputedStyle(this.categoriesList, null).getPropertyValue('padding-top'), 10);
   }
 
+  shouldComponentUpdate(nextProps) {
+    if (this.props.categories !== nextProps.categories) {
+      return true;
+    }
+
+    if (this.props.historyLimit !== nextProps.historyLimit) {
+      return true;
+    }
+
+    if (this.props.onClickEmoji !== nextProps.onClickEmoji) {
+      return true;
+    }
+
+    return false;
+  }
+
   onClickEmoji = (emoji, event) => {
     const history = store.get('emojis-history') || [];
     const selected = findIndex(history, (emojiHistory) => emojiHistory.name === emoji.name);
@@ -152,6 +168,10 @@ export default class EmojisPopup extends Component {
     );
   };
 
+  resetScroll() {
+    this.categoriesList.scrollTop = 0;
+  }
+
   render() {
     const {
       className,
@@ -178,18 +198,17 @@ export default class EmojisPopup extends Component {
         >
           {
             fullCategories.map((category) => (
-              <div key={category.name}>
-                <EmojisCategory
-                  ref={(node) => {
-                    this.categories[category.name] = node;
-                  }}
-                  className={CLASSNAMES.category}
-                  name={category.name}
-                  symbol={category.symbol}
-                  emojis={category.emojis}
-                  onClickEmoji={this.onClickEmoji}
-                />
-              </div>
+              <EmojisCategory
+                ref={(node) => {
+                  this.categories[category.name] = node;
+                }}
+                key={category.name}
+                className={CLASSNAMES.category}
+                name={category.name}
+                symbol={category.symbol}
+                emojis={category.emojis}
+                onClickEmoji={this.onClickEmoji}
+              />
             ))
           }
         </div>

@@ -10,9 +10,11 @@
         display: none;
         visibility: hidden;
         position: absolute;
+        width: 26rem;
+        height: 24.5rem;
 
         &.opened {
-            display: flex;
+            display: block;
             visibility: visible;
         }
     }
