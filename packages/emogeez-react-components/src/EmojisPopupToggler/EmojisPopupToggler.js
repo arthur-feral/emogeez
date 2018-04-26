@@ -4,8 +4,9 @@ import classNames from 'classnames';
 import { noop } from 'lodash';
 import EmojisPopup from '../EmojisPopup/EmojisPopup';
 import icons from '../Icons/Icons';
-import place from './placement';
+import { placeEmojiPopup } from '../placement';
 
+const MARGIN_POPUP = 10;
 const People = icons.people;
 const COMPONENT_NAME = 'emojisPopupToggler';
 export const CLASSNAMES = {
@@ -62,7 +63,7 @@ export default class EmojisPopupToggler extends Component {
       const $toggler = this.toggler;
       const $arrow = this.arrow;
       if ($popup && $toggler && $arrow) {
-        place($popup, $toggler, $arrow);
+        placeEmojiPopup($popup, $toggler, MARGIN_POPUP, $arrow);
       }
     }
   }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { noop } from 'lodash';
+import { noop, omit } from 'lodash';
 
 const COMPONENT_NAME = 'emoji';
 export const CLASSNAMES = {
@@ -19,9 +19,12 @@ export default class Emoji extends Component {
   };
 
   onClick = (event) => {
-    event.preventDefault();
     this.props.onClick(this.props.emoji, event);
   };
+
+  getDOMNode() {
+    return this.DOMNode;
+  }
 
   render() {
     const {
@@ -31,9 +34,14 @@ export default class Emoji extends Component {
         symbol,
       },
     } = this.props;
+    const cleanProps = omit(this.props, ['emoji', 'className']);
 
     return (
       <button
+        ref={(node) => {
+          this.DOMNode = node;
+        }}
+        {...cleanProps}
         className={classNames(CLASSNAMES.container, className, `emojis-${name}`)}
         draggable="false"
         onClick={this.onClick}

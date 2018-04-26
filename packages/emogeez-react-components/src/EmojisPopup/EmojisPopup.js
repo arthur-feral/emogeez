@@ -178,18 +178,17 @@ export default class EmojisPopup extends Component {
         >
           {
             fullCategories.map((category) => (
-              <div key={category.name}>
-                <EmojisCategory
-                  ref={(node) => {
-                    this.categories[category.name] = node;
-                  }}
-                  className={CLASSNAMES.category}
-                  name={category.name}
-                  symbol={category.symbol}
-                  emojis={category.emojis}
-                  onClickEmoji={this.onClickEmoji}
-                />
-              </div>
+              <EmojisCategory
+                ref={(node) => {
+                  this.categories[category.name] = node;
+                }}
+                key={category.name}
+                className={CLASSNAMES.category}
+                name={category.name}
+                symbol={category.symbol}
+                emojis={category.emojis}
+                onClickEmoji={this.onClickEmoji}
+              />
             ))
           }
         </div>

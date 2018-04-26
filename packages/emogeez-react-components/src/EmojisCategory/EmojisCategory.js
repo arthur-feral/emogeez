@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { noop } from 'lodash';
+import { noop, has } from 'lodash';
 import Emoji from '../Emoji/Emoji';
+import EmojiModifiers from '../EmojiModifiers/EmojiModifiers';
+import { placeModifiersPopup } from '../placement';
 
 const COMPONENT_NAME = 'emojisCategory';
 export const CLASSNAMES = {
@@ -11,14 +13,16 @@ export const CLASSNAMES = {
   categoryEmojis: `${COMPONENT_NAME}Emojis`,
   categoryTitleSymbol: `${COMPONENT_NAME}TitleSymbol`,
   categoryTitleName: `${COMPONENT_NAME}TitleName`,
+  emojiWrapper: `${COMPONENT_NAME}EmojiWrapper`,
+  modifiers: `${COMPONENT_NAME}Modifiers`,
   emoji: `${COMPONENT_NAME}Emoji`,
 };
+let canClose = true;
 
 export default class EmojisCategory extends Component {
   static propTypes = {
     emojis: PropTypes.array,
     name: PropTypes.string.isRequired,
-    symbol: PropTypes.string.isRequired,
     onClickEmoji: PropTypes.func,
   };
 
@@ -27,46 +31,128 @@ export default class EmojisCategory extends Component {
     onClickEmoji: noop,
   };
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isModifiersPanelOpened: false,
+      modifierPanelName: '',
+    };
+
+    this.emojisNodes = {};
+    this.modifierNodes = {};
+    this.closePanel = this.closePanel.bind(this);
+  }
+
+  componentDidMount() {
+    document.addEventListener('click', this.closePanel);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('click', this.closePanel);
+  }
+
+  closePanel() {
+    if (canClose) {
+      this.setState({
+        isModifiersPanelOpened: false,
+        modifierPanelName: '',
+      });
+    }
+  }
+
   onClickEmoji = (emoji, event) => {
-    this.props.onClickEmoji(emoji, event);
+    event.stopPropagation();
+    event.preventDefault();
+    const hasModifiers = has(emoji, 'modifiers');
+
+    if (hasModifiers && !this.state.isModifiersPanelOpened) {
+      this.setState({
+        isModifiersPanelOpened: true,
+        modifierPanelName: emoji.name,
+      }, () => {
+        canClose = false;
+        placeModifiersPopup(
+          this.modifierNodes[emoji.name].getDOMNode(),
+          this.emojisNodes[emoji.name].getDOMNode(),
+          this.DOMNode,
+        );
+        setTimeout(() => {
+          canClose = true;
+        }, 500);
+      });
+    } else {
+      this.props.onClickEmoji(emoji, event);
+      canClose = true;
+      this.closePanel();
+    }
   };
 
   getDOMNode() {
-    return this.domNode;
+    return this.DOMNode;
+  }
+
+  renderEmojis(emojis, isModifiersPanelOpened, modifierPanelName) {
+    return emojis.map(emoji => {
+      const hasModifier = has(emoji, 'modifiers');
+
+      return (
+        <span
+          className={classNames(CLASSNAMES.emojiWrapper, { hasModifier })}
+          key={`${CLASSNAMES.emojiWrapper}${emoji.name}`}
+        >
+          <Emoji
+            ref={(node) => {
+              this.emojisNodes[emoji.name] = node;
+            }}
+            key={emoji.name}
+            className={CLASSNAMES.emoji}
+            emoji={emoji}
+            onClick={this.onClickEmoji}
+          />
+          {
+            hasModifier && (
+              <EmojiModifiers
+                ref={(node) => {
+                  this.modifierNodes[emoji.name] = node;
+                }}
+                className={classNames(CLASSNAMES.modifiers, {
+                  isOpened: (isModifiersPanelOpened && (modifierPanelName === emoji.name)),
+                })}
+                key={`${CLASSNAMES.modifiers}${emoji.name}`}
+                emoji={emoji}
+                onClickEmoji={this.onClickEmoji}
+              />
+            )
+          }
+        </span>
+      );
+    });
   }
 
   render() {
     const {
       className,
       name,
-      symbol,
       emojis,
     } = this.props;
+    const {
+      modifierPanelName,
+      isModifiersPanelOpened,
+    } = this.state;
 
     return (
       <div
         ref={(node) => {
-          this.domNode = node;
+          this.DOMNode = node;
         }}
         className={classNames(className, CLASSNAMES.container)}
       >
         <div className={CLASSNAMES.categoryTitle}>
-          {/*
-            <Emoji name={emojis[0].name}
-                 symbol={emojis[0].symbol}
-          />
-          */}
           <span className={CLASSNAMES.categoryTitleName}>{name}</span>
         </div>
         <div className={CLASSNAMES.categoryEmojis}>
-          {emojis.map(emoji => (
-            <Emoji
-              key={emoji.name}
-              className={CLASSNAMES.emoji}
-              emoji={emoji}
-              onClick={this.onClickEmoji}
-            />
-          ))}
+          {this.renderEmojis(emojis, isModifiersPanelOpened, modifierPanelName)}
         </div>
       </div>
     );
