@@ -16,4 +16,4 @@ It is managed by [lerna](https://github.com/lerna/lerna) and [yarn workspaces](h
 
 
 ### emogeez-react-components
-![generator](https://github.com/arthur-feral/emogeez/blob/master/examples/demo_react_components.gif)
+![GIF example](https://github.com/arthur-feral/emogeez/blob/master/examples/demo_react_components.gif)
