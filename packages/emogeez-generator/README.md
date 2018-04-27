@@ -10,6 +10,8 @@ Themes that can be used: `apple, emojione, emojidex, emojipedia, facebook, googl
 Once the generator's work is done, you find the generated files into the specified folder (default in the current working directory).
 For each themes, you will find a .json, .png and .sass or .less.
 
+![generator](https://github.com/arthur-feral/emogeez/blob/master/packages/emogeez-generator/demo_generator.png)
+
 #### The PNG
 [apple.png](https://github.com/arthur-feral/emogeez/raw/master/packages/emogeez-generator/emojis/apple/apple.png)
 
