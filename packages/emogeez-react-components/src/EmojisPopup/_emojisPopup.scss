@@ -1,24 +1,23 @@
-$popupHeight: 24.5rem;
-$categoriesListHeight: 3.6rem;
+$categoriesListHeight: 24.5rem;
+$categoriesListWidth: 26rem;
+$categoriesTabsHeight: 3rem;
 $colorGreen: #1bc74e;
 
 .emojisPopupContainer {
-    width: 26rem;
-    height: $popupHeight;
+    width: $categoriesListWidth;
+    height: $categoriesListHeight + $categoriesTabsHeight;
     padding: 0;
     background-color: #fff;
-    border-radius: 5px;
     position: relative;
-    //display: flex;
-    //flex-direction: column;
-    //justify-content: space-between;
-    //align-items: stretch;
-    overflow: visible;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
 
     .emojisPopupCategoriesContainer {
-        height: $popupHeight - $categoriesListHeight;
-        width: 26rem;
-        overflow-x: visible;
+        height: $categoriesListHeight;
+        overflow-x: hidden;
         overflow-y: auto;
         position: relative;
     }
@@ -37,21 +36,21 @@ $colorGreen: #1bc74e;
         display: flex;
         flex-direction: row;
         justify-content: center;
-        padding: 1rem;
+        align-items: flex-start;
         z-index: 1;
         border-bottom-right-radius: 5px;
         border-bottom-left-radius: 5px;
+        height: $categoriesTabsHeight;
     }
 
     .emojisPopupEmojiCategory {
         position: relative;
-        display: flex;
 
         button {
             background-color: transparent;
             border: 0;
-            padding: 0;
-            margin: 0 0.6rem;
+            margin: 0;
+            padding: 0.6rem;
             cursor: pointer;
         }
 
@@ -68,13 +67,13 @@ $colorGreen: #1bc74e;
             height: 4px;
             background-color: transparent;
             border-radius: 50%;
-            bottom: -4px;
+            bottom: 0;
             left: 50%;
             margin-left: -2px;
         }
 
         &:last-child {
-            margin-right: 0;
+            padding-right: 0;
         }
 
         &.selected {

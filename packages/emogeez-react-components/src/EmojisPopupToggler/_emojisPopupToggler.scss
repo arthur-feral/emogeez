@@ -1,3 +1,6 @@
+$categoriesListHeight: 24.5rem;
+$categoriesTabsHeight: 3rem;
+
 .emojisPopupTogglerContainer {
     position: relative;
 
@@ -8,10 +11,9 @@
         animation-fill-mode: both;
         animation-name: slideInDown;
         display: none;
+        border-radius: 5px;
         visibility: hidden;
         position: absolute;
-        width: 26rem;
-        height: 24.5rem;
 
         &.opened {
             display: block;
