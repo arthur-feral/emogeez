@@ -9,7 +9,7 @@
     "prepublish": "yarn run transpile && yarn run test",
     "lint:js": "eslint lib tests --ext .js",
     "test": "NODE_ENV=test TEMP_FILES_PATH=tests/tmp nyc --check-coverage --lines 85 --report-dir=${CIRCLE_ARTIFACTS:-'./nyc-reports'} --reporter=lcov yarn run mocha",
-    "mocha": "NODE_ENV=test TEMP_FILES_PATH=tests/tmp mocha --compilers js:babel-register -r tests/bootstrap.js -r babel-polyfill $(find lib -name '*.test.js')",
+    "mocha": "NODE_ENV=test TEMP_FILES_PATH=tests/tmp mocha --compilers js:babel-register -r tests/bootstrap.js --timeout 5000 -r babel-polyfill $(find lib -name '*.test.js')",
     "clean": "rm -r tmp/**/*"
   },
   "engines": {

@@ -10,11 +10,13 @@ export const CLASSNAMES = {
 
 export default class Emoji extends Component {
   static propTypes = {
+    prefix: PropTypes.string,
     emoji: PropTypes.object.isRequired,
     onClick: PropTypes.func,
   };
 
   static defaultProps = {
+    prefix: 'emojis',
     onClick: noop,
   };
 
@@ -41,6 +43,7 @@ export default class Emoji extends Component {
   render() {
     const {
       className,
+      prefix,
       emoji: {
         name,
         symbol,
@@ -54,7 +57,7 @@ export default class Emoji extends Component {
           this.DOMNode = node;
         }}
         {...cleanProps}
-        className={classNames(CLASSNAMES.container, className, `emojis-${name}`)}
+        className={classNames(CLASSNAMES.container, className, `${prefix}-${name}`)}
         draggable="false"
         onClick={this.onClick}
         aria-label={name}

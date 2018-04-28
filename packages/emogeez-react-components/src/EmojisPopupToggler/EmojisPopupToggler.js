@@ -23,15 +23,19 @@ export default class EmojisPopupToggler extends Component {
     categories: PropTypes.array,
     onClickEmoji: PropTypes.func,
     isOpened: PropTypes.bool,
+    historyEnabled: PropTypes.bool,
     historyLimit: PropTypes.number,
     onOpen: PropTypes.func,
+    prefix: PropTypes.string,
     onClose: PropTypes.func,
   };
 
   static defaultProps = {
+    prefix: 'emojis',
     categories: [],
     onClickEmoji: noop,
     isOpened: false,
+    historyEnabled: false,
     historyLimit: 21,
     onOpen: noop,
     onClose: noop,
@@ -115,7 +119,6 @@ export default class EmojisPopupToggler extends Component {
     if ($popup && $toggler && $arrow) {
       placeEmojiPopup($popup, $toggler, MARGIN_POPUP, $arrow);
     }
-
     this.props.onOpen();
   }
 
@@ -136,6 +139,8 @@ export default class EmojisPopupToggler extends Component {
     const {
       className,
       categories,
+      prefix,
+      historyEnabled,
       historyLimit,
     } = this.props;
 
@@ -163,6 +168,8 @@ export default class EmojisPopupToggler extends Component {
             ref={(node) => {
               this.emojisPopup = node;
             }}
+            prefix={prefix}
+            historyEnabled={historyEnabled}
             historyLimit={historyLimit}
             className={CLASSNAMES.popup}
             categories={categories}

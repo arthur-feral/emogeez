@@ -62,15 +62,19 @@ const getHistory = (categories) => {
 
 export default class EmojisPopup extends Component {
   static propTypes = {
+    prefix: PropTypes.string,
     categories: PropTypes.array,
     onClickEmoji: PropTypes.func,
+    historyEnabled: PropTypes.bool,
     historyLimit: PropTypes.number,
   };
 
   static defaultProps = {
     categories: [],
+    prefix: 'emojis',
     onClickEmoji: noop,
-    historyLimit: 28,
+    historyEnabled: true,
+    historyLimit: 21,
   };
 
   constructor(props) {
@@ -88,20 +92,25 @@ export default class EmojisPopup extends Component {
   }
 
   onClickEmoji(emoji, event) {
-    const history = store.get('emojis-history') || [];
-    const selected = findIndex(history, (emojiHistory) => emojiHistory.name === emoji.name);
-    if (selected === -1) {
-      history.push({
-        ...emoji,
-        count: 1,
-      });
-    } else {
-      history[selected].count += 1;
+    if (this.props.historyEnabled) {
+      const history = store.get('emojis-history') || [];
+      const selected = findIndex(history, (emojiHistory) => emojiHistory.name === emoji.name);
+      if (selected === -1) {
+        if (history.length < this.props.historyLimit) {
+          history.push({
+            ...emoji,
+            count: 1,
+          });
+        }
+      } else {
+        history[selected].count += 1;
+      }
+      store.set('emojis-history', take(reverse(sortBy(history)), this.props.historyLimit));
+      this.setState({});
     }
-    store.set('emojis-history', take(reverse(sortBy(history)), this.props.historyLimit));
+
     this.resetScroll();
     this.props.onClickEmoji(emoji, event);
-    this.setState({});
   };
 
   onClickCategory = (categoryName) => {
@@ -162,9 +171,15 @@ export default class EmojisPopup extends Component {
     const {
       className,
       categories,
+      historyEnabled,
+      prefix,
     } = this.props;
-    const historyCategory = getHistory(categories);
-    const fullCategories = historyCategory.emojis.length ? [historyCategory].concat(categories) : categories;
+
+    let fullCategories = categories;
+    if (historyEnabled) {
+      const historyCategory = getHistory(categories);
+      fullCategories = historyCategory.emojis.length ? [historyCategory].concat(categories) : categories;
+    }
 
     return (
       <div
@@ -193,6 +208,7 @@ export default class EmojisPopup extends Component {
                 name={category.name}
                 symbol={category.symbol}
                 emojis={category.emojis}
+                prefix={prefix}
                 onClickEmoji={this.onClickEmoji}
               />
             ))
