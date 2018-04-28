@@ -236,7 +236,7 @@ $ yarn run --preproc sass -d path/to/the/folder -s 48 -c
 
 **cache**
 
-```-c, --cache``` Force using cache. In fact the program will get about 16k images and at least 1,7k html pages, so it caches datas on the first use and if you launch it again, it could use datas on the ``tmp/` folder. Don't use it if you want freash new datas from the websites. (DEFAULT: false)
+```-c, --cache``` Force using cache. In fact the program will get about 20k images and at least 2k html pages, so it caches datas on the first use and if you launch it again, it could use datas on the ``tmp/` folder. Don't use it if you want freash new datas from the websites. (DEFAULT: false)
 
 # Notes
 This is an early version. I know it needs some fixes and optimization but it works.

@@ -1,6 +1,8 @@
 # Emogeez parser
 
-This module works with emogeez-generator. It helps you parsing emojis in text and find emojis to replace it with the emoji name, or utf8 or image.
+This module helps you parsing emojis in text and find emojis to replace it with the emoji name, or utf8 or image.
+It works with emogeez-generator data generated. You can either use the `fetchTheme` to fetch the JSON file containing the emojis data (using the file hosting),
+or `setTheme` passing your data if you want to use a local json. :warning: the, JSON data must be properly formated as the generator whould do if you use custom json.
 
 ### Installation 
 ```bash
@@ -29,7 +31,19 @@ const {
 
 fetchTheme('apple')
     .then(() => {
-      // do what you want in your app
+      let text = 'Hello ! :) how are you 😊';
+      const hasOnlyOneEmoji = matcher.hasOnlyOneEmoji('apple', text);
+      // => hasOnlyOneEmoji = false
+      const hasOnlyEmojis = matcher.hasOnlyEmojis('apple', text);
+      // => hasOnlyEmojis = false
+
+      text = replacer.toUTF8('apple', text);
+      // text = Hello ! 🙂 how are you 😊
+      
+      text = replacer.UTF8ToHTML('apple', text, (emoji) => {
+        return `<%${emoji.name}%>`;
+      });
+      // text = Hello ! <%grinning-face%> how are you <%smiling-face-with-smiling-eyes%>
     });
 ```
 
