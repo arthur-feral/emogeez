@@ -12,11 +12,13 @@ export const CLASSNAMES = {
 
 export default class EmojiModifiers extends Component {
   static propTypes = {
+    prefix: PropTypes.string,
     emoji: PropTypes.object.isRequired,
     onClickEmoji: PropTypes.func,
   };
 
   static defaultProps = {
+    prefix: 'emojis',
     onClickEmoji: noop,
   };
 
@@ -44,6 +46,7 @@ export default class EmojiModifiers extends Component {
     const {
       className,
       emoji,
+      prefix,
     } = this.props;
 
     const emojis = {
@@ -63,6 +66,7 @@ export default class EmojiModifiers extends Component {
               key={`${CLASSNAMES.container}${modifier.name}`}
               className={CLASSNAMES.emoji}
               emoji={modifier}
+              prefix={prefix}
               onClick={this.onClick}
             />
           ))

@@ -8,7 +8,7 @@
     "prepublish": "yarn run transpile && yarn run test",
     "lint:js": "eslint lib tests --ext .js",
     "test": "NODE_ENV=test nyc --check-coverage --lines 85 --report-dir=${CIRCLE_ARTIFACTS:-'./nyc-reports'} --reporter=lcov yarn run mocha",
-    "mocha": "NODE_ENV=test mocha --compilers js:babel-register -r tests/bootstrap.js -r babel-polyfill $(find lib -name '*.test.js')"
+    "mocha": "NODE_ENV=test mocha --compilers js:babel-register --timeout 5000 -r tests/bootstrap.js -r babel-polyfill $(find lib -name '*.test.js')"
   },
   "engines": {
     "node": ">=9.2.0"

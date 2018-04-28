@@ -21,6 +21,7 @@ let canClose = true;
 
 export default class EmojisCategory extends Component {
   static propTypes = {
+    prefix: PropTypes.string,
     emojis: PropTypes.array,
     name: PropTypes.string.isRequired,
     onClickEmoji: PropTypes.func,
@@ -28,6 +29,7 @@ export default class EmojisCategory extends Component {
 
   static defaultProps = {
     emojis: [],
+    prefix: 'emojis',
     onClickEmoji: noop,
   };
 
@@ -127,6 +129,7 @@ export default class EmojisCategory extends Component {
             ref={(node) => {
               this.emojisNodes[emoji.name] = node;
             }}
+            prefix={this.props.prefix}
             key={emoji.name}
             className={CLASSNAMES.emoji}
             emoji={emoji}
@@ -138,6 +141,7 @@ export default class EmojisCategory extends Component {
                 ref={(node) => {
                   this.modifierNodes[emoji.name] = node;
                 }}
+                prefix={this.props.prefix}
                 className={CLASSNAMES.modifiers}
                 key={`${CLASSNAMES.modifiers}${emoji.name}`}
                 emoji={emoji}
