@@ -1,4 +1,3 @@
-require('../../tests/bootstrap');
 import {
   expect,
 } from 'chai';
@@ -7,7 +6,10 @@ import Store from '../store/store';
 import Http from '../http/http';
 import Replacer from './replacer';
 
+require('../../tests/bootstrap');
+
 const emojisData = require('../../tests/json/apple.json');
+
 const config = Config();
 const http = Http(config);
 const store = Store(config, http);
@@ -138,20 +140,16 @@ describe('Replacer', () => {
 
   describe('namesToHTML', () => {
     it('replace emojis names to html', () => {
-      let text = 'hello :grinning-face: how are you?';
-      let result = namesToHTML('apple', text, (emoji) => {
-        return `<span class="emoji-${emoji.name}"></span>`;
-      });
+      const text = 'hello :grinning-face: how are you?';
+      const result = namesToHTML('apple', text, emoji => `<span class="emoji-${emoji.name}"></span>`);
       expect(result).to.equal('hello <span class="emoji-grinning-face"></span> how are you?');
     });
   });
 
   describe('UTF8ToHTML', () => {
     it('replace emojis names to html', () => {
-      let text = 'hello 🙂 :grinning-face: how are you? :)';
-      let result = UTF8ToHTML('apple', text, (emoji) => {
-        return `<span class="emoji-${emoji.name}"></span>`;
-      });
+      const text = 'hello 🙂 :grinning-face: how are you? :)';
+      const result = UTF8ToHTML('apple', text, emoji => `<span class="emoji-${emoji.name}"></span>`);
       expect(result).to.equal('hello <span class="emoji-slightly-smiling-face"></span> <span class="emoji-grinning-face"></span> how are you? :)');
     });
   });

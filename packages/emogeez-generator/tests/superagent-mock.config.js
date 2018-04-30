@@ -16,14 +16,14 @@ module.exports = [
     /**
      * regular expression of URL
      */
-    pattern: 'https?://emojipedia.org(/[a-z0-9\-]+/)?',
+    pattern: 'https?://emojipedia.org(/[a-z0-9\-]+/)?',// eslint-disable-line
 
     /**
      * returns the data
      *
      * @param match array Result of the resolution of the regular expression
      */
-    fixtures: function (match) {
+    fixtures: (match) => {
       if (match[1] === '/people/') {
         return people;
       }
@@ -69,23 +69,17 @@ module.exports = [
      * @param match array Result of the resolution of the regular expression
      * @param data  mixed Data returns by `fixtures` attribute
      */
-    get: function (match, data) {
-      return {
-        text: data,
-      };
-    },
+    get: (match, data) => ({
+      text: data,
+    }),
   },
   {
-    //pattern: 'https://emojipedia-us.s3.amazonaws.com/[a-zA-Z0-9\/-]+.png',
+    // pattern: 'https://emojipedia-us.s3.amazonaws.com/[a-zA-Z0-9\/-]+.png',
     pattern: 'https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/grinning-face_1f600.png',
-    fixtures: function (match) {
-      return fs.readFileSync(`${__dirname}/images/grinning-face_1f600.png`);
-    },
+    fixtures: () => fs.readFileSync(`${__dirname}/images/grinning-face_1f600.png`),
 
-    get: function (match, data) {
-      return {
-        body: data,
-      };
-    },
+    get: (match, data) => ({
+      body: data,
+    }),
   },
 ];

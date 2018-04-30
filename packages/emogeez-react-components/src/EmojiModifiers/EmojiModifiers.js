@@ -22,14 +22,6 @@ export default class EmojiModifiers extends Component {
     onClickEmoji: noop,
   };
 
-  onClick = (emoji, event) => {
-    this.props.onClickEmoji(emoji, event);
-  };
-
-  getDOMNode() {
-    return this.DOMNode;
-  }
-
   shouldComponentUpdate(nextProps) {
     if (this.props.emoji !== nextProps.emoji) {
       return true;
@@ -40,6 +32,14 @@ export default class EmojiModifiers extends Component {
     }
 
     return false;
+  }
+
+  onClick = (emoji, event) => {
+    this.props.onClickEmoji(emoji, event);
+  };
+
+  getDOMNode() {
+    return this.DOMNode;
   }
 
   render() {
@@ -59,9 +59,10 @@ export default class EmojiModifiers extends Component {
         ref={(node) => {
           this.DOMNode = node;
         }}
-        className={classNames(CLASSNAMES.container, className)}>
+        className={classNames(CLASSNAMES.container, className)}
+      >
         {
-          map(emojis, (modifier) => (
+          map(emojis, modifier => (
             <Emoji
               key={`${CLASSNAMES.container}${modifier.name}`}
               className={CLASSNAMES.emoji}

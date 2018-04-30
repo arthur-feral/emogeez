@@ -4,8 +4,8 @@ import ReactTestUtils from 'react-dom/test-utils';
 import {
   expect,
 } from 'chai';
-import EmojisCategory, { CLASSNAMES } from './EmojisCategory.js';
 import apple from 'emogeez-generator/emojis/apple/apple.json';
+import EmojisCategory, { CLASSNAMES } from './EmojisCategory';
 
 const emojis = apple.people.emojis;
 

@@ -1,10 +1,9 @@
-require('../../tests/bootstrap');
-
 import {
   expect,
-  assert,
 } from 'chai';
 import Config from './config';
+
+require('../../tests/bootstrap');
 
 const config1 = Config({
   blackList: [],
@@ -23,7 +22,7 @@ describe('Config', () => {
     expect(Config(config1)).to.deep.equal({
       blackList: [],
       theme: 'apple',
-      themesUrl: `https://cdn.jsdelivr.net/gh/arthur-feral/emogeez@latest/packages/emogeez-generator/emojis`,
+      themesUrl: 'https://cdn.jsdelivr.net/gh/arthur-feral/emogeez@latest/packages/emogeez-generator/emojis',
     });
   });
 
@@ -36,7 +35,7 @@ describe('Config', () => {
           'reversed-hand-with-middle-finger-extended',
         ],
         theme: 'apple',
-        themesUrl: `https://cdn.jsdelivr.net/gh/arthur-feral/emogeez@latest/packages/emogeez-generator/emojis`,
+        themesUrl: 'https://cdn.jsdelivr.net/gh/arthur-feral/emogeez@latest/packages/emogeez-generator/emojis',
       });
 
       expect(Config({
@@ -45,14 +44,14 @@ describe('Config', () => {
           'reversed-hand-with-middle-finger-extended',
         ],
         theme: 'themeName',
-        themesUrl: `urlToCustomThemes`,
+        themesUrl: 'urlToCustomThemes',
       })).to.deep.equal({
         blackList: [
           'grinning-face',
           'reversed-hand-with-middle-finger-extended',
         ],
         theme: 'themeName',
-        themesUrl: `urlToCustomThemes`,
+        themesUrl: 'urlToCustomThemes',
       });
     });
   });

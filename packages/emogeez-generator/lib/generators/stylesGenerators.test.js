@@ -1,5 +1,3 @@
-require('../../tests/bootstrap');
-
 import {
   map,
 } from 'lodash';
@@ -10,6 +8,8 @@ import fs from 'fs-extra';
 import EventEmitter from 'eventemitter3';
 import StylesGenerator from './stylesGenerators';
 
+require('../../tests/bootstrap');
+
 const emitter = new EventEmitter();
 const stylesGenerator = StylesGenerator({
   destination: 'emojis',
@@ -19,19 +19,20 @@ const stylesGenerator = StylesGenerator({
   prefix: 'emojis',
   preproc: 'sass',
 }, emitter);
-const coordinatesJSON = require(`${process.cwd()}/tests/jsons/coordinates.json`);
-const emojisFullPeopleJSON = require(`${process.cwd()}/tests/jsons/emojisFullForCategory.json`);
+const coordinatesJSON = require(`${process.cwd()}/tests/jsons/coordinates.json`);// eslint-disable-line
+const emojisFullPeopleJSON = require(`${process.cwd()}/tests/jsons/emojisFullForCategory.json`);// eslint-disable-line
 const emojisNames = map(emojisFullPeopleJSON.people.emojis, e => e.name);
-const sassResult = fs.readFileSync(`tests/styles/apple_.scss`, 'utf8');
-const cssResult = fs.readFileSync(`tests/styles/apple_.css`, 'utf8');
+const sassResult = fs.readFileSync('tests/styles/apple_.scss', 'utf8');
+const cssResult = fs.readFileSync('tests/styles/apple_.css', 'utf8');
 
 describe('StylesGenerator', () => {
   describe('generateStyle', () => {
     it('generate the stylesheet file', async () => {
-      const result = await stylesGenerator('apple', emojisNames, {
-        width: 144,
-        height: 144,
-      }, coordinatesJSON);
+      const result = await stylesGenerator('apple', emojisNames,
+        {
+          width: 144,
+          height: 144,
+        }, coordinatesJSON);
 
       expect(result).to.deep.equal({
         css: cssResult,

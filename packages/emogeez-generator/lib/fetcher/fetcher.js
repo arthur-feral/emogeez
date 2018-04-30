@@ -1,13 +1,11 @@
 import fs from 'fs-extra';
 import Throttle from 'superagent-throttle';
 import {
-  forEach,
   map,
 } from 'lodash';
 import {
   saveFile,
 } from '../utils';
-import logger from '../logger';
 import {
   BASE_URL,
   APP_READY,
@@ -33,10 +31,10 @@ const imagesPath = `${tempPath}/images`;
 const htmlPath = `${tempPath}/html`;
 
 const throttle = new Throttle({
-  active: true,     // set false to pause queue
-  rate: 150,          // how many requests can be sent every `ratePer`
-  ratePer: 1000,   // number of ms in which `rate` requests may be sent
-  concurrent: 50     // how many requests can be sent concurrently
+  active: true, // set false to pause queue
+  rate: 150, // how many requests can be sent every `ratePer`
+  ratePer: 1000, // number of ms in which `rate` requests may be sent
+  concurrent: 50, // how many requests can be sent concurrently
 });
 
 /**
@@ -218,4 +216,4 @@ export default (superagent, config, emitter) => {
     fetchEmoji,
     fetchImage,
   };
-}
+};

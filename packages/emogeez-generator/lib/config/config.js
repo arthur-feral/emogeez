@@ -2,14 +2,14 @@ import {
   each,
   includes,
 } from 'lodash';
+import fse from 'fs-extra';
+import jimp from 'jimp';
 import logger from '../logger';
 import {
   APP_READY, APP_START,
   ERROR,
   DEFAULT_THEMES_URL,
 } from '../constants';
-import fse from 'fs-extra';
-import jimp from 'jimp';
 import Configuration from './Configuration';
 
 const AVAILABLE_PREPROCESSORS = ['sass', 'less'];
@@ -39,7 +39,7 @@ export default (commander, emitter) => {
   };
 
   logger.sameLine('⚙️ Configuring app: ♻️');
-  let config = {};
+  const config = {};
 
   if (commander.preproc && !includes(AVAILABLE_PREPROCESSORS, commander.preproc)) {
     throw new Error('⚙️ You must provide a correct preprocessor parameter');

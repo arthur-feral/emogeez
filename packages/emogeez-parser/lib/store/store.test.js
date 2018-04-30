@@ -1,5 +1,3 @@
-require('../../tests/bootstrap');
-
 import {
   expect,
   assert,
@@ -13,7 +11,10 @@ import Configurator from '../config/config';
 import Store from './store';
 import Http from '../http/http';
 
+require('../../tests/bootstrap');
+
 const emojisData = require('../../tests/json/apple.json');
+
 const config = Configurator();
 const http = Http(config);
 let store = Store(config, http);
@@ -41,8 +42,7 @@ describe('Store', () => {
     describe('getEmojiByName', () => {
       it('returns the emoji named name', () => {
         const emoji = store.getEmojiByName('apple', 'grinning-face');
-        expect(emoji)
-          .to.deep.equal({
+        expect(emoji).to.deep.equal({
           category: 'people',
           fullName: 'Grinning Face',
           name: 'grinning-face',
@@ -54,7 +54,7 @@ describe('Store', () => {
           unicode: '1f600',
         });
         const emoji2 = store.getEmojiByName('apple', 'unknown-emoji');
-        expect(emoji2).to.be.undefined;
+        assert.isUndefined(emoji2);
       });
     });
 
@@ -83,7 +83,7 @@ describe('Store', () => {
     describe('toUTF8', () => {
       it('returns the emoji utf8 from a name', () => {
         const utf8 = store.toUTF8('apple', 'grinning-face');
-        expect(utf8).to.deep.equal(emojisData['people']['emojis'][0].symbol);
+        expect(utf8).to.deep.equal(emojisData.people.emojis[0].symbol);
       });
     });
   });
@@ -126,5 +126,4 @@ describe('Store', () => {
       });
     });
   });
-
 });

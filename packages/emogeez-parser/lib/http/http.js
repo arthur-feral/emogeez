@@ -6,8 +6,6 @@ import 'whatwg-fetch';
  * @return {{get: function(*)}}
  */
 export default (config) => {
-
-
   /**
    *
    * @param themeName
@@ -25,7 +23,7 @@ export default (config) => {
         error.response = response;
         throw error;
       })
-      .then((response) => response.json());
+      .then(response => response.json());
   };
 
   return {

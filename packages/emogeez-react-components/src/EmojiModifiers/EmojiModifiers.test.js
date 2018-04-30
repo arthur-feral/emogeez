@@ -7,8 +7,8 @@ import ReactTestUtils from 'react-dom/test-utils';
 import {
   expect,
 } from 'chai';
-import EmojiModifiers, { CLASSNAMES } from './EmojiModifiers.js';
 import apple from 'emogeez-generator/emojis/apple/apple.json';
+import EmojiModifiers, { CLASSNAMES } from './EmojiModifiers';
 
 const emojis = apple.people.emojis;
 const emoji = find(emojis, e => e.name === 'boy');

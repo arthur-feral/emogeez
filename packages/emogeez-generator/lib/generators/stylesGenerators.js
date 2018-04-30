@@ -25,16 +25,14 @@ export default (config) => {
    * @param {number} emojiSize size of an emoji
    * @returns {string}
    */
-  const generateBase = (template, prefix, spritePath, spriteWidth, spriteHeight, emojiSize) => {
-    return [
-      '', template
-        .replace(/<%prefix%>/gm, prefix)
-        .replace('<%pathToSprite%>', spritePath)
-        .replace('<%spriteWidth%>', spriteWidth)
-        .replace('<%spriteHeight%>', spriteHeight)
-        .replace(/<%emojiSize%>/gm, emojiSize),
-    ].join('');
-  };
+  const generateBase = (template, prefix, spritePath, spriteWidth, spriteHeight, emojiSize) => [
+    '', template
+      .replace(/<%prefix%>/gm, prefix)
+      .replace('<%pathToSprite%>', spritePath)
+      .replace('<%spriteWidth%>', spriteWidth)
+      .replace('<%spriteHeight%>', spriteHeight)
+      .replace(/<%emojiSize%>/gm, emojiSize),
+  ].join('');
 
   /**
    * returns special sass rule for an emoji
@@ -45,15 +43,13 @@ export default (config) => {
    * @param {number} positionY emoji position
    * @returns {string}
    */
-  const generateEmoji = (template, prefix, name, positionX, positionY) => {
-    return [
-      '', template
-        .replace(/<%prefix%>/gm, prefix)
-        .replace('<%emojiName%>', name)
-        .replace('<%emojiXPosition%>', positionX)
-        .replace('<%emojiYPosition%>', positionY),
-    ].join('');
-  };
+  const generateEmoji = (template, prefix, name, positionX, positionY) => [
+    '', template
+      .replace(/<%prefix%>/gm, prefix)
+      .replace('<%emojiName%>', name)
+      .replace('<%emojiXPosition%>', positionX)
+      .replace('<%emojiYPosition%>', positionY),
+  ].join('');
 
   /**
    * generate a sass file from datas
@@ -69,7 +65,7 @@ export default (config) => {
     let preprocContent = generateBase(baseTemplate, config.prefix, spritePath, properties.width / 2, properties.height / 2, config.size) + os.EOL;
     let cssContent = generateBase(baseTemplateCss, config.prefix, spritePath, properties.width / 2, properties.height / 2, config.size) + os.EOL;
 
-    emojisNames.map((emojiName, index) => {
+    map(emojisNames, (emojiName, index) => {
       preprocContent += generateEmoji(emojiTemplate, config.prefix, emojiName, coordinatesArray[index].x / 2, coordinatesArray[index].y / 2);
       cssContent += generateEmoji(emojiTemplateCss, config.prefix, emojiName, coordinatesArray[index].x / 2, coordinatesArray[index].y / 2);
     });

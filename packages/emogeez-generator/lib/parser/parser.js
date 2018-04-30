@@ -1,9 +1,8 @@
 import {
   has,
   trim,
-  omit,
-  take,
 } from 'lodash';
+import cheerio from 'cheerio';
 import logger from '../logger';
 import {
   BASE_URL,
@@ -27,7 +26,6 @@ import {
   FETCHER_FETCH_EMOJI_SUCCESS,
   PARSER_FOUND_MODIFIERS,
 } from '../constants';
-import cheerio from 'cheerio';
 import {
   getUnicode,
 } from '../utils';
@@ -39,7 +37,6 @@ import {
  * @return {{parseCategories: function(), parseCategory: function(*), parseEmoji: function(*), parseImage: function(*=)}}
  */
 export default (config, emitter) => {
-
   /**
    * this method parse the index page of emojipedia
    * to get all categories and fetch it
@@ -53,7 +50,7 @@ export default (config, emitter) => {
         throw new Error('[Scrapper] Canno\'t get categories list, Html structure has changed');
       }
 
-      let categories = [];
+      const categories = [];
       $categoriesContainer.find('a').each(function () {
         const $emojiNode = $(this).find('.emoji');
         const symbol = $emojiNode.text();
@@ -95,7 +92,7 @@ export default (config, emitter) => {
         throw new Error('[Scrapper] Cannot get emojis list, Html structure has changed');
       }
 
-      let emojis = [];
+      const emojis = [];
 
       $emojisList.find('a').each(function () {
         const $emojiNode = $(this).find('.emoji');
@@ -117,7 +114,6 @@ export default (config, emitter) => {
       });
 
       emitter.emit(PARSER_PARSE_CATEGORY_SUCCESS, emojis);
-      //emitter.emit(PARSER_PARSE_CATEGORY_SUCCESS, take(emojis, 10));
     } catch (error) {
       logger.error(error);
       emitter.emit(PARSER_PARSE_CATEGORY_ERROR, error);
@@ -136,7 +132,7 @@ export default (config, emitter) => {
    */
   const parseEmoji = (emojiBase, html) => {
     try {
-      let emojiFull = {
+      const emojiFull = {
         ...emojiBase,
         unicode: getUnicode(emojiBase.symbol),
         shortnames: [],
@@ -151,7 +147,8 @@ export default (config, emitter) => {
       $themes.each(function () {
         const themeName = $(this)
           .find('.vendor-info')
-          .find('a').attr('href').replace(/\//g, '');
+          .find('a').attr('href')
+          .replace(/\//g, '');
         const imagePath = $(this)
           .find('.vendor-image')
           .find('img').attr('src');
@@ -213,4 +210,4 @@ export default (config, emitter) => {
     parseCategory,
     parseEmoji,
   };
-}
+};

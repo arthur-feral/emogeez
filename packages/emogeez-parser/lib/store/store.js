@@ -1,8 +1,6 @@
 import {
   forEach,
   reduce,
-  includes,
-  isUndefined,
   has,
 } from 'lodash';
 
@@ -13,15 +11,13 @@ import {
  * @return {object}
  */
 export default (config, http) => {
-  let blackList = reduce(config.blackList, (result, emojiName) => ({ ...result, [emojiName]: emojiName }), {});
-  let themesEmojis = { [config.theme]: {} };
-  let themesCategories = { [config.theme]: {} };
-  let themesCodepointToName = { [config.theme]: {} };
+  const blackList = reduce(config.blackList, (result, emojiName) => ({ ...result, [emojiName]: emojiName }), {});
+  const themesEmojis = { [config.theme]: {} };
+  const themesCategories = { [config.theme]: {} };
+  const themesCodepointToName = { [config.theme]: {} };
 
   const getEmojis = (theme = config.theme) => themesEmojis[theme];
-  const hasEmoji = (theme = config.theme, name) => {
-    return has(getEmojis(theme), name);
-  };
+  const hasEmoji = (theme = config.theme, name) => has(getEmojis(theme), name);
   const getEmojiByName = (theme = config.theme, name) => getEmojis(theme)[name];
   const getCategories = (theme = config.theme) => themesCategories[theme];
   const getNameFromCodepoint = (theme = config.theme, name) => themesCodepointToName[theme][name];
@@ -48,10 +44,9 @@ export default (config, http) => {
     });
   };
 
-  const fetchTheme = (theme = config.theme) => {
-    return http.get(theme)
+  const fetchTheme = (theme = config.theme) =>
+    http.get(theme)
       .then(emojisData => setTheme(theme, emojisData));
-  };
 
   return {
     getEmojis,
@@ -64,4 +59,4 @@ export default (config, http) => {
     setTheme,
     fetchTheme,
   };
-}
+};

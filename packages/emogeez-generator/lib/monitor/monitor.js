@@ -1,5 +1,4 @@
 import {
-  keys,
   size,
   throttle,
 } from 'lodash';
@@ -10,7 +9,6 @@ import {
   PARSER_PARSE_CATEGORY_SUCCESS,
   PARSER_PARSE_EMOJI_SUCCESS,
   PARSER_PARSE_IMAGE_SUCCESS,
-  PARSER_PARSED_ALL_IMAGES,
 
   FETCHER_FETCH_CATEGORIES_ERROR,
   FETCHER_FETCH_CATEGORY_ERROR,
@@ -33,11 +31,11 @@ export default (config, emitter) => {
   let categoriesScrapped = 0;
 
   const printProgress = () => {
-    let catPercentage = Math.floor(categoriesScrapped / categoriesTotal * 100);
-    let emoPercentage = Math.floor(emojisScrapped / emojisTotal * 100);
-    let imaPercentage = Math.floor(imagesComputed / imagesTotal * 100);
-    let total = (catPercentage + emoPercentage + imaPercentage) / 3;
-    let toLog = `📡 Collecting data: ♻️ `;
+    const catPercentage = Math.floor((categoriesScrapped / categoriesTotal) * 100);
+    const emoPercentage = Math.floor((emojisScrapped / emojisTotal) * 100);
+    const imaPercentage = Math.floor((imagesComputed / imagesTotal) * 100);
+    const total = (catPercentage + emoPercentage + imaPercentage) / 3;
+    let toLog = '📡 Collecting data: ♻️ ';
     toLog += ` = [C ${categoriesScrapped}/${categoriesTotal} - ${catPercentage}%]`;
     toLog += ` = [E ${emojisScrapped}/${emojisTotal} - ${emoPercentage}%]`;
     toLog += ` = [I ${imagesComputed}/${imagesTotal} - ${imaPercentage}%]`;
