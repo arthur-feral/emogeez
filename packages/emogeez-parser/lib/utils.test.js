@@ -1,4 +1,3 @@
-require('../tests/bootstrap');
 import {
   expect,
 } from 'chai';
@@ -8,7 +7,11 @@ import {
 import {
   getUnicode,
 } from './utils';
+
+require('../tests/bootstrap');
+
 const emojis = require('../tests/json/emojis.json');
+
 const grinning = emojis.people.emojis['grinning-face'].symbol;
 const grin = emojis.people.emojis['grinning-face-with-smiling-eyes'].symbol;
 const $thumbsup = find(emojis.people.emojis, e => e.name === 'thumbs-up-sign');

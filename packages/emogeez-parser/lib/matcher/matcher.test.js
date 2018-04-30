@@ -1,18 +1,16 @@
-require('../../tests/bootstrap');
-
 import {
   expect,
   assert,
 } from 'chai';
-import {
-  find,
-} from 'lodash';
 import Config from '../config/config';
 import Store from '../store/store';
 import Http from '../http/http';
 import Matcher from './matcher';
 
+require('../../tests/bootstrap');
+
 const emojisData = require('../../tests/json/apple.json');
+
 const config = Config();
 const http = Http(config);
 const store = Store(config, http);

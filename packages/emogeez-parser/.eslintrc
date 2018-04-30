@@ -4,56 +4,20 @@
     "iadvize"
   ],
   "rules": {
-    "react/prefer-es6-class": "warn",
-    "global-require": "warn",
-    "import/extensions": "warn",
-    "import/no-extraneous-dependencies": "warn",
-    "jsx-a11y/anchor-has-content": "warn",
-    "react/forbid-prop-types": "warn",
-    "react/prop-types": [
-      "error",
-      {
-        "ignore": [
-          "children",
-          "className"
-        ]
-      }
-    ]
+    "global-require": "warn"
   },
   "overrides": [
     {
       "files": [
-        "**/*.spec.js*"
+        "**/*.test.js"
       ],
       "globals": {
-        "expect": true,
-        "assert": true,
-        "sinon": true,
-        "mount": true,
-        "ReactTestUtils": true,
-        "beckyJS": true,
-        "shallow": true,
-        "_": true,
         "describe": true,
         "it": true,
-        "KEY_CODES": true,
         "beforeEach": true,
         "afterEach": true,
         "before": true,
         "after": true
-      },
-      "rules": {
-        "react/react-in-jsx-scope": "warn",
-        "import/no-extraneous-dependencies": "warn",
-        "no-unused-expressions": "warn"
-      }
-    },
-    {
-      "files": [
-        "**/*.scenario.js*"
-      ],
-      "rules": {
-        "import/no-extraneous-dependencies": "warn"
       }
     }
   ]

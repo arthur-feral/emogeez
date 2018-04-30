@@ -12,7 +12,6 @@ const split = require('emoji-aware').split;
 export default ({
   getNameFromCodepoint,
 }) => {
-
   /**
    * return the emojis names from a text
    * @param {string} themeName
@@ -42,7 +41,7 @@ export default ({
   const hasEmojis = (themeName, text) => {
     const chars = split(text);
 
-    return chars.filter(char => {
+    return chars.filter((char) => {
       const charUnicode = getUnicode(char);
       const emojiName = getNameFromCodepoint(themeName, charUnicode);
 
@@ -68,7 +67,7 @@ export default ({
 
     const chars = split(text);
 
-    const emojis = chars.filter(char => {
+    const emojis = chars.filter((char) => {
       const charUnicode = getUnicode(char);
       const emojiName = getNameFromCodepoint(themeName, charUnicode);
 
@@ -96,7 +95,7 @@ export default ({
 
     const chars = split(text);
 
-    const emojis = chars.filter(char => {
+    const emojis = chars.filter((char) => {
       const charUnicode = getUnicode(char);
       const emojiName = getNameFromCodepoint(themeName, charUnicode);
 
@@ -112,4 +111,4 @@ export default ({
     hasOnlyEmojis,
     hasOnlyOneEmoji,
   };
-}
+};

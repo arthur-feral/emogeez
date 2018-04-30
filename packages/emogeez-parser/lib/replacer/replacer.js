@@ -1,6 +1,4 @@
 import {
-  forEach,
-  has,
   isFunction,
   map,
 } from 'lodash';
@@ -18,13 +16,12 @@ const {
 const SHORT_NAME_REGEXP = /:([a-z0-9-]+):/mg;
 
 export default (store) => {
-
   /**
    * replace aliases to name
    * @param {string} text
    * @returns {string}
    */
-  const aliasesToNames = (text) => text.replace(ALIASES_REGEXP, (fullMatch, prevLimit, emoji) => `${prevLimit}:${ALIASES_MAP[emoji]}:`);
+  const aliasesToNames = text => text.replace(ALIASES_REGEXP, (fullMatch, prevLimit, emoji) => `${prevLimit}:${ALIASES_MAP[emoji]}:`);
 
   const toUTF8 = (theme, text) => {
     let newText = aliasesToNames(text);

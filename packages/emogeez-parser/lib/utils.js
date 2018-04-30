@@ -4,7 +4,7 @@
  * @param char
  * @returns {string}
  */
-export const getUnicode = (char) => {
+export const getUnicode = (char) => {// eslint-disable-line
   let i = 0;
   let c = 0;
   let p = 0;
