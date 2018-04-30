@@ -1,12 +1,9 @@
-$categoriesListHeight: 24.5rem;
-$categoriesTabsHeight: 3rem;
-
 .emojisPopupTogglerContainer {
     position: relative;
 
     .emojisPopupTogglerPopupWrapper {
         animation-duration: 0.3s;
-        border: 1px solid #c5c9cf;
+        border: 1px solid $popupBorderColor;
         box-shadow: 0 6px 12px 0 rgba(38, 40, 45, .2);
         animation-fill-mode: both;
         animation-name: slideInDown;
@@ -25,7 +22,7 @@ $categoriesTabsHeight: 3rem;
         display: block;
         width: 1rem;
         height: 1rem;
-        border: 1px solid #C5C9CF;
+        border: 1px solid $popupBorderColor;
         transform: rotate(-45deg);
         position: absolute;
         box-sizing: content-box;

@@ -1,7 +1,6 @@
 import {
   map,
 } from 'lodash';
-import './_emojiModifiers.scss';
 import EmojiModifiers from './EmojiModifiers';
 import centered from '@storybook/addon-centered';
 import React from 'react';

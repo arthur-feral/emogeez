@@ -1,7 +1,6 @@
 import {
   keys,
 } from 'lodash';
-import './_emojisCategory.scss';
 import EmojisCategory from './EmojisCategory';
 import centered from '@storybook/addon-centered';
 import React from 'react';

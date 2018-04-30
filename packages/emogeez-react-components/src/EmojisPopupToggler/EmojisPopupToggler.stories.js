@@ -2,7 +2,6 @@ import {
   map,
 } from 'lodash';
 import React from 'react';
-import './_emojisPopupToggler.scss';
 import EmojisPopupToggler from './EmojisPopupToggler';
 import centered from '@storybook/addon-centered';
 import { storiesOf } from '@storybook/react';

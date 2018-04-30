@@ -1,7 +1,6 @@
 import {
   map,
 } from 'lodash';
-import './_emoji.scss';
 import Emoji from './Emoji';
 import { withKnobs, selectV2 } from '@storybook/addon-knobs';
 import centered from '@storybook/addon-centered';
