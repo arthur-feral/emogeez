@@ -28,7 +28,7 @@ stories.add('Custom toggler', () => {
     categories: map(apple, category => category),
     onClickEmoji: console.log,
     togglerRenderer: () => (
-      <button>
+      <button className="customClassName">
         custom toggler
       </button>
     ),

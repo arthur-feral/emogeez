@@ -151,14 +151,15 @@ export default class EmojisPopupToggler extends Component {
       togglerRenderer,
     } = this.props;
 
+    const originalToggler = togglerRenderer(this.props, this.state);
     const toggler = React.cloneElement(
-      togglerRenderer(this.props, this.state), {
+      originalToggler, {
         ref: (node) => {
           this.toggler = node;
         },
-        className: CLASSNAMES.button,
+        className: classNames(CLASSNAMES.button, originalToggler.props.className),
         onClick: this.onClickButton,
-        alt: 'toggle emoji popup',
+        alt: originalToggler.props.alt || 'toggle emoji popup',
       },
     );
 
