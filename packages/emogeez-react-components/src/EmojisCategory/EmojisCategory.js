@@ -52,7 +52,7 @@ export default class EmojisCategory extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    if (this.props.emojis.length !== nextProps.emojis.length) {
+    if (this.props.emojis !== nextProps.emojis) {
       return true;
     }
 

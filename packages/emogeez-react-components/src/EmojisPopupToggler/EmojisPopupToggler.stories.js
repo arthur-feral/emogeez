@@ -15,6 +15,7 @@ stories.add('Default', () => {
   const props = {
     categories: map(apple, category => category),
     onClickEmoji: console.log,
+    historyEnabled: true,
   };
 
   return (

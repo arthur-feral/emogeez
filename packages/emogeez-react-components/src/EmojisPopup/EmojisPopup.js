@@ -18,6 +18,7 @@ export const CLASSNAMES = {
 };
 
 const SCROLL_TRANSITION_TIMING = 300;
+const MAX_COUNT = 10;
 
 const ease = function (currentTime, start, change, duration) {
   currentTime /= duration / 2;
@@ -46,17 +47,46 @@ const scrollTo = function (element, to, duration) {
   animateScroll(0);
 };
 
-const loadHistory = (categories) => {
-  const history = store.get('emojis-history') || [];
-  return reverse(sortBy(history, emoji => emoji.count));
+const loadHistory = (limit) => {
+  let history = store.get('emojis-history') || [];
+  history = sortBy(history, emoji => emoji.count);
+  history = reverse(history);
+  history = take(history, limit);
+
+  return history;
 };
 
-const getHistory = (categories) => {
+const updateHistory = (emoji) => {
+  let history = store.get('emojis-history') || [];
+  const selected = findIndex(history, (emojiHistory) => emojiHistory.name === emoji.name);
+  if (selected === -1) {
+    history.push({
+      ...emoji,
+      count: 1,
+    });
+  } else {
+    history[selected].count += 1;
+  }
+
+  // in case an emoji has been clicked MAX_COUNT times
+  // we reset the counts so any emoji got a chance to be on history
+  const winner = findIndex(history, (emojiHistory) => emojiHistory.count === MAX_COUNT);
+  if (winner >= 0) {
+    history = history.map(emoji => ({
+      ...emoji,
+      count: 1,
+    }));
+  }
+
+  store.set('emojis-history', history);
+};
+
+const getHistory = (limit) => {
   return {
     symbol: '',
     name: 'history',
     fullName: 'History',
-    emojis: loadHistory(categories),
+    emojis: loadHistory(limit),
   };
 };
 
@@ -85,6 +115,45 @@ export default class EmojisPopup extends Component {
     this.categories = {};
     this.categoriesTabs = {};
     this.onClickEmoji = this.onClickEmoji.bind(this);
+
+    this.state = {
+      history: this.props.historyEnabled ?
+        getHistory(props.historyLimit) :
+        null,
+    };
+  }
+
+  shouldComponentUpdate(newProps, newState) {
+    if (newProps.categories !== this.props.categories) {
+      return true;
+    }
+
+    if (newProps.prefix !== this.props.prefix) {
+      return true;
+    }
+
+    if (newProps.categories !== this.props.categories) {
+      return true;
+    }
+
+    if (newProps.onClickEmoji !== this.props.onClickEmoji) {
+      return true;
+    }
+
+    if (newProps.historyEnabled !== this.props.historyEnabled) {
+      return true;
+    }
+
+    if (newProps.historyLimit !== this.props.historyLimit) {
+      return true;
+    }
+
+    if (newState.history !== this.state.history) {
+      return true;
+    }
+
+
+    return false;
   }
 
   componentDidMount() {
@@ -93,20 +162,11 @@ export default class EmojisPopup extends Component {
 
   onClickEmoji(emoji, event) {
     if (this.props.historyEnabled) {
-      const history = store.get('emojis-history') || [];
-      const selected = findIndex(history, (emojiHistory) => emojiHistory.name === emoji.name);
-      if (selected === -1) {
-        if (history.length < this.props.historyLimit) {
-          history.push({
-            ...emoji,
-            count: 1,
-          });
-        }
-      } else {
-        history[selected].count += 1;
-      }
-      store.set('emojis-history', take(reverse(sortBy(history)), this.props.historyLimit));
-      this.setState({});
+      updateHistory(emoji);
+
+      this.setState({
+        history: getHistory(this.props.historyLimit),
+      });
     }
 
     this.resetScroll();
@@ -175,10 +235,13 @@ export default class EmojisPopup extends Component {
       prefix,
     } = this.props;
 
+    const {
+      history,
+    } = this.state;
+
     let fullCategories = categories;
-    if (historyEnabled) {
-      const historyCategory = getHistory(categories);
-      fullCategories = historyCategory.emojis.length ? [historyCategory].concat(categories) : categories;
+    if (historyEnabled && history && history.emojis.length) {
+      fullCategories = [history].concat(categories);
     }
 
     return (
