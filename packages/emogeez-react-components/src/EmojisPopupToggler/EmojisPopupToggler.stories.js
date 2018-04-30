@@ -15,6 +15,23 @@ stories.add('Default', () => {
   const props = {
     categories: map(apple, category => category),
     onClickEmoji: console.log,
+    historyEnabled: true,
+  };
+
+  return (
+    <EmojisPopupToggler {...props} />
+  );
+});
+
+stories.add('Custom toggler', () => {
+  const props = {
+    categories: map(apple, category => category),
+    onClickEmoji: console.log,
+    togglerRenderer: () => (
+      <button className="customClassName">
+        custom toggler
+      </button>
+    ),
   };
 
   return (

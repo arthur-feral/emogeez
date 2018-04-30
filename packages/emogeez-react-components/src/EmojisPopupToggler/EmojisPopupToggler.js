@@ -28,6 +28,7 @@ export default class EmojisPopupToggler extends Component {
     onOpen: PropTypes.func,
     prefix: PropTypes.string,
     onClose: PropTypes.func,
+    togglerRenderer: PropTypes.func,
   };
 
   static defaultProps = {
@@ -39,6 +40,11 @@ export default class EmojisPopupToggler extends Component {
     historyLimit: 21,
     onOpen: noop,
     onClose: noop,
+    togglerRenderer: () => (
+      <button>
+        <People className={CLASSNAMES.icon} />
+      </button>
+    ),
   };
 
   constructor(props) {
@@ -142,7 +148,20 @@ export default class EmojisPopupToggler extends Component {
       prefix,
       historyEnabled,
       historyLimit,
+      togglerRenderer,
     } = this.props;
+
+    const originalToggler = togglerRenderer(this.props, this.state);
+    const toggler = React.cloneElement(
+      originalToggler, {
+        ref: (node) => {
+          this.toggler = node;
+        },
+        className: classNames(CLASSNAMES.button, originalToggler.props.className),
+        onClick: this.onClickButton,
+        alt: originalToggler.props.alt || 'toggle emoji popup',
+      },
+    );
 
     return (
       <div
@@ -176,16 +195,7 @@ export default class EmojisPopupToggler extends Component {
             onClickEmoji={this.onClickEmoji}
           />
         </div>
-        <button
-          ref={(node) => {
-            this.toggler = node;
-          }}
-          className={CLASSNAMES.button}
-          onClick={this.onClickButton}
-          alt="toggle emoji popup"
-        >
-          <People className={CLASSNAMES.icon} />
-        </button>
+        {toggler}
       </div>
     );
   }

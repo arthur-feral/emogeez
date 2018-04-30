@@ -45,4 +45,18 @@ describe('EmojisPopupToggler', () => {
     ReactTestUtils.Simulate.click(toggler);
     expect(popup.className).to.equal('emojisPopupTogglerPopupWrapper');
   });
+
+  it('should have a custom toggler', () => {
+    const component = renderComponentIntoDOM({
+      ...story,
+      togglerRenderer: () => (
+        <button className="customClassName">
+          hi
+        </button>
+      ),
+    });
+    const toggler = ReactTestUtils.findRenderedDOMComponentWithClass(component, CLASSNAMES.button);
+    expect(toggler.textContent).to.equal('hi');
+    expect(toggler.className).to.equal('emojisPopupTogglerButton customClassName');
+  });
 });
