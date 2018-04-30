@@ -20,6 +20,7 @@ export const CLASSNAMES = {
 const SCROLL_TRANSITION_TIMING = 300;
 const MAX_COUNT = 10;
 
+/* eslint-disable */
 const ease = function (currentTime, start, change, duration) {
   currentTime /= duration / 2;
   if (currentTime < 1) {
@@ -46,6 +47,7 @@ const scrollTo = function (element, to, duration) {
 
   animateScroll(0);
 };
+/* eslint-enable */
 
 const loadHistory = (limit) => {
   let history = store.get('emojis-history') || [];
@@ -58,7 +60,7 @@ const loadHistory = (limit) => {
 
 const updateHistory = (emoji) => {
   let history = store.get('emojis-history') || [];
-  const selected = findIndex(history, (emojiHistory) => emojiHistory.name === emoji.name);
+  const selected = findIndex(history, emojiHistory => emojiHistory.name === emoji.name);
   if (selected === -1) {
     history.push({
       ...emoji,
@@ -70,7 +72,7 @@ const updateHistory = (emoji) => {
 
   // in case an emoji has been clicked MAX_COUNT times
   // we reset the counts so any emoji got a chance to be on history
-  const winner = findIndex(history, (emojiHistory) => emojiHistory.count === MAX_COUNT);
+  const winner = findIndex(history, emojiHistory => emojiHistory.count === MAX_COUNT);
   if (winner >= 0) {
     history = history.map(emoji => ({
       ...emoji,
@@ -81,14 +83,12 @@ const updateHistory = (emoji) => {
   store.set('emojis-history', history);
 };
 
-const getHistory = (limit) => {
-  return {
-    symbol: '',
-    name: 'history',
-    fullName: 'History',
-    emojis: loadHistory(limit),
-  };
-};
+const getHistory = limit => ({
+  symbol: '',
+  name: 'history',
+  fullName: 'History',
+  emojis: loadHistory(limit),
+});
 
 export default class EmojisPopup extends Component {
   static propTypes = {
@@ -121,6 +121,10 @@ export default class EmojisPopup extends Component {
         getHistory(props.historyLimit) :
         null,
     };
+  }
+
+  componentDidMount() {
+    this.categoriesListPaddingTop = parseInt(window.getComputedStyle(this.categoriesList, null).getPropertyValue('padding-top'), 10);
   }
 
   shouldComponentUpdate(newProps, newState) {
@@ -156,11 +160,10 @@ export default class EmojisPopup extends Component {
     return false;
   }
 
-  componentDidMount() {
-    this.categoriesListPaddingTop = parseInt(window.getComputedStyle(this.categoriesList, null).getPropertyValue('padding-top'), 10);
-  }
-
   onClickEmoji(emoji, event) {
+    event.stopPropagation();
+    event.preventDefault();
+
     if (this.props.historyEnabled) {
       updateHistory(emoji);
 
@@ -171,7 +174,7 @@ export default class EmojisPopup extends Component {
 
     this.resetScroll();
     this.props.onClickEmoji(emoji, event);
-  };
+  }
 
   onClickCategory = (categoryName) => {
     const $category = this.categories[categoryName].getDOMNode();
@@ -200,6 +203,10 @@ export default class EmojisPopup extends Component {
     event.stopPropagation();
   };
 
+  resetScroll() {
+    this.categoriesList.scrollTop = 0;
+  }
+
   renderCategoryTab = (category, index) => {
     const Icon = icons[category.name];
 
@@ -223,10 +230,6 @@ export default class EmojisPopup extends Component {
     );
   };
 
-  resetScroll() {
-    this.categoriesList.scrollTop = 0;
-  }
-
   render() {
     const {
       className,
@@ -246,10 +249,6 @@ export default class EmojisPopup extends Component {
 
     return (
       <div
-        onClick={(event) => {
-          event.stopPropagation();
-          event.preventDefault();
-        }}
         className={classNames(className, CLASSNAMES.container)}
       >
         <div
@@ -261,7 +260,7 @@ export default class EmojisPopup extends Component {
           className={CLASSNAMES.categoriesContainer}
         >
           {
-            fullCategories.map((category) => (
+            fullCategories.map(category => (
               <EmojisCategory
                 ref={(node) => {
                   this.categories[category.name] = node;

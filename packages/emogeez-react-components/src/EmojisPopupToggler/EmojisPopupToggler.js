@@ -76,35 +76,6 @@ export default class EmojisPopupToggler extends Component {
     );
   }
 
-  /**
-   * called when we click on window
-   * it checks if we clicked on the popup or outside
-   * @param {Event} event
-   */
-  handleClickOutside(event) {
-    const domNode = this.container;
-    if ((!domNode || !domNode.contains(event.target)) && this.isOpened) {
-      this.onClickButton(event);
-    }
-  }
-
-  /**
-   * when we click on the popup, we have to determine if you have to close the popup
-   * if this.props.closeOnClick is provided has a boolean, simply check if is true
-   * otherwise execute the func if its a func and test the return
-   */
-  onClickContent(event) {
-    if (typeof this.props.closeOnClick === 'function') {
-      this.setState({ opened: !this.props.closeOnClick(event) });
-    }
-
-    if (typeof this.props.closeOnClick === 'boolean') {
-      if (this.props.closeOnClick) {
-        this.setState({ opened: false });
-      }
-    }
-  }
-
   onClickButton = (event) => {
     event.preventDefault();
     event.stopPropagation();
@@ -115,6 +86,19 @@ export default class EmojisPopupToggler extends Component {
       this.closePopup();
     }
   };
+
+  onClickEmoji = (emoji, event) => {
+    this.closePopup();
+    this.props.onClickEmoji(emoji, event);
+  };
+
+  closePopup() {
+    this.isOpened = false;
+    const $popup = this.popup;
+    $popup.className = $popup.className.replace(' opened', '');
+    this.emojisPopup.resetScroll();
+    this.props.onClose();
+  }
 
   openPopup() {
     this.isOpened = true;
@@ -128,18 +112,17 @@ export default class EmojisPopupToggler extends Component {
     this.props.onOpen();
   }
 
-  closePopup() {
-    this.isOpened = false;
-    const $popup = this.popup;
-    $popup.className = $popup.className.replace(' opened', '');
-    this.emojisPopup.resetScroll();
-    this.props.onClose();
+  /**
+   * called when we click on window
+   * it checks if we clicked on the popup or outside
+   * @param {Event} event
+   */
+  handleClickOutside(event) {
+    const domNode = this.container;
+    if ((!domNode || !domNode.contains(event.target)) && this.isOpened) {
+      this.onClickButton(event);
+    }
   }
-
-  onClickEmoji = (emoji, event) => {
-    this.closePopup();
-    this.props.onClickEmoji(emoji, event);
-  };
 
   render() {
     const {

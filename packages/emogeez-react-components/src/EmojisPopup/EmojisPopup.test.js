@@ -7,10 +7,9 @@ import {
 } from 'chai';
 import {
   map,
-  times,
 } from 'lodash';
-import EmojisPopup, { CLASSNAMES } from './EmojisPopup.js';
 import apple from 'emogeez-generator/emojis/apple/apple.json';
+import EmojisPopup, { CLASSNAMES } from './EmojisPopup';
 
 const categories = map(apple, category => category);
 
@@ -65,13 +64,13 @@ describe('EmojisPopup', () => {
       assert.isNull(localStorage.getItem('emojis-history'));
       const emoji = ReactTestUtils.findRenderedDOMComponentWithClass(component, 'emojis-grinning-face');
       ReactTestUtils.Simulate.click(emoji);
-      expect(localStorage.getItem('emojis-history')).to.deep.equal('[{"symbol":"😀","name":"grinning-face","fullName":"Grinning Face","category":"people","unicode":"1f600","shortnames":["grinning"],"shortname":"grinning","count":1}]');
+      expect(localStorage.getItem('emojis-history')).to.deep.equal('[{"symbol":"😀","name":"grinning-face","fullName":"Grinning Face","category":"people","unicode":"1f600","shortnames":["grinning"],"shortname":"grinning","count":1}]');// eslint-disable-line
       ReactTestUtils.Simulate.click(emoji);
-      expect(localStorage.getItem('emojis-history')).to.deep.equal('[{"symbol":"😀","name":"grinning-face","fullName":"Grinning Face","category":"people","unicode":"1f600","shortnames":["grinning"],"shortname":"grinning","count":2}]');
+      expect(localStorage.getItem('emojis-history')).to.deep.equal('[{"symbol":"😀","name":"grinning-face","fullName":"Grinning Face","category":"people","unicode":"1f600","shortnames":["grinning"],"shortname":"grinning","count":2}]');// eslint-disable-line
 
       const emoji2 = ReactTestUtils.findRenderedDOMComponentWithClass(component, 'emojis-grinning-face-with-smiling-eyes');
       ReactTestUtils.Simulate.click(emoji2);
-      expect(localStorage.getItem('emojis-history')).to.deep.equal('[{"symbol":"😀","name":"grinning-face","fullName":"Grinning Face","category":"people","unicode":"1f600","shortnames":["grinning"],"shortname":"grinning","count":2},{"symbol":"😁","name":"grinning-face-with-smiling-eyes","fullName":"Beaming Face With Smiling Eyes","category":"people","unicode":"1f601","shortnames":["grin"],"shortname":"grin","count":1}]');
+      expect(localStorage.getItem('emojis-history')).to.deep.equal('[{"symbol":"😀","name":"grinning-face","fullName":"Grinning Face","category":"people","unicode":"1f600","shortnames":["grinning"],"shortname":"grinning","count":2},{"symbol":"😁","name":"grinning-face-with-smiling-eyes","fullName":"Beaming Face With Smiling Eyes","category":"people","unicode":"1f601","shortnames":["grin"],"shortname":"grin","count":1}]');// eslint-disable-line
     });
 
     it('should not display more than historyLimit', () => {
@@ -85,13 +84,13 @@ describe('EmojisPopup', () => {
       assert.isNull(localStorage.getItem('emojis-history'));
       const emoji = ReactTestUtils.findRenderedDOMComponentWithClass(component, 'emojis-grinning-face');
       ReactTestUtils.Simulate.click(emoji);
-      expect(localStorage.getItem('emojis-history')).to.deep.equal('[{"symbol":"😀","name":"grinning-face","fullName":"Grinning Face","category":"people","unicode":"1f600","shortnames":["grinning"],"shortname":"grinning","count":1}]');
+      expect(localStorage.getItem('emojis-history')).to.deep.equal('[{"symbol":"😀","name":"grinning-face","fullName":"Grinning Face","category":"people","unicode":"1f600","shortnames":["grinning"],"shortname":"grinning","count":1}]');// eslint-disable-line
       ReactTestUtils.Simulate.click(emoji);
-      expect(localStorage.getItem('emojis-history')).to.deep.equal('[{"symbol":"😀","name":"grinning-face","fullName":"Grinning Face","category":"people","unicode":"1f600","shortnames":["grinning"],"shortname":"grinning","count":2}]');
+      expect(localStorage.getItem('emojis-history')).to.deep.equal('[{"symbol":"😀","name":"grinning-face","fullName":"Grinning Face","category":"people","unicode":"1f600","shortnames":["grinning"],"shortname":"grinning","count":2}]');// eslint-disable-line
 
       const emoji2 = ReactTestUtils.findRenderedDOMComponentWithClass(component, 'emojis-grinning-face-with-smiling-eyes');
       ReactTestUtils.Simulate.click(emoji2);
-      expect(localStorage.getItem('emojis-history')).to.deep.equal('[{"symbol":"😀","name":"grinning-face","fullName":"Grinning Face","category":"people","unicode":"1f600","shortnames":["grinning"],"shortname":"grinning","count":2},{"symbol":"😁","name":"grinning-face-with-smiling-eyes","fullName":"Beaming Face With Smiling Eyes","category":"people","unicode":"1f601","shortnames":["grin"],"shortname":"grin","count":1}]');
+      expect(localStorage.getItem('emojis-history')).to.deep.equal('[{"symbol":"😀","name":"grinning-face","fullName":"Grinning Face","category":"people","unicode":"1f600","shortnames":["grinning"],"shortname":"grinning","count":2},{"symbol":"😁","name":"grinning-face-with-smiling-eyes","fullName":"Beaming Face With Smiling Eyes","category":"people","unicode":"1f601","shortnames":["grin"],"shortname":"grin","count":1}]');// eslint-disable-line
 
       const historyCategory = ReactTestUtils.scryRenderedDOMComponentsWithClass(component, CLASSNAMES.category)[0];
       expect(historyCategory.children[0].textContent).to.equal('history');

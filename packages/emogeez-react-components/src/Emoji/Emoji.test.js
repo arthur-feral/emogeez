@@ -4,8 +4,8 @@ import ReactTestUtils from 'react-dom/test-utils';
 import {
   expect,
 } from 'chai';
-import Emoji, { CLASSNAMES } from './Emoji.js';
 import apple from 'emogeez-generator/emojis/apple/apple.json';
+import Emoji, { CLASSNAMES } from './Emoji';
 
 const emojis = apple.people.emojis;
 
@@ -42,7 +42,7 @@ describe('Emoji', () => {
   it('should render properly', () => {
     const component = renderComponentIntoDOM(story);
     const emoji = ReactTestUtils.findRenderedDOMComponentWithClass(component, CLASSNAMES.container);
-    expect(emoji.attributes.alt.value).to.equal(emojis[0].symbol);
+    expect(emoji.textContent).to.equal(emojis[0].symbol);
   });
 
   it('should react onClick', () => {

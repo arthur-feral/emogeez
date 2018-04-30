@@ -51,6 +51,10 @@ export default class EmojisCategory extends Component {
     };
   }
 
+  componentDidMount() {
+    document.addEventListener('click', this.closePanel);
+  }
+
   shouldComponentUpdate(nextProps) {
     if (this.props.emojis !== nextProps.emojis) {
       return true;
@@ -67,22 +71,8 @@ export default class EmojisCategory extends Component {
     return false;
   }
 
-  componentDidMount() {
-    document.addEventListener('click', this.closePanel);
-  }
-
   componentWillUnmount() {
     document.removeEventListener('click', this.closePanel);
-  }
-
-  closePanel() {
-    if (canClose && this.popupModifier.isModifiersPanelOpened) {
-      const popup = this.modifierNodes[this.popupModifier.modifierPanelName].getDOMNode();
-      if (popup) {
-        popup.className = popup.className.replace(' isOpened', '');
-        this.popupModifier.isModifiersPanelOpened = false;
-      }
-    }
   }
 
   onClickEmoji = (emoji, event) => {
@@ -116,8 +106,18 @@ export default class EmojisCategory extends Component {
     return this.DOMNode;
   }
 
+  closePanel() {
+    if (canClose && this.popupModifier.isModifiersPanelOpened) {
+      const popup = this.modifierNodes[this.popupModifier.modifierPanelName].getDOMNode();
+      if (popup) {
+        popup.className = popup.className.replace(' isOpened', '');
+        this.popupModifier.isModifiersPanelOpened = false;
+      }
+    }
+  }
+
   renderEmojis(emojis) {
-    return emojis.map(emoji => {
+    return emojis.map((emoji) => {
       const hasModifier = has(emoji, 'modifiers');
 
       return (

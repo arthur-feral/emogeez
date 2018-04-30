@@ -1,6 +1,7 @@
+/* eslint-disable*/
 import jsdom from 'jsdom';
 
-const {JSDOM} = jsdom;
+const { JSDOM } = jsdom;
 
 // from mocha-jsdom https://github.com/rstacruz/mocha-jsdom/blob/master/index.js#L80
 const propagateToGlobal = (win) => {
@@ -8,7 +9,7 @@ const propagateToGlobal = (win) => {
     if (!win.hasOwnProperty(key)) continue;
     if (key in global) continue;
 
-    global[key] = win[key]
+    global[key] = win[key];
   }
 };
 
@@ -35,25 +36,25 @@ function storageMock() {
   let storage = {};
 
   return {
-    setItem: function(key, value) {
+    setItem: function (key, value) {
       storage[key] = value || '';
     },
-    getItem: function(key) {
+    getItem: function (key) {
       return key in storage ? storage[key] : null;
     },
-    removeItem: function(key) {
+    removeItem: function (key) {
       delete storage[key];
     },
     get length() {
       return Object.keys(storage).length;
     },
-    key: function(i) {
+    key: function (i) {
       let keys = Object.keys(storage);
       return keys[i] || null;
     },
-    clear: function() {
+    clear: function () {
       storage = {};
-    }
+    },
   };
 }
 
