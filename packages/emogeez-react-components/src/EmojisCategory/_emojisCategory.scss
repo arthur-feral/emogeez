@@ -3,13 +3,13 @@
     position: relative;
 
     .emojisCategoryTitle {
-        border-bottom: 1px solid #c5c9cf;
+        border-bottom: 1px solid $categoryTitleBorder;
         margin-bottom: 0.5rem;
     }
 
     .emojisCategoryTitleName {
         font-size: 1.3rem;
-        color: #707689;
+        color: $categoryTitleColor;
         text-transform: capitalize;
     }
 
@@ -31,8 +31,8 @@
         position: relative;
 
         &:hover {
-            border-color: #f4f4f5;
-            background-color: #f4f4f5;
+            border-color: $emojiHoverColor;
+            background-color: $emojiHoverColor;
         }
     }
 

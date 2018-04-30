@@ -1,7 +1,6 @@
 import {
   map,
 } from 'lodash';
-import './_emojisPopup.scss';
 import EmojisPopup from './EmojisPopup';
 import centered from '@storybook/addon-centered';
 

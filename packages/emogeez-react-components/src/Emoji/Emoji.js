@@ -61,8 +61,9 @@ export default class Emoji extends Component {
         draggable="false"
         onClick={this.onClick}
         aria-label={name}
-        alt={symbol}
-      />
+      >
+        {symbol}
+      </button>
     );
   }
 }

@@ -1,13 +1,8 @@
-$categoriesListHeight: 24.5rem;
-$categoriesListWidth: 26rem;
-$categoriesTabsHeight: 3rem;
-$colorGreen: #1bc74e;
-
 .emojisPopupContainer {
     width: $categoriesListWidth;
     height: $categoriesListHeight + $categoriesTabsHeight;
     padding: 0;
-    background-color: #fff;
+    background-color: $popupBackgroundColor;
     position: relative;
     border-radius: 5px;
     display: flex;
@@ -31,7 +26,7 @@ $colorGreen: #1bc74e;
     }
 
     .emojisPopupCategories {
-        border-top: 1px solid #c5c9cf;
+        border-top: 1px solid $categoriesTabsBorderColor;
         background-color: white;
         display: flex;
         flex-direction: row;
@@ -57,7 +52,7 @@ $colorGreen: #1bc74e;
         .emojisPopupEmojiCategoryIcon {
             width: 16px;
             height: 16px;
-            fill: #707689;
+            fill: $categoriesTabsColor;
         }
 
         .emojisPopupEmojiCategoryDot {
@@ -78,11 +73,11 @@ $colorGreen: #1bc74e;
 
         &.selected {
             .emojisPopupEmojiCategoryIcon {
-                fill: $colorGreen;
+                fill: $categoriesTabsColorHover;
             }
 
             .emojisPopupEmojiCategoryDot {
-                background-color: $colorGreen;
+                background-color: $categoriesTabsColorHover;
             }
         }
     }
