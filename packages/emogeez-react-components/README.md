@@ -99,6 +99,8 @@ static propTypes = {
   historyEnabled: PropTypes.bool,
   historyLimit: PropTypes.number,
   
+  togglerRenderer: PropTypes.func,
+  
   onOpen: PropTypes.func,
   onClose: PropTypes.func,
 };
@@ -109,6 +111,11 @@ static defaultProps = {
   isOpened: false,
   historyEnabled: true,
   historyLimit: 21,
+  togglerRenderer: (props, state) => (
+    <button>
+      <People className={CLASSNAMES.icon} />
+    </button>
+  ),
   onOpen: noop,
   onClose: noop,
 };
