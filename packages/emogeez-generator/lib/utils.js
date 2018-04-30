@@ -6,8 +6,12 @@ import fs from 'fs-extra';
  * @param char
  * @returns {string}
  */
+/* eslint-disable */
 export const getUnicode = (char) => {
-  let i = 0, c = 0, p = 0, r = [];
+  let i = 0;
+  let c = 0;
+  let p = 0;
+  let r = [];
   while (i < char.length) {
     c = char.charCodeAt(i++);
     if (p) {
@@ -21,6 +25,7 @@ export const getUnicode = (char) => {
   }
   return r.join('-');
 };
+/* eslint-enable */
 
 /**
  * save a file on a specified path

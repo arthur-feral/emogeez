@@ -1,7 +1,3 @@
-require('../../tests/bootstrap');
-import {
-  size,
-} from 'lodash';
 import {
   expect,
 } from 'chai';
@@ -10,8 +6,13 @@ import EventEmitter from 'eventemitter3';
 import Collector from './collector';
 import {
   PARSER_PARSE_EMOJI_SUCCESS,
-  PARSER_PARSE_CATEGORIES_SUCCESS, PARSER_FOUND_THEME, COLLECTOR_COLLECT_DONE,
+  PARSER_PARSE_CATEGORIES_SUCCESS,
 } from '../constants';
+
+require('../../tests/bootstrap');
+
+const json = `${process.cwd()}/tests/jsons/grinning-face.json`;
+const emojiParsed = require(json);// eslint-disable-line
 
 const baseConfig = {
   destination: `${process.cwd()}/emojis`,
@@ -22,11 +23,10 @@ const baseConfig = {
 };
 
 const emitter = new EventEmitter();
-let collector = Collector(baseConfig, emitter);
+const collector = Collector(baseConfig, emitter);
 
 const collectDoneSpy = sinon.spy();
 
-const emojiParsed = require(`${process.cwd()}/tests/jsons/grinning-face.json`);
 emitter.on('COLLECTOR_COLLECT_DONE', collectDoneSpy);
 describe('Collector', () => {
   describe('getStore', () => {
@@ -87,30 +87,30 @@ describe('Collector', () => {
       expect(collector.getStore().categories).to.deep.equal({});
       emitter.emit(PARSER_PARSE_CATEGORIES_SUCCESS, [
         {
-          'fullName': 'Smileys & People',
-          'name': 'people',
-          'symbol': '😃',
-          'url': 'https://emojipedia.org/people/',
+          fullName: 'Smileys & People',
+          name: 'people',
+          symbol: '😃',
+          url: 'https://emojipedia.org/people/',
         },
         {
-          'fullName': 'Food',
-          'name': 'food',
-          'symbol': '🍟',
-          'url': 'https://emojipedia.org/food/',
+          fullName: 'Food',
+          name: 'food',
+          symbol: '🍟',
+          url: 'https://emojipedia.org/food/',
         },
       ]);
       expect(collector.getStore().categories).to.deep.equal({
         people: {
-          'fullName': 'Smileys & People',
-          'name': 'people',
-          'symbol': '😃',
-          'url': 'https://emojipedia.org/people/',
+          fullName: 'Smileys & People',
+          name: 'people',
+          symbol: '😃',
+          url: 'https://emojipedia.org/people/',
         },
         food: {
-          'fullName': 'Food',
-          'name': 'food',
-          'symbol': '🍟',
-          'url': 'https://emojipedia.org/food/',
+          fullName: 'Food',
+          name: 'food',
+          symbol: '🍟',
+          url: 'https://emojipedia.org/food/',
         },
       });
     });

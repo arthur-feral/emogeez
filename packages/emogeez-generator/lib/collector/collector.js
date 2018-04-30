@@ -7,7 +7,6 @@ import {
   has,
   forEach,
   get,
-  keys,
   size,
 } from 'lodash';
 import {
@@ -19,9 +18,7 @@ import {
   PARSER_PARSE_CATEGORY_SUCCESS,
   PARSER_FOUND_MODIFIERS,
   GENERATOR_GENERATE_THEMES_SUCCESS,
-  GENERATOR_GENERATE_SPRITE_SUCCESS,
   GENERATOR_GENERATE_STYLE_SUCCESS,
-  FETCHER_FETCH_IMAGE_ERROR,
   PARSER_FOUND_THEME,
 } from '../constants';
 import logger from '../logger';
@@ -33,7 +30,7 @@ import logger from '../logger';
  * @return {{getEmojis: function(): {}, getThemes: function(): {}, getCategories: function(): {}, getData: function(): {}}}
  */
 export default (config, emitter) => {
-  let store = {
+  const store = {
     emojisTotal: 0,
     emojisScrapped: 0,
     imagesTotal: 0,
@@ -55,11 +52,8 @@ export default (config, emitter) => {
   /**
    * @description event handler
    * it catches all themes receptions when we parse an emoji page
-   * @param {object} emoji the emoji data
-   * @param {string} themeName the theme name
-   * @param {string} imageUrl image url
    */
-  const onThemeFound = (emoji, themeName, imageUrl) => {
+  const onThemeFound = () => {
     store.imagesTotal += 1;
   };
   emitter.on(PARSER_FOUND_THEME, onThemeFound);
@@ -92,12 +86,10 @@ export default (config, emitter) => {
    * @param {array<object>} categoriesFound
    */
   const onCategoriesParsed = (categoriesFound) => {
-    store.categories = reduce(categoriesFound, (result, category) => {
-      return {
-        ...result,
-        [category.name]: category,
-      };
-    }, {});
+    store.categories = reduce(categoriesFound, (result, category) => ({
+      ...result,
+      [category.name]: category,
+    }), {});
   };
   emitter.on(PARSER_PARSE_CATEGORIES_SUCCESS, onCategoriesParsed);
 
@@ -154,7 +146,7 @@ export default (config, emitter) => {
     what we do here:
     we select only main emojis and remove modifiers from the emojis list, coz they are in the main emojis modifiers key
      */
-    let themes = reduce(store.emojisThemes, (result, emojisTheme, themeName) => ({
+    const themes = reduce(store.emojisThemes, (result, emojisTheme, themeName) => ({
       ...result,
       [themeName]: reduce(emojisTheme, (result, emojiName, imageUrl) => ({
         ...result,
@@ -166,7 +158,7 @@ export default (config, emitter) => {
   };
   emitter.on(PARSER_PARSED_ALL_IMAGES, onParsedAllImages);
 
-  const generateJSONS = (theme) => {
+  const generateJSONS = () => {
     let dataClean = {};
     forEach(store.categories, (category) => {
       dataClean = {
@@ -188,16 +180,10 @@ export default (config, emitter) => {
 
     forEach(store.emojis, (emoji) => {
       if (has(emoji, 'parent')) {
-        store.emojis[emoji.parent]
-          ['modifiers']
-          [emoji.name] = emoji;
+        store.emojis[emoji.parent].modifiers = store.emojis[emoji.parent].modifiers || {};
+        store.emojis[emoji.parent].modifiers[emoji.name] = emoji;
 
-        dataClean
-          [emoji.category]
-          ['emojis']
-          [emoji.parent]
-          ['modifiers']
-          [emoji.name] = omit(emoji, 'themes');
+        dataClean[emoji.category].emojis[emoji.parent].modifiers[emoji.name] = omit(emoji, 'themes');
       } else {
         dataClean = {
           ...dataClean,
@@ -224,7 +210,7 @@ export default (config, emitter) => {
   const generateThemeJSON = (themeName, emojisNames) => {
     let themeData = {};
 
-    emojisNames.map((emojiName) => {
+    map(emojisNames, (emojiName) => {
       const emoji = omit(store.emojis[emojiName], 'url', 'themes', 'modifiers');
 
       if (!has(emoji, 'parent')) {
@@ -241,8 +227,8 @@ export default (config, emitter) => {
       } else {
         const parentIndex = findIndex(themeData[emoji.category].emojis, (e => e.name === emoji.parent));
         const parent = themeData[emoji.category].emojis[parentIndex];
-        parent['modifiers'] = {
-          ...parent['modifiers'] || {},
+        parent.modifiers = {
+          ...parent.modifiers || {},
           [emoji.name]: emoji,
         };
 
@@ -256,12 +242,12 @@ export default (config, emitter) => {
                   ...result,
                   parent,
                 ];
-              } else {
-                return [
-                  ...result,
-                  e,
-                ];
               }
+
+              return [
+                ...result,
+                e,
+              ];
             }, []),
           },
         };

@@ -3,18 +3,11 @@ import {
 } from 'chai';
 import sinon from 'sinon';
 import {
-  size,
   map,
 } from 'lodash';
 import fs from 'fs';
 import EventEmitter from 'eventemitter3';
 import Parser from './parser';
-import {
-  FETCHER_FETCH_CATEGORIES_SUCCESS,
-  FETCHER_FETCH_CATEGORY_SUCCESS,
-  FETCHER_FETCH_EMOJI_SUCCESS,
-  PARSER_FOUND_THEME,
-} from '../constants';
 
 const baseConfig = {
   destination: `${process.cwd()}/emojis`,
@@ -25,7 +18,7 @@ const baseConfig = {
 };
 
 const emitter = new EventEmitter();
-let parser = Parser(baseConfig, emitter);
+const parser = Parser(baseConfig, emitter);
 
 const parseCategoriesSuccessSpy = sinon.spy();
 const parseCategorySuccessSpy = sinon.spy();
@@ -40,27 +33,27 @@ emitter.on('PARSER_PARSE_IMAGE_SUCCESS', parseImageSuccessSpy);
 emitter.on('PARSER_FOUND_THEME', foundThemeForEmoji);
 
 const indexHTML = fs.readFileSync(`${process.cwd()}/tests/html/index.html`, 'utf8');
-const categoriesJSON = require(`${process.cwd()}/tests/jsons/categories.json`);
+const categoriesJSON = require(`${process.cwd()}/tests/jsons/categories.json`);//eslint-disable-line
 const categoryHTML = fs.readFileSync(`${process.cwd()}/tests/html/people.html`, 'utf8');
-const categoryEmojis = require(`${process.cwd()}/tests/jsons/emojisForCategory.json`);
+const categoryEmojis = require(`${process.cwd()}/tests/jsons/emojisForCategory.json`);//eslint-disable-line
 
 // grinning-face
 // with shortname
 const emojiHTML1 = fs.readFileSync(`${process.cwd()}/tests/html/grinning-face.html`, 'utf8');
-const emojiJSON1 = require(`${process.cwd()}/tests/jsons/grinning-face.json`);
+const emojiJSON1 = require(`${process.cwd()}/tests/jsons/grinning-face.json`);//eslint-disable-line
 
 // Kissing Face With Smiling Eyes
 // with snake case shortname
 const emojiHTML2 = fs.readFileSync(`${process.cwd()}/tests/html/kissing-face-with-smiling-eyes.html`, 'utf8');
-const emojiJSON2 = require(`${process.cwd()}/tests/jsons/kissing-face-with-smiling-eyes.json`);
+const emojiJSON2 = require(`${process.cwd()}/tests/jsons/kissing-face-with-smiling-eyes.json`);//eslint-disable-line
 
 // emoji with no shortnames
 const emojiHTML3 = fs.readFileSync(`${process.cwd()}/tests/html/grinning-face-with-star-eyes.html`, 'utf8');
-const emojiJSON3 = require(`${process.cwd()}/tests/jsons/grinning-face-with-star-eyes.json`);
+const emojiJSON3 = require(`${process.cwd()}/tests/jsons/grinning-face-with-star-eyes.json`);//eslint-disable-line
 
 // emoji with modifiers
 const emojiHTML4 = fs.readFileSync(`${process.cwd()}/tests/html/father-christmas.html`, 'utf8');
-const emojiJSON4 = require(`${process.cwd()}/tests/jsons/father-christmas.json`);
+const emojiJSON4 = require(`${process.cwd()}/tests/jsons/father-christmas.json`);//eslint-disable-line
 
 describe('Parser', () => {
   describe('parseCategories', () => {
@@ -71,11 +64,11 @@ describe('Parser', () => {
       expect(parseCategoriesSuccessSpy.callCount).to.equal(1);
       expect(parseCategoriesSuccessSpy.args[0][0]).to.deep.equal([
         {
-          'fullName': 'Smileys & People',
-          'name': 'people',
-          'symbol': '😃',
-          'unicode': '1f603',
-          'url': 'https://emojipedia.org/people/',
+          fullName: 'Smileys & People',
+          name: 'people',
+          symbol: '😃',
+          unicode: '1f603',
+          url: 'https://emojipedia.org/people/',
         },
       ]);
     });
@@ -113,10 +106,10 @@ describe('Parser', () => {
       it('parses the emoji page', () => {
         expect(parseEmojiSuccessSpy.callCount).to.equal(0);
         parser.parseEmoji({
-          'symbol': '😙',
-          'name': 'kissing-face-with-smiling-eyes',
-          'fullName': 'Kissing Face With Smiling Eyes',
-          'category': 'people',
+          symbol: '😙',
+          name: 'kissing-face-with-smiling-eyes',
+          fullName: 'Kissing Face With Smiling Eyes',
+          category: 'people',
         }, emojiHTML2);
 
         expect(parseEmojiSuccessSpy.callCount).to.equal(1);
@@ -130,10 +123,10 @@ describe('Parser', () => {
       it('parses the emoji page', () => {
         expect(parseEmojiSuccessSpy.callCount).to.equal(0);
         parser.parseEmoji({
-          'symbol': '😙',
-          'name': 'kissing-face-with-smiling-eyes',
-          'fullName': 'Kissing Face With Smiling Eyes',
-          'category': 'people',
+          symbol: '😙',
+          name: 'kissing-face-with-smiling-eyes',
+          fullName: 'Kissing Face With Smiling Eyes',
+          category: 'people',
         }, emojiHTML2);
 
         expect(parseEmojiSuccessSpy.callCount).to.equal(1);
@@ -147,10 +140,10 @@ describe('Parser', () => {
       it('parses the emoji page', () => {
         expect(parseEmojiSuccessSpy.callCount).to.equal(0);
         parser.parseEmoji({
-          'symbol': '🤩',
-          'name': 'grinning-face-with-star-eyes',
-          'fullName': 'Star-Struck',
-          'category': 'people',
+          symbol: '🤩',
+          name: 'grinning-face-with-star-eyes',
+          fullName: 'Star-Struck',
+          category: 'people',
         }, emojiHTML3);
 
         expect(parseEmojiSuccessSpy.callCount).to.equal(1);
@@ -164,10 +157,10 @@ describe('Parser', () => {
       it('parses the emoji page', () => {
         expect(parseEmojiSuccessSpy.callCount).to.equal(0);
         parser.parseEmoji({
-          'symbol': '🎅',
-          'name': 'father-christmas',
-          'fullName': 'Santa Claus',
-          'category': 'people',
+          symbol: '🎅',
+          name: 'father-christmas',
+          fullName: 'Santa Claus',
+          category: 'people',
         }, emojiHTML4);
 
         expect(parseEmojiSuccessSpy.callCount).to.equal(1);

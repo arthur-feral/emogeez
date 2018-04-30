@@ -7,7 +7,8 @@
     "transpile": "$(npm bin)/babel . --out-dir dist --ignore cache,tests,node_modules,nyc-reports,dist,*.test.js",
     "prepublish": "yarn run transpile && yarn run test",
     "lint:js": "eslint lib tests --ext .js",
-    "test": "NODE_ENV=test nyc --check-coverage --lines 85 --report-dir=${CIRCLE_ARTIFACTS:-'./nyc-reports'} --reporter=lcov yarn run mocha",
+    "coverage": "NODE_ENV=test nyc --check-coverage --lines 85 --report-dir=${CIRCLE_ARTIFACTS:-'./nyc-reports'} --reporter=lcov yarn run mocha",
+    "test": "echo \"yarn run lint:js --quiet\" && yarn run coverage",
     "mocha": "NODE_ENV=test mocha --compilers js:babel-register --timeout 5000 -r tests/bootstrap.js -r babel-polyfill $(find lib -name '*.test.js')"
   },
   "engines": {
@@ -33,6 +34,7 @@
     "babel-cli": "^6.18.0",
     "babel-core": "^6.20.0",
     "babel-env": "^2.4.1",
+    "babel-eslint": "^8.2.3",
     "babel-plugin-transform-class-properties": "6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-polyfill": "^6.23.0",
@@ -40,7 +42,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-register": "^6.18.0",
     "chai": "^3.5.0",
-    "eslint": "^4.14.0",
+    "eslint": "^4.19.1",
     "fetch-mock": "^6.3.0",
     "mocha": "^3.2.0",
     "nyc": "^11.3.0",

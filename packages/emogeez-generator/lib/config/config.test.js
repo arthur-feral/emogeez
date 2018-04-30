@@ -1,4 +1,3 @@
-require('../../tests/bootstrap');
 import {
   expect,
 } from 'chai';
@@ -11,6 +10,8 @@ import {
   APP_START,
   DEFAULT_THEMES_URL,
 } from '../constants';
+
+require('../../tests/bootstrap');
 
 const emitter = new EventEmitter();
 

@@ -10,7 +10,7 @@ const loggersTypes = {
   success: 'green',
   error: 'red',
 };
-let loggers = {};
+const loggers = {};
 
 each(loggersTypes, (color, type) => {
   loggers[type] = process.env.NODE_ENV === 'test' ?
@@ -25,18 +25,7 @@ loggers.count = function (message) {
 };
 
 loggers.sameLine = (message) => {
-
-  /*
-  Got some
-  Maximum call stack size exceeded
-  RangeError: Maximum call stack size exceeded
-  sometimes
-   */
-  try {
-    process.stdout.write(`${chalk.yellow(message)}\r`);
-  } catch (error) {
-
-  }
+  process.stdout.write(`${chalk.yellow(message)}\r`);
 };
 /**
  * module for stdout logs

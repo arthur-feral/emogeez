@@ -1,14 +1,14 @@
+import jimp from 'jimp';
+import sizeOf from 'image-size';
+import gm from 'gm';
+import fse from 'fs-extra';
+import fs from 'fs';
 import {
-  has,
-  forEach,
   map,
-  omit,
   keys,
   size,
-  reduce,
 } from 'lodash';
 import {
-  APP_READY,
   COLLECTOR_COLLECT_DONE,
   ERROR,
   FETCHER_FETCH_IMAGE_SUCCESS,
@@ -20,18 +20,14 @@ import {
   GENERATOR_GENERATE_THEMES_SUCCESS,
   EXTENTIONS,
 } from '../constants';
-import jimp from 'jimp';
 import logger from '../logger';
-import sizeOf from 'image-size';
-import gm from 'gm';
-import fse from 'fs-extra';
-import fs from 'fs';
 import StylesGenerator from './stylesGenerators';
 
-const PngQuant = require('pngquant');
-const pngOptimizer = new PngQuant([192, '--quality', '60-80', '--nofs', '-']);
+// const PngQuant = require('pngquant');
+// const pngOptimizer = new PngQuant([192, '--quality', '60-80', '--nofs', '-']);
 const Spritesmith = require('spritesmith');
-const spritesmith = new Spritesmith();
+
+// const spritesmith = new Spritesmith();
 const MAX_IMAGES_TO_PROCESS_AT_TIME = 5;
 const MAX_SPRITES_TO_PROCESS_AT_TIME = 1;
 
@@ -41,10 +37,10 @@ const BASE_IMAGE_PATH = `${IMAGES_PATH}/base.png`;
 
 export default (config, emitter) => {
   const stylesGenerator = StylesGenerator(config, emitter);
-  let imagesToProcess = [];
+  const imagesToProcess = [];
   let imagesProcessing = 0;
 
-  let spritesToProcess = [];
+  const spritesToProcess = [];
   let spritesProcessing = 0;
 
   let themesToGenerate = 0;
@@ -57,9 +53,9 @@ export default (config, emitter) => {
    */
   const generateImage = (emoji, themeName) => {
     imagesProcessing += 1;
-    let imageFolder = `${TEMP_FILES_PATH}/images/${themeName}/${emoji.category}`;
-    let imagePath = `${imageFolder}/${emoji.name}.png`;
-    let imageRawPath = `${imageFolder}/${emoji.name}_raw.png`;
+    const imageFolder = `${TEMP_FILES_PATH}/images/${themeName}/${emoji.category}`;
+    const imagePath = `${imageFolder}/${emoji.name}.png`;
+    const imageRawPath = `${imageFolder}/${emoji.name}_raw.png`;
     let alreadyProcessed = true;
     const sizeWithGoodResolution = config.size * 2;
 
@@ -77,48 +73,48 @@ export default (config, emitter) => {
     if (alreadyProcessed) {
       emitter.emit(PARSER_PARSE_IMAGE_SUCCESS, emoji, themeName, imagePath);
       return Promise.resolve(emoji, themeName, imagePath);
-    } else {
-      return new Promise((resolve, reject) => {
-        jimp.read(imageRawPath).then((image) => {
-          image
-            .autocrop()
-            .write(imagePath, (writeBaseError) => {
-              if (writeBaseError) {
-                reject(writeBaseError);
-              }
-
-              gm(imageRawPath)
-                .resize(null, sizeWithGoodResolution)
-                .write(imagePath, (writeRawError) => {
-                  if (writeRawError) {
-                    reject(writeRawError);
-                  }
-
-                  const dimensions = sizeOf(imagePath);
-                  const x = Math.round((sizeWithGoodResolution - dimensions.width) / 2);
-
-                  gm(BASE_IMAGE_PATH)
-                  // add the emoji image into the base transparent image centered
-                    .draw(`image Over ${x},0 0,0 ${imagePath}`)
-                    .write(imagePath, function (writeResultError) {
-                      if (writeResultError) {
-                        reject(writeResultError);
-                      }
-
-                      resolve();
-                    });
-                });
-            });
-        }).then(() => {
-          emitter.emit(PARSER_PARSE_IMAGE_SUCCESS, emoji, themeName, imagePath);
-        }).catch((error) => {
-          logger.error('[GenerateImage]');
-          logger.error(error.message);
-          logger.error(error.stack);
-          emitter.emit(PARSER_PARSE_IMAGE_ERROR, error, emoji, themeName);
-        });
-      });
     }
+
+    return new Promise((resolve, reject) => {
+      jimp.read(imageRawPath).then((image) => {
+        image
+          .autocrop()
+          .write(imagePath, (writeBaseError) => {
+            if (writeBaseError) {
+              reject(writeBaseError);
+            }
+
+            gm(imageRawPath)
+              .resize(null, sizeWithGoodResolution)
+              .write(imagePath, (writeRawError) => {
+                if (writeRawError) {
+                  reject(writeRawError);
+                }
+
+                const dimensions = sizeOf(imagePath);
+                const x = Math.round((sizeWithGoodResolution - dimensions.width) / 2);
+
+                gm(BASE_IMAGE_PATH)
+                // add the emoji image into the base transparent image centered
+                  .draw(`image Over ${x},0 0,0 ${imagePath}`)
+                  .write(imagePath, (writeResultError) => {
+                    if (writeResultError) {
+                      reject(writeResultError);
+                    }
+
+                    resolve();
+                  });
+              });
+          });
+      }).then(() => {
+        emitter.emit(PARSER_PARSE_IMAGE_SUCCESS, emoji, themeName, imagePath);
+      }).catch((error) => {
+        logger.error('[GenerateImage]');
+        logger.error(error.message);
+        logger.error(error.stack);
+        emitter.emit(PARSER_PARSE_IMAGE_ERROR, error, emoji, themeName);
+      });
+    });
   };
 
   const tryProcessingImage = () => {
@@ -127,33 +123,15 @@ export default (config, emitter) => {
     if (imagesProcessing < MAX_IMAGES_TO_PROCESS_AT_TIME) {
       if (imagesToProcess.length) {
         const args = imagesToProcess.shift();
-        generateImage.apply(null, args);
+        generateImage.apply(null, args); // eslint-disable-line
       }
     }
   };
 
-  const tryProcessingSprite = () => {
-    spritesProcessing -= 1;
-
-    if (spritesProcessing < MAX_SPRITES_TO_PROCESS_AT_TIME) {
-      if (spritesToProcess.length) {
-        const args = spritesToProcess.shift();
-        generateSprite.apply(null, args);
-      }
-    }
-  };
-
-  const queueImageProcessing = (emoji, themeName) => {
-    if (imagesProcessing < MAX_IMAGES_TO_PROCESS_AT_TIME) {
-      generateImage(emoji, themeName);
-    } else {
-      imagesToProcess.push([emoji, themeName]);
-    }
-  };
 
   const queueSpriteProcessing = (themeName, theme) => {
     if (spritesProcessing < MAX_SPRITES_TO_PROCESS_AT_TIME) {
-      generateSprite(themeName, theme);
+      generateSprite(themeName, theme); // eslint-disable-line
     } else {
       spritesToProcess.push([themeName, theme]);
     }
@@ -171,6 +149,26 @@ export default (config, emitter) => {
     );
   };
 
+  const tryProcessingSprite = () => {
+    spritesProcessing -= 1;
+
+    if (spritesProcessing < MAX_SPRITES_TO_PROCESS_AT_TIME) {
+      if (spritesToProcess.length) {
+        const args = spritesToProcess.shift();
+        generateSprite.apply(null, args); //eslint-disable-line
+      }
+    }
+  };
+
+  const queueImageProcessing = (emoji, themeName) => {
+    if (imagesProcessing < MAX_IMAGES_TO_PROCESS_AT_TIME) {
+      generateImage(emoji, themeName);
+    } else {
+      imagesToProcess.push([emoji, themeName]);
+    }
+  };
+
+
   /**
    *
    * @param {string} themeName name of the theme
@@ -185,7 +183,7 @@ export default (config, emitter) => {
       const themeSpriteDestination = `${themeSpritePath}/${themeName}.png`;
       fse.mkdirpSync(themeSpritePath);
 
-      Spritesmith.run({ src: emojisFilePath }, function handleResult(err, result) {
+      Spritesmith.run({ src: emojisFilePath }, (err, result) => {
         if (err) {
           reject(err);
         } else {
@@ -202,8 +200,8 @@ export default (config, emitter) => {
             reject(error);
           }
         }
-
       });
+
       // spritesmith.createImages(emojisFilePath, function handleImages(err, images) {
       //   const result = spritesmith.processImages(images);
       //   const destination = fs.createWriteStream(themeSpriteDestination).on('finish', () => {
@@ -228,6 +226,7 @@ export default (config, emitter) => {
       logger.success(`[Generator] ${themeName} Done`);
       emitter.emit(GENERATOR_GENERATE_SPRITE_SUCCESS, themeName, keys(theme), properties, coordinates);
     }).catch((error) => {
+      console.log('fuck', error);
       logger.error(`[Generator] ${error}`);
       emitter.emit(GENERATOR_GENERATE_SPRITE_ERROR, error, themeName, theme);
     });
@@ -240,8 +239,8 @@ export default (config, emitter) => {
    * @param {object} properties
    * @param {object} coordinates
    */
-  const generateStyle = (themeName, emojisNames, properties, coordinates) => {
-    return new Promise((resolve, reject) => {
+  const generateStyle = (themeName, emojisNames, properties, coordinates) =>
+    new Promise((resolve, reject) => {
       const styleFiles = stylesGenerator(themeName, emojisNames, properties, coordinates);
       const filePath = `${config.destination}/${themeName}`;
       const fileNameCss = `${themeName}.${EXTENTIONS.css}`;
@@ -257,12 +256,11 @@ export default (config, emitter) => {
       } catch (error) {
         return reject(error);
       }
-    }).then((path) => {
+    }).then(() => {
       emitter.emit(GENERATOR_GENERATE_STYLE_SUCCESS, themeName, emojisNames);
     }).catch((error) => {
       emitter.emit(ERROR, error);
     });
-  };
 
   emitter.on(COLLECTOR_COLLECT_DONE, generateSprites);
   emitter.on(FETCHER_FETCH_IMAGE_SUCCESS, queueImageProcessing);

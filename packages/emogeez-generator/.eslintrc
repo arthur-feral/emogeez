@@ -1,20 +1,23 @@
 {
+  "parser": "babel-eslint",
   "extends": [
     "iadvize"
   ],
+  "rules": {
+    "global-require": "warn"
+  },
   "overrides": [
     {
       "files": [
-        "tests/*.test.js"
+        "**/*.test.js"
       ],
       "globals": {
-        "_": true,
-        "specs": true,
         "describe": true,
-        "expect": true,
         "it": true,
-        "chai": true,
+        "beforeEach": true,
+        "afterEach": true,
         "before": true,
+        "after": true
       }
     }
   ]
