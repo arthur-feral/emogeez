@@ -1,7 +1,6 @@
 import {
   reduce,
   map,
-  sortBy,
   last,
 } from 'lodash';
 import fs from 'fs-extra';
