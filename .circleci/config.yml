@@ -28,6 +28,7 @@ jobs:
           - v2-cache-react-components-{{ checksum "packages/emogeez-react-components/yarn.lock" }}
           - v2-cache-react-components
 
+      - run: yarn
       - run: yarn run lerna-bootstrap
 
       - save_cache:
