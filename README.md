@@ -11,10 +11,10 @@ It is managed by [lerna](https://github.com/lerna/lerna) and [yarn workspaces](h
 
 ### emogeez-generator
 ![generator](https://github.com/arthur-feral/emogeez/blob/master/examples/demo_generator.png)
-[README](https://github.com/arthur-feral/emogeez/blob/master/emogeez-generator/README.md)
+[README](https://github.com/arthur-feral/emogeez/blob/master/packages/emogeez-generator/README.md)
 ### emogeez-parser
-[README](https://github.com/arthur-feral/emogeez/blob/master/emogeez-parser/README.md)
+[README](https://github.com/arthur-feral/emogeez/blob/master/packages/emogeez-parser/README.md)
 
 ### emogeez-react-components
-[README](https://github.com/arthur-feral/emogeez/blob/master/emogeez-react-components/README.md)
+[README](https://github.com/arthur-feral/emogeez/blob/master/packages/emogeez-react-components/README.md)
 ![GIF example](https://github.com/arthur-feral/emogeez/blob/master/examples/demo_react_components.gif)
