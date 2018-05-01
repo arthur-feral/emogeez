@@ -1,6 +1,8 @@
 import {
   reduce,
   map,
+  sortBy,
+  last,
 } from 'lodash';
 import fs from 'fs-extra';
 import EventEmitter from 'eventemitter3';
@@ -98,7 +100,17 @@ describe('Generator', () => {
         width: 144,
         height: 144,
       });
-      expect(generateSpriteSuccessSpy.args[0][3]).to.deep.equal(coordinatesJSON);
+
+      const expectedCoordsValues = reduce(coordinatesJSON, (result, value, key) => ({
+        ...result,
+        [last(key.split('/'))]: value,
+      }), {});
+      const resultCoordsValues = reduce(generateSpriteSuccessSpy.args[0][3], (result, value, key) => ({
+        ...result,
+        [last(key.split('/'))]: value,
+      }), {});
+
+      expect(expectedCoordsValues).to.deep.equal(resultCoordsValues);
     });
   });
 
