@@ -43,16 +43,24 @@ const placePopup = (popup, toggler, offset, parentClass = null) => {
     right: 'auto',
     bottom: 'auto',
   };
-  if ((togglerBox.left + (togglerBox.width / 2)) < parentBox.width / 2) {
-    if (popupBox.left <= 0) { // if popup is out of parent on left side
-      newPlacement.left = (togglerBox.width / 2) + (-popupBox.left + offset); // we add to popup propertie the difference
+  const togglerCenter = togglerBox.left + (togglerBox.width / 2);
+  const parentCenter = parentBox.left + (parentBox.width / 2);
+
+  // if we are closer to the left
+  if (togglerCenter < parentCenter) {
+    let nextLeft = (togglerCenter - (popupBox.width / 2)) + offset;
+    const outLeft = nextLeft - parentBox.left;
+    if (outLeft < 0) {
+      nextLeft += Math.abs(outLeft);
     }
+    newPlacement.left = nextLeft - togglerBox.left;
   } else {
-    newPlacement.right = (togglerBox.width / 2) - (popupBox.width / 2);
-    const outRight = parentBox.right - popupBox.right;
-    if (outRight <= 0) {
-      newPlacement.right -= outRight - offset;
+    let nextLeft = (togglerCenter - (popupBox.width / 2)) + offset;
+    const outRight = (parentBox.left + parentBox.width) - (nextLeft + popupBox.width);
+    if (outRight < 0) {
+      nextLeft -= Math.abs(outRight);
     }
+    newPlacement.left = nextLeft - togglerBox.left;
   }
 
   if ((togglerBox.top + (togglerBox.height / 2)) < parentBox.height / 2) {
@@ -132,8 +140,8 @@ export const placeModifiersPopup = (popup, toggler, parent) => {
   const togglerBox = toggler.getBoundingClientRect();
   const parentBox = parent.getBoundingClientRect();
 
-  const togglerCenter = togglerBox.left + togglerBox.width / 2;
-  const parentCenter = parentBox.left + parentBox.width / 2;
+  const togglerCenter = togglerBox.left + (togglerBox.width / 2);
+  const parentCenter = parentBox.left + (parentBox.width / 2);
   let popupLeft = 'auto';
 
 
