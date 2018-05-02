@@ -13,9 +13,6 @@
     "storybook": "start-storybook -p 9001 -c .storybook",
     "build-storybook": "build-storybook"
   },
-  "engines": {
-    "node": ">=9.2.0"
-  },
   "homepage": "https://github.com/arthur-feral/emogeez/tree/master/packages/emogeez-react-components",
   "keywords": [
     "emoji",

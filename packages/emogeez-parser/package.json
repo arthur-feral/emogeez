@@ -11,9 +11,6 @@
     "test": "yarn run lint:js --quiet && yarn run coverage",
     "mocha": "NODE_ENV=test mocha --compilers js:babel-register --timeout 5000 -r tests/bootstrap.js -r babel-polyfill $(find lib -name '*.test.js')"
   },
-  "engines": {
-    "node": ">=9.2.0"
-  },
   "homepage": "https://github.com/arthur-feral/emogeez/tree/master/packages/emogeez-parser",
   "keywords": [
     "emoji",
