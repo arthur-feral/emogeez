@@ -136,18 +136,6 @@ export default class EmojisPopupToggler extends Component {
       togglerRenderer,
     } = this.props;
 
-    /*
-    categories: PropTypes.array,
-    onClickEmoji: PropTypes.func,
-    isOpened: PropTypes.bool,
-    historyEnabled: PropTypes.bool,
-    historyLimit: PropTypes.number,
-    onOpen: PropTypes.func,
-    prefix: PropTypes.string,
-    onClose: PropTypes.func,
-    togglerRenderer: PropTypes.func,
-    containerClassNameForPlacement: PropTypes.string,
-     */
     const sanitizedProps = omit(this.props, [
       'className',
       'categories',
