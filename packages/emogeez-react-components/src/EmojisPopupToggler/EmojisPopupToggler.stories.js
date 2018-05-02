@@ -2,9 +2,9 @@ import {
   map,
 } from 'lodash';
 import React from 'react';
-import EmojisPopupToggler from './EmojisPopupToggler';
 import centered from '@storybook/addon-centered';
 import { storiesOf } from '@storybook/react';
+import EmojisPopupToggler from './EmojisPopupToggler';
 import apple from '../../node_modules/emogeez-generator/emojis/apple/apple.json';
 
 const stories = storiesOf('EmojisPopupToggler', module)
@@ -35,5 +35,33 @@ stories.add('Custom toggler', () => {
 
   return (
     <EmojisPopupToggler {...props} />
+  );
+});
+
+stories.add('Placement from parentClass', () => {
+  const togglerStyle = {
+    position: 'absolute',
+    left: 10,
+    top: 10,
+  };
+
+  const props = {
+    categories: map(apple, category => category),
+    onClickEmoji: console.log,
+    style: togglerStyle,
+    containerClassNameForPlacement: 'parentClass',
+  };
+
+  const parentStyle = {
+    width: 500,
+    height: 600,
+    border: '1px solid red',
+    position: 'relative',
+  };
+
+  return (
+    <div style={parentStyle} className="parentClass">
+      <EmojisPopupToggler {...props} />
+    </div>
   );
 });

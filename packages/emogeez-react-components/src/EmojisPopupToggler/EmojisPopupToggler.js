@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { noop } from 'lodash';
+import { noop, omit } from 'lodash';
 import EmojisPopup from '../EmojisPopup/EmojisPopup';
 import icons from '../Icons/Icons';
 import { placeEmojiPopup } from '../placement';
@@ -29,6 +29,7 @@ export default class EmojisPopupToggler extends Component {
     prefix: PropTypes.string,
     onClose: PropTypes.func,
     togglerRenderer: PropTypes.func,
+    containerClassNameForPlacement: PropTypes.string,
   };
 
   static defaultProps = {
@@ -45,6 +46,7 @@ export default class EmojisPopupToggler extends Component {
         <People className={CLASSNAMES.icon} />
       </button>
     ),
+    containerClassNameForPlacement: null,
   };
 
   constructor(props) {
@@ -107,7 +109,7 @@ export default class EmojisPopupToggler extends Component {
     const $arrow = this.arrow;
     $popup.className = `${$popup.className} opened`;
     if ($popup && $toggler && $arrow) {
-      placeEmojiPopup($popup, $toggler, MARGIN_POPUP, $arrow);
+      placeEmojiPopup($popup, $toggler, MARGIN_POPUP, $arrow, this.props.containerClassNameForPlacement);
     }
     this.props.onOpen();
   }
@@ -134,6 +136,19 @@ export default class EmojisPopupToggler extends Component {
       togglerRenderer,
     } = this.props;
 
+    const sanitizedProps = omit(this.props, [
+      'className',
+      'categories',
+      'onClickEmoji',
+      'isOpened',
+      'historyEnabled',
+      'historyLimit',
+      'onOpen',
+      'prefix',
+      'onClose',
+      'togglerRenderer',
+      'containerClassNameForPlacement',
+    ]);
     const originalToggler = togglerRenderer(this.props, this.state);
     const toggler = React.cloneElement(
       originalToggler, {
@@ -151,6 +166,7 @@ export default class EmojisPopupToggler extends Component {
         ref={(node) => {
           this.container = node;
         }}
+        {...sanitizedProps}
         className={classNames(className, CLASSNAMES.container)}
       >
         <div
