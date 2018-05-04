@@ -19,7 +19,7 @@ const findParents = (element, classNames) => {
 const placePopup = (popup, toggler, offset, parentClass = null) => {
   const isFromWindow = parentClass === null;
   let parentNotFound = false;
-  let $parent = isFromWindow ? window : findParents(popup, parentClass);
+  let $parent = isFromWindow ? window : findParents(toggler, parentClass);
   if (!$parent) {
     parentNotFound = true;
     $parent = window;
@@ -36,48 +36,41 @@ const placePopup = (popup, toggler, offset, parentClass = null) => {
   const popupBox = popup.getBoundingClientRect();
   const togglerBox = toggler.getBoundingClientRect();
 
-  // /!\ placement computing here is relative to the parent
-  const newPlacement = {
-    top: 'auto',
-    left: 'auto',
-    right: 'auto',
-    bottom: 'auto',
-  };
-  const togglerCenter = togglerBox.left + (togglerBox.width / 2);
-  const parentCenter = parentBox.left + (parentBox.width / 2);
+  const togglerCenterX = togglerBox.left + (togglerBox.width / 2);
+  const togglerCenterY = togglerBox.top + (togglerBox.height / 2);
+  const parentCenterX = parentBox.left + (parentBox.width / 2);
+  const parentCenterY = parentBox.top + (parentBox.height / 2);
+
+  let nextTop = popupBox.top;
+  let nextLeft = popupBox.left;
 
   // if we are closer to the left
-  if (togglerCenter < parentCenter) {
-    let nextLeft = (togglerCenter - (popupBox.width / 2)) + offset;
+  if (togglerCenterX < parentCenterX) {
+    nextLeft = (togglerCenterX - (popupBox.width / 2));
     const outLeft = nextLeft - parentBox.left;
     if (outLeft < 0) {
       nextLeft += Math.abs(outLeft);
     }
-    newPlacement.left = nextLeft - togglerBox.left;
+    nextLeft += offset;
   } else {
-    let nextLeft = (togglerCenter - (popupBox.width / 2)) + offset;
+    nextLeft = (togglerCenterX - (popupBox.width / 2));
     const outRight = (parentBox.left + parentBox.width) - (nextLeft + popupBox.width);
     if (outRight < 0) {
       nextLeft -= Math.abs(outRight);
     }
-    newPlacement.left = nextLeft - togglerBox.left;
+    nextLeft -= offset;
   }
 
-  if ((togglerBox.top + (togglerBox.height / 2)) < parentBox.height / 2) {
-    newPlacement.top = togglerBox.height + offset;
-    if (popupBox.top <= 0) { // if popup is out of parent on top side
-      newPlacement.top += (-popupBox.top + offset); // we add to popup propertie the difference
-    }
-  }
-  const outBottom = parentBox.bottom - popupBox.bottom;
-  if (outBottom <= 0) {
-    newPlacement.bottom = togglerBox.height + offset;
+  if (togglerCenterY < parentCenterY) {
+    nextTop = togglerBox.top + togglerBox.height + offset;
+  } else {
+    nextTop = togglerBox.top - popupBox.height - offset;
   }
 
-  popup.style.top = newPlacement.top === 'auto' ? 'auto' : `${newPlacement.top}px`;
-  popup.style.left = newPlacement.left === 'auto' ? 'auto' : `${newPlacement.left}px`;
-  popup.style.right = newPlacement.right === 'auto' ? 'auto' : `${newPlacement.right}px`;
-  popup.style.bottom = newPlacement.bottom === 'auto' ? 'auto' : `${newPlacement.bottom}px`;
+  popup.style.setProperty('top', `${nextTop}px`);
+  popup.style.setProperty('left', `${nextLeft}px`);
+  popup.style.setProperty('right', 'auto');
+  popup.style.setProperty('bottom', 'auto');
 };
 
 /**
@@ -116,15 +109,12 @@ const placeArrow = (popup, toggler, arrow) => {
 export const placeEmojiPopup = (popup, toggler, offset, arrow, parentClass = null) => {
   const popupBox = popup.getBoundingClientRect();
   const togglerBox = toggler.getBoundingClientRect();
-  const style = popup.style;
 
-  style.top = `${togglerBox.height + offset}px`;
-  style.left = `${togglerBox.width / 2}px`;
-  style.right = 'auto';
-  style.bottom = 'auto';
-  style.marginLeft = `${-popupBox.width / 2}px`;
+  popup.style.setProperty('top', `${togglerBox.top + togglerBox.height + offset}px`);
+  popup.style.setProperty('left', `${togglerBox.left + (togglerBox.width / 2) - (popupBox.width / 2)}px`);
+  popup.style.setProperty('right', 'auto');
+  popup.style.setProperty('bottom', 'auto');
 
-  popup.style = style;
   placePopup(popup, toggler, offset, parentClass);
   placeArrow(popup, toggler, arrow);
 };

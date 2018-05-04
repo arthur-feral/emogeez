@@ -1,3 +1,4 @@
+import ReactDOM from 'react-dom';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -6,9 +7,23 @@ import EmojisPopup from '../EmojisPopup/EmojisPopup';
 import icons from '../Icons/Icons';
 import { placeEmojiPopup } from '../placement';
 
-const MARGIN_POPUP = 10;
+const POPUP_CONTAINER_ID = 'emogeezPopup';
+const OFFSET_POPUP = 10;
 const People = icons.people;
 const COMPONENT_NAME = 'emojisPopupToggler';
+let togglersCount = 0;
+let togglerOpenedUID = null;
+let togglersMounted = [];
+/**
+ * return the popup DOM Node
+ * @return {Element}
+ */
+const getPopupNode = () => {
+  const $container = window.document.getElementById(POPUP_CONTAINER_ID);
+
+  return $container.children[0];
+};
+
 export const CLASSNAMES = {
   container: `${COMPONENT_NAME}Container`,
   popupWrapper: `${COMPONENT_NAME}PopupWrapper`,
@@ -52,23 +67,60 @@ export default class EmojisPopupToggler extends Component {
   constructor(props) {
     super(props);
 
+    togglersCount += 1;
+    this.UID = togglersCount;
     this.container = null;
-    this.popup = null;
-    this.arrow = null;
     this.toggler = null;
-    this.emojisPopup = null;
     this.handleClickOutside = this.handleClickOutside.bind(this);
-    this.onClickButton = this.onClickButton.bind(this);
+    this.onClickToggler = this.onClickToggler.bind(this);
     this.openPopup = this.openPopup.bind(this);
     this.closePopup = this.closePopup.bind(this);
     this.isOpened = props.isOpened;
   }
 
   componentDidMount() {
+    const {
+      categories,
+      prefix,
+      historyEnabled,
+      historyLimit,
+    } = this.props;
+
+    let emojiPopupContainer = window.document.getElementById(POPUP_CONTAINER_ID);
+    if (emojiPopupContainer === null) {
+      emojiPopupContainer = window.document.createElement('div');
+      emojiPopupContainer.id = POPUP_CONTAINER_ID;
+      window.document.body.appendChild(emojiPopupContainer);
+      ReactDOM.render((
+        <div
+          className={classNames(CLASSNAMES.popupWrapper)}
+        >
+          <div
+            key="popupArrow"
+            className={CLASSNAMES.popupArrow}
+          />
+          <EmojisPopup
+            prefix={prefix}
+            historyEnabled={historyEnabled}
+            historyLimit={historyLimit}
+            className={CLASSNAMES.popup}
+            categories={categories}
+            onClickEmoji={this.onClickEmoji}
+          />
+        </div>
+      ), emojiPopupContainer);
+    }
+
     document.addEventListener(
       'click',
       this.handleClickOutside,
     );
+
+    if (this.isOpened) {
+      this.openPopup();
+    }
+
+    togglersMounted.push(this.UID);
   }
 
   componentWillUnmount() {
@@ -76,18 +128,33 @@ export default class EmojisPopupToggler extends Component {
       'click',
       this.handleClickOutside,
     );
+
+    togglersMounted = togglersMounted.filter(uid => uid !== this.UID);
+
+    if (togglersMounted.length === 0) {
+      const container = window.document.getElementById(POPUP_CONTAINER_ID);
+      ReactDOM.unmountComponentAtNode(container);
+      container.remove();
+    }
   }
 
-  onClickButton = (event) => {
+  onClickToggler(event) {
     event.preventDefault();
     event.stopPropagation();
 
     if (!this.isOpened) {
+      // in case the popup is already opened from another toggler
+      // we close it first to get the animation
+      if (togglerOpenedUID !== null && this.UID !== togglerOpenedUID) {
+        this.closePopup();
+      }
+      this.isOpened = true;
       this.openPopup();
     } else {
+      this.isOpened = false;
       this.closePopup();
     }
-  };
+  }
 
   onClickEmoji = (emoji, event) => {
     this.closePopup();
@@ -95,21 +162,20 @@ export default class EmojisPopupToggler extends Component {
   };
 
   closePopup() {
-    this.isOpened = false;
-    const $popup = this.popup;
+    togglerOpenedUID = null;
+    const $popup = getPopupNode();
     $popup.className = $popup.className.replace(' opened', '');
-    this.emojisPopup.resetScroll();
     this.props.onClose();
   }
 
   openPopup() {
-    this.isOpened = true;
-    const $popup = this.popup;
+    togglerOpenedUID = this.UID;
+    const $popup = getPopupNode();
     const $toggler = this.toggler;
-    const $arrow = this.arrow;
+    const $arrow = $popup.children[0];
     $popup.className = `${$popup.className} opened`;
     if ($popup && $toggler && $arrow) {
-      placeEmojiPopup($popup, $toggler, MARGIN_POPUP, $arrow, this.props.containerClassNameForPlacement);
+      placeEmojiPopup($popup, $toggler, OFFSET_POPUP, $arrow, this.props.containerClassNameForPlacement);
     }
     this.props.onOpen();
   }
@@ -120,19 +186,20 @@ export default class EmojisPopupToggler extends Component {
    * @param {Event} event
    */
   handleClickOutside(event) {
-    const domNode = this.container;
-    if ((!domNode || !domNode.contains(event.target)) && this.isOpened) {
-      this.onClickButton(event);
+    if (this.isOpened) {
+      const domNode = this.container;
+      if ((!domNode || !domNode.contains(event.target))) {
+        this.isOpened = false;
+        if (this.UID === togglerOpenedUID) {
+          this.closePopup();
+        }
+      }
     }
   }
 
   render() {
     const {
       className,
-      categories,
-      prefix,
-      historyEnabled,
-      historyLimit,
       togglerRenderer,
     } = this.props;
 
@@ -156,7 +223,7 @@ export default class EmojisPopupToggler extends Component {
           this.toggler = node;
         },
         className: classNames(CLASSNAMES.button, originalToggler.props.className),
-        onClick: this.onClickButton,
+        onClick: this.onClickToggler,
         alt: originalToggler.props.alt || 'toggle emoji popup',
       },
     );
@@ -169,31 +236,6 @@ export default class EmojisPopupToggler extends Component {
         {...sanitizedProps}
         className={classNames(className, CLASSNAMES.container)}
       >
-        <div
-          className={classNames(CLASSNAMES.popupWrapper)}
-          ref={(node) => {
-            this.popup = node;
-          }}
-        >
-          <div
-            key="popupArrow"
-            ref={(node) => {
-              this.arrow = node;
-            }}
-            className={CLASSNAMES.popupArrow}
-          />
-          <EmojisPopup
-            ref={(node) => {
-              this.emojisPopup = node;
-            }}
-            prefix={prefix}
-            historyEnabled={historyEnabled}
-            historyLimit={historyLimit}
-            className={CLASSNAMES.popup}
-            categories={categories}
-            onClickEmoji={this.onClickEmoji}
-          />
-        </div>
         {toggler}
       </div>
     );
