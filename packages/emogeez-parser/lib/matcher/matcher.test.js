@@ -91,6 +91,7 @@ describe('Matcher', () => {
       assert.isFalse(hasOnlyEmojis('apple', simpleText5));
 
       assert.isTrue(hasOnlyEmojis('apple', emojisText1));
+      assert.isTrue(hasOnlyEmojis('apple', `${emojisText1} ${emojisText3}`));
       assert.isTrue(hasOnlyEmojis('apple', emojisText2));
       assert.isTrue(hasOnlyEmojis('apple', emojisText3));
       assert.isTrue(hasOnlyEmojis('apple', emojisText4));

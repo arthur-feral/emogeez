@@ -71,7 +71,7 @@ export default ({
       const charUnicode = getUnicode(char);
       const emojiName = getNameFromCodepoint(themeName, charUnicode);
 
-      return !isUndefined(emojiName);
+      return !isUndefined(emojiName) || /\s/g.test(char);
     });
 
     return (chars && (chars.length === emojis.length));
