@@ -173,7 +173,7 @@ export default class EmojisPopup extends Component {
     }
 
     this.resetScroll();
-    this.props.onClickEmoji(emoji, event);
+    this.props.onClickEmoji()(emoji, event);
   }
 
   onClickCategory = (categoryName) => {

@@ -79,7 +79,9 @@ stories.add('Multiples togglers', () => {
 
   const toggler1 = {
     categories: map(apple, category => category),
-    onClickEmoji: console.log,
+    onClickEmoji: (emoji) => {
+      console.log('toggler1', emoji);
+    },
     style: {
       position: 'absolute',
       top: 10,
@@ -90,7 +92,9 @@ stories.add('Multiples togglers', () => {
 
   const toggler2 = {
     categories: map(apple, category => category),
-    onClickEmoji: console.log,
+    onClickEmoji: (emoji) => {
+      console.log('toggler2', emoji);
+    },
     style: {
       position: 'absolute',
       right: 10,
@@ -101,7 +105,9 @@ stories.add('Multiples togglers', () => {
 
   const toggler3 = {
     categories: map(apple, category => category),
-    onClickEmoji: console.log,
+    onClickEmoji: (emoji) => {
+      console.log('toggler3', emoji);
+    },
     style: {
       position: 'absolute',
       bottom: 10,
@@ -112,7 +118,9 @@ stories.add('Multiples togglers', () => {
 
   const toggler4 = {
     categories: map(apple, category => category),
-    onClickEmoji: console.log,
+    onClickEmoji: (emoji) => {
+      console.log('toggler4', emoji);
+    },
     style: {
       position: 'absolute',
       left: 10,
@@ -123,7 +131,9 @@ stories.add('Multiples togglers', () => {
 
   const toggler5 = {
     categories: map(apple, category => category),
-    onClickEmoji: console.log,
+    onClickEmoji: (emoji) => {
+      console.log('toggler5', emoji);
+    },
     style: {
       position: 'absolute',
       right: 10,
@@ -138,7 +148,9 @@ stories.add('Multiples togglers', () => {
 
   const toggler6 = {
     categories: map(apple, category => category),
-    onClickEmoji: console.log,
+    onClickEmoji: (emoji) => {
+      console.log('toggler6', emoji);
+    },
     style: {
       position: 'absolute',
       left: 250,

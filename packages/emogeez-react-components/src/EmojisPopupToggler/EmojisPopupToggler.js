@@ -6,6 +6,9 @@ import { noop, omit } from 'lodash';
 import EmojisPopup from '../EmojisPopup/EmojisPopup';
 import icons from '../Icons/Icons';
 import { placeEmojiPopup } from '../placement';
+import {
+  CLASSNAMES as EmojisCategoryCLASSNAMES,
+} from '../EmojisCategory/EmojisCategory';
 
 const POPUP_CONTAINER_ID = 'emogeezPopup';
 const OFFSET_POPUP = 10;
@@ -21,6 +24,7 @@ export const CLASSNAMES = {
   icon: `${COMPONENT_NAME}Icon`,
 };
 
+let onClickEmojiCallback = noop;
 let togglersCount = 0;
 let togglerOpenedUID = null;
 let togglersMounted = [];
@@ -40,7 +44,7 @@ const destroyPopup = () => {
   container.remove();
 };
 
-const buildPopup = (props, onClickEmoji) => {
+const buildPopup = (props) => {
   const {
     categories,
     prefix,
@@ -65,7 +69,9 @@ const buildPopup = (props, onClickEmoji) => {
         historyLimit={historyLimit}
         className={CLASSNAMES.popup}
         categories={categories}
-        onClickEmoji={onClickEmoji}
+        onClickEmoji={() => (emoji, event) => {
+          onClickEmojiCallback(emoji, event);
+        }}
       />
     </div>
   ), emojiPopupContainer);
@@ -121,7 +127,7 @@ export default class EmojisPopupToggler extends Component {
   componentDidMount() {
     const emojiPopupContainer = window.document.getElementById(POPUP_CONTAINER_ID);
     if (emojiPopupContainer === null) {
-      buildPopup(this.props, this.onClickEmoji);
+      buildPopup(this.props);
     }
 
     document.addEventListener(
@@ -140,7 +146,7 @@ export default class EmojisPopupToggler extends Component {
   componentWillReceiveProps(newProps) {
     if (newProps.categories !== this.props.categories && newProps.categories.length !== 0) {
       destroyPopup();
-      buildPopup(newProps, this.onClickEmoji);
+      buildPopup(newProps);
     }
   }
 
@@ -168,14 +174,18 @@ export default class EmojisPopupToggler extends Component {
         this.closePopup();
       }
       this.isOpened = true;
+      onClickEmojiCallback = this.onClickEmoji;
       this.openPopup();
     } else {
       this.isOpened = false;
       this.closePopup();
     }
+
+    return false;
   }
 
   onClickEmoji = (emoji, event) => {
+    this.isOpened = false;
     this.closePopup();
     this.props.onClickEmoji(emoji, event);
   };
@@ -206,12 +216,19 @@ export default class EmojisPopupToggler extends Component {
    */
   handleClickOutside(event) {
     if (this.isOpened) {
-      const domNode = this.container;
-      if ((!domNode || !domNode.contains(event.target))) {
+      const togglerNode = this.container;
+      const popupNode = getPopupNode();
+      //const modifiersClassNameRegex = new RegExp(EmojisCategoryCLASSNAMES.hasModifiers, 'g');
+      if (
+        !popupNode.contains(event.target)
+        && !togglerNode.contains(event.target)
+      ) {
         this.isOpened = false;
         if (this.UID === togglerOpenedUID) {
           this.closePopup();
         }
+        // if (!modifiersClassNameRegex.test(event.target.className)) {
+        // }
       }
     }
   }
