@@ -1,8 +1,9 @@
 # Emogeez parser
 
 This module helps you parsing emojis in text and find emojis to replace it with the emoji name, or utf8 or image.
-It works with emogeez-generator data generated. You can either use the `fetchTheme` to fetch the JSON file containing the emojis data (using the file hosting),
-or `setTheme` passing your data if you want to use a local json. :warning: the, JSON data must be properly formated as the generator whould do if you use custom json.
+It works with emogeez-generator data generated. You can either use the `fetchTheme` to fetch the JSON file containing the emojis data from the opensource cdn jsdeliver,
+`https://cdn.jsdelivr.net/gh/arthur-feral/emogeez@latest/packages/emogeez-generator/emojis/apple/apple.png`
+or `setTheme` passing your data if you want to use a custom json. :warning: the, JSON data must be properly formated as the generator whould do if you use custom json.
 
 ### Installation 
 ```bash
@@ -21,15 +22,12 @@ After running the `emogeez-generator` package, the generated files can be hosted
 import parserFactory from 'emogeez-parser';
 
 const {
+  store,
   replacer,
   matcher,
-} = parserFactory({
-  blackList: [],
-  theme: 'apple',
-  themesUrl: 'https://yourcdn.com/emojis/',
-});
+} = parserFactory();
 
-fetchTheme('apple')
+store.fetchTheme('apple')
     .then(() => {
       let text = 'Hello ! :) how are you 😊';
       const hasOnlyOneEmoji = matcher.hasOnlyOneEmoji('apple', text);
@@ -59,7 +57,7 @@ The default thème.
 
 ####themesUrl {string} 
 The url when all emojis themes are hosted. 
-**Default** the emogeez-generator repository. (the size of each emojis are 48px)
+**Default** the emogeez-generator repository: `https://cdn.jsdelivr.net/gh/arthur-feral/emogeez@latest/packages/emogeez-generator/emojis/apple/apple.json`
 
 
 store
@@ -182,6 +180,23 @@ Find the list of emojis's names in the text
 
 **returns** {array<string>}
 
+#### hasOnlyEmojis
+Return true if the string contains only emojis in it
+
+**arguments**
+- `theme` {string} the theme for what we want to match emojis
+- `text` {string} the text in which we want to find if there is emojis
+
+**returns** {boolean}
+
+#### hasOnlyOneEmoji
+Return true if the string contains only one emoji in it
+
+**arguments**
+- `theme` {string} the theme for what we want to match emojis
+- `text` {string} the text in which we want to find if there is emojis
+
+**returns** {boolean}
 
 # Notes
 

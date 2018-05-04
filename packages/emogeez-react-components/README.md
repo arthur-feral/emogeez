@@ -6,7 +6,7 @@ or you can fetch manually the json file generated with [emogeez-generator](https
 [hosted here](https://cdn.jsdelivr.net/gh/arthur-feral/emogeez@latest/packages/emogeez-generator/emojis/apple/apple.json)(https://cdn.jsdelivr.net/gh/arthur-feral/emogeez@latest/packages/emogeez-generator/emojis/apple/apple.json).
 
 <p align="center">
-  <img src="https://github.com/arthur-feral/emogeez/blob/master/packages/emogeez-react-components/popup_emojis.png">
+  <img src="https://raw.githubusercontent.com/arthur-feral/emogeez/master/packages/emogeez-react-components/popup_emojis.png">
 </p>
 
 You can test it by running the storybook.
@@ -103,6 +103,10 @@ static propTypes = {
   
   onOpen: PropTypes.func,
   onClose: PropTypes.func,
+  
+  // if you want the popup to be placed according to a parent
+  // the popup will try to be contained in it
+  containerClassNameForPlacement: PropTypes.string,
 };
 static defaultProps = {
   prefix: 'emojis',
@@ -118,6 +122,7 @@ static defaultProps = {
   ),
   onOpen: noop,
   onClose: noop,
+  containerClassNameForPlacement: null,
 };
 ```
 

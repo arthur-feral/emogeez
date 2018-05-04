@@ -32,7 +32,7 @@ export default (commander, emitter) => {
   const DEFAULT_CONFIG_PARAMS = {
     destination: 'emojis',
     themesUrl: DEFAULT_THEMES_URL,
-    size: 48,
+    size: 24,
     cache: false,
     prefix: 'emojis',
     preproc: 'sass',

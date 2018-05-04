@@ -1,16 +1,17 @@
 # Emogeez generator 👷‍♂️
 
 This module is a tool for building emojis sprites for many themes to be used on web apps.
-It gathers required informations from the website [Emojipedia](https://emojipedia.org) like images of all emojis in different themes and build an sprite image with all the emojis.
-To display these emojis on webpages it generates also the stylesheet file with the positions.
+It gathers required informations from the website [Emojipedia](https://emojipedia.org) like images of all emojis in different themes and build an sprite image with all the emojis and the stylesheet file associated with all the emojis positions.
 To be used on web app easily, it build a JSON file with useful informations about each emojis for each categories.
+You can after this use the [emogeez-react-components](https://github.com/arthur-feral/emogeez/blob/master/packages/emogeez-react-components/README.md) components library to display them on your app.
 
+---
 Themes that can be used: `apple, emojione, emojidex, emojipedia, facebook, google, htc, lg, messenger, microsoft, mozilla, samsung, twitter, whatsapp`
 
 Once the generator's work is done, you find the generated files into the specified folder (default in the current working directory).
-For each themes, you will find a .json, .png and .sass or .less.
+For each themes, you will find a .json, .png and .sass or .less and a .css file.
 
-![generator](https://github.com/arthur-feral/emogeez/blob/master/packages/emogeez-generator/demo_generator.png)
+![generator](https://github.com/arthur-feral/emogeez/raw/master/packages/emogeez-generator/demo_generator.png)
 
 #### The PNG
 [apple.png](https://github.com/arthur-feral/emogeez/raw/master/packages/emogeez-generator/emojis/apple/apple.png)
@@ -50,136 +51,57 @@ The emojis positions are stored in this stylesheet. Each emoji has a classname b
 It stores useful informations about each emoji.
 
 ```JSON
-{
-  "food-drink": {
-    "symbol": "🍔",
-    "url": "https://emojipedia.org/food-drink/",
-    "name": "food-drink",
-    "fullName": "Food & Drink",
-    "unicode": "1f354",
-    "emojis": [
-      {
-        "symbol": "🍇",
-        "name": "grapes",
-        "fullName": "Grapes",
-        "category": "food-drink",
-        "unicode": "1f347",
-        "shortnames": [
-          "grapes"
-        ],
-        "shortname": "grapes"
-      },
-      {
-        "symbol": "🍈",
-        "name": "melon",
-        "fullName": "Melon",
-        "category": "food-drink",
-        "unicode": "1f348",
-        "shortnames": [
-          "melon"
-        ],
-        "shortname": "melon"
-      },
-      {
-        "symbol": "🍉",
-        "name": "watermelon",
-        "fullName": "Watermelon",
-        "category": "food-drink",
-        "unicode": "1f349",
-        "shortnames": [
-          "watermelon"
-        ],
-        "shortname": "watermelon"
-      },
-```
-if an emoji owns modifiers (different version of an emoji like skin color etc...)
-of course you will find the modifiers version of emojis (black skin etc...). They are stored into the original emoji `modifiers` key if any. The modifiers versions of an emoji will have the same `index` key than the original.
-```
-{
-    "symbol": "🚣",
-    "url": "https://emojipedia.org/rowboat/",
-    "name": "rowboat",
-    "fullName": "Person Rowing Boat",
-    "category": "activity",
-    "unicode": "1f6a3",
+"father-christmas": {
+    "symbol": "🎅",
+    "name": "father-christmas",
+    "fullName": "Santa Claus",
+    "category": "people",
+    "unicode": "1f385",
     "shortnames": [
-      "rowboat"
+      "santa"
     ],
     "modifiers": {
-      "rowboat-type-1-2": {
-        "parent": "rowboat",
-        "fullName": "Person Rowing Boat: Light Skin Tone",
-        "name": "rowboat-type-1-2",
-        "symbol": "🚣🏻",
-        "category": "activity",
-        "url": "https://emojipedia.org/rowboat-type-1-2/",
-        "unicode": "1f6a3-1f3fb",
-        "shortnames": [
-          "rowboat-type-1-2"
-        ],
-        "modifiers": {},
-        "shortname": "rowboat-type-1-2"
+      "father-christmas-type-1-2": {
+        "parent": "father-christmas",
+        "fullName": "Santa Claus: Light Skin Tone",
+        "name": "father-christmas-type-1-2",
+        "symbol": "🎅🏻",
+        "category": "people",
       },
-      "rowboat-type-3": {
-        "parent": "rowboat",
-        "fullName": "Person Rowing Boat: Medium-Light Skin Tone",
-        "name": "rowboat-type-3",
-        "symbol": "🚣🏼",
-        "category": "activity",
-        "url": "https://emojipedia.org/rowboat-type-3/",
-        "unicode": "1f6a3-1f3fc",
-        "shortnames": [
-          "rowboat-type-3"
-        ],
-        "modifiers": {},
-        "shortname": "rowboat-type-3"
+      "father-christmas-type-3": {
+        "parent": "father-christmas",
+        "fullName": "Santa Claus: Medium-Light Skin Tone",
+        "name": "father-christmas-type-3",
+        "symbol": "🎅🏼",
+        "category": "people",
       },
-      "rowboat-type-4": {
-        "parent": "rowboat",
-        "fullName": "Person Rowing Boat: Medium Skin Tone",
-        "name": "rowboat-type-4",
-        "symbol": "🚣🏽",
-        "category": "activity",
-        "url": "https://emojipedia.org/rowboat-type-4/",
-        "unicode": "1f6a3-1f3fd",
-        "shortnames": [
-          "rowboat-type-4"
-        ],
-        "modifiers": {},
-        "shortname": "rowboat-type-4"
+      "father-christmas-type-4": {
+        "parent": "father-christmas",
+        "fullName": "Santa Claus: Medium Skin Tone",
+        "name": "father-christmas-type-4",
+        "symbol": "🎅🏽",
+        "category": "people",
       },
-      "rowboat-type-5": {
-        "parent": "rowboat",
-        "fullName": "Person Rowing Boat: Medium-Dark Skin Tone",
-        "name": "rowboat-type-5",
-        "symbol": "🚣🏾",
-        "category": "activity",
-        "url": "https://emojipedia.org/rowboat-type-5/",
-        "unicode": "1f6a3-1f3fe",
-        "shortnames": [
-          "rowboat-type-5"
-        ],
-        "modifiers": {},
-        "shortname": "rowboat-type-5"
+      "father-christmas-type-5": {
+        "parent": "father-christmas",
+        "fullName": "Santa Claus: Medium-Dark Skin Tone",
+        "name": "father-christmas-type-5",
+        "symbol": "🎅🏾",
+        "category": "people",
       },
-      "rowboat-type-6": {
-        "parent": "rowboat",
-        "fullName": "Person Rowing Boat: Dark Skin Tone",
-        "name": "rowboat-type-6",
-        "symbol": "🚣🏿",
-        "category": "activity",
-        "url": "https://emojipedia.org/rowboat-type-6/",
-        "unicode": "1f6a3-1f3ff",
-        "shortnames": [
-          "rowboat-type-6"
-        ],
-        "modifiers": {},
-        "shortname": "rowboat-type-6"
+      "father-christmas-type-6": {
+        "parent": "father-christmas",
+        "fullName": "Santa Claus: Dark Skin Tone",
+        "name": "father-christmas-type-6",
+        "symbol": "🎅🏿",
+        "category": "people",
       }
     },
-    "shortname": "rowboat"
-}
+    "shortname": "santa"
+    // ...
 ```
+if an emoji owns modifiers (different version of an emoji like skin color etc...)
+of course you will find the modifiers version of emojis (black skin etc...). They are stored into the original emoji `modifiers` key if any.
 
 ### How to use
 
@@ -214,7 +136,7 @@ $ yarn run -h
 
 Run it
 ```bash
-$ yarn run --preproc sass -d path/to/the/folder -s 48 -c
+$ yarn run --preproc sass -d path/to/the/folder -s 24 -c
 ```
 
 ###Options
@@ -228,7 +150,7 @@ $ yarn run --preproc sass -d path/to/the/folder -s 48 -c
 
 **size**
 
-```-s, --size``` The sprite's height (DEFAULT: 48)
+```-s, --size``` The sprite's height (DEFAULT: 24)
 
 **prefix**
 
@@ -236,7 +158,7 @@ $ yarn run --preproc sass -d path/to/the/folder -s 48 -c
 
 **cache**
 
-```-c, --cache``` Force using cache. In fact the program will get about 20k images and at least 2k html pages, so it caches datas on the first use and if you launch it again, it could use datas on the ``tmp/` folder. Don't use it if you want freash new datas from the websites. (DEFAULT: false)
+```-c, --cache``` Force using cache. In fact the program will get about 20k images and at least 2k html pages, so it caches datas on the first use and if you launch it again, it could use datas on the ``tmp/` folder. Don't use it if you want fresh new datas from the websites. (DEFAULT: false)
 
 # Notes
 This is an early version. I know it needs some fixes and optimization but it works.
