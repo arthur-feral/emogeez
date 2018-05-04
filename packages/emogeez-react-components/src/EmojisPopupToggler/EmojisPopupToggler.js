@@ -6,6 +6,9 @@ import { noop, omit } from 'lodash';
 import EmojisPopup from '../EmojisPopup/EmojisPopup';
 import icons from '../Icons/Icons';
 import { placeEmojiPopup } from '../placement';
+import {
+  CLASSNAMES as EmojisCategoryCLASSNAMES,
+} from '../EmojisCategory/EmojisCategory';
 
 const POPUP_CONTAINER_ID = 'emogeezPopup';
 const OFFSET_POPUP = 10;
@@ -177,9 +180,12 @@ export default class EmojisPopupToggler extends Component {
       this.isOpened = false;
       this.closePopup();
     }
+
+    return false;
   }
 
   onClickEmoji = (emoji, event) => {
+    this.isOpened = false;
     this.closePopup();
     this.props.onClickEmoji(emoji, event);
   };
@@ -210,12 +216,19 @@ export default class EmojisPopupToggler extends Component {
    */
   handleClickOutside(event) {
     if (this.isOpened) {
-      const domNode = this.container;
-      if ((!domNode || !domNode.contains(event.target))) {
+      const togglerNode = this.container;
+      const popupNode = getPopupNode();
+      //const modifiersClassNameRegex = new RegExp(EmojisCategoryCLASSNAMES.hasModifiers, 'g');
+      if (
+        !popupNode.contains(event.target)
+        && !togglerNode.contains(event.target)
+      ) {
         this.isOpened = false;
         if (this.UID === togglerOpenedUID) {
           this.closePopup();
         }
+        // if (!modifiersClassNameRegex.test(event.target.className)) {
+        // }
       }
     }
   }

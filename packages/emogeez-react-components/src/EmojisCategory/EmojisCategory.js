@@ -16,6 +16,7 @@ export const CLASSNAMES = {
   emojiWrapper: `${COMPONENT_NAME}EmojiWrapper`,
   modifiers: `${COMPONENT_NAME}Modifiers`,
   emoji: `${COMPONENT_NAME}Emoji`,
+  hasModifiers: `${COMPONENT_NAME}EmojiHasModifiers`,
 };
 let canClose = true;
 
@@ -131,7 +132,7 @@ export default class EmojisCategory extends Component {
             }}
             prefix={this.props.prefix}
             key={emoji.name}
-            className={CLASSNAMES.emoji}
+            className={classNames(CLASSNAMES.emoji, CLASSNAMES.hasModifiers)}
             emoji={emoji}
             onClick={this.onClickEmoji}
           />
