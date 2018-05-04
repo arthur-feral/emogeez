@@ -1,38 +1,6 @@
 .emojisPopupTogglerContainer {
     position: relative;
 
-    .emojisPopupTogglerPopupWrapper {
-        animation-duration: 0.3s;
-        border: 1px solid $popupBorderColor;
-        box-shadow: 0 6px 12px 0 rgba(38, 40, 45, .2);
-        animation-fill-mode: both;
-        animation-name: slideInDown;
-        display: none;
-        border-radius: 5px;
-        visibility: hidden;
-        position: absolute;
-
-        &.opened {
-            display: block;
-            visibility: visible;
-        }
-    }
-
-    .emojisPopupTogglerArrow {
-        display: block;
-        width: 1rem;
-        height: 1rem;
-        border: 1px solid $popupBorderColor;
-        transform: rotate(-45deg);
-        position: absolute;
-        box-sizing: content-box;
-        background-color: white;
-    }
-
-    .emojisPopupTogglerPopup {
-
-    }
-
     .emojisPopupTogglerButton {
         background-color: transparent;
         border: 0;
@@ -46,6 +14,34 @@
         height: 16px;
         fill: #707689;
     }
+}
+
+.emojisPopupTogglerPopupWrapper {
+    animation-duration: 0.3s;
+    border: 1px solid $popupBorderColor;
+    box-shadow: 0 6px 12px 0 rgba(38, 40, 45, .2);
+    animation-fill-mode: both;
+    animation-name: slideInDown;
+    display: none;
+    border-radius: 5px;
+    visibility: hidden;
+    position: fixed;
+
+    &.opened {
+        display: block;
+        visibility: visible;
+    }
+}
+
+.emojisPopupTogglerArrow {
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    border: 1px solid $popupBorderColor;
+    transform: rotate(-45deg);
+    position: absolute;
+    box-sizing: content-box;
+    background-color: white;
 }
 
 @keyframes slideInDown {
