@@ -11,6 +11,16 @@ const POPUP_CONTAINER_ID = 'emogeezPopup';
 const OFFSET_POPUP = 10;
 const People = icons.people;
 const COMPONENT_NAME = 'emojisPopupToggler';
+
+export const CLASSNAMES = {
+  container: `${COMPONENT_NAME}Container`,
+  popupWrapper: `${COMPONENT_NAME}PopupWrapper`,
+  popup: `${COMPONENT_NAME}Popup`,
+  popupArrow: `${COMPONENT_NAME}Arrow`,
+  button: `${COMPONENT_NAME}Button`,
+  icon: `${COMPONENT_NAME}Icon`,
+};
+
 let togglersCount = 0;
 let togglerOpenedUID = null;
 let togglersMounted = [];
@@ -24,18 +34,47 @@ const getPopupNode = () => {
   return $container.children[0];
 };
 
-export const CLASSNAMES = {
-  container: `${COMPONENT_NAME}Container`,
-  popupWrapper: `${COMPONENT_NAME}PopupWrapper`,
-  popup: `${COMPONENT_NAME}Popup`,
-  popupArrow: `${COMPONENT_NAME}Arrow`,
-  button: `${COMPONENT_NAME}Button`,
-  icon: `${COMPONENT_NAME}Icon`,
+const destroyPopup = () => {
+  const container = window.document.getElementById(POPUP_CONTAINER_ID);
+  ReactDOM.unmountComponentAtNode(container);
+  container.remove();
+};
+
+const buildPopup = (props, onClickEmoji) => {
+  const {
+    categories,
+    prefix,
+    historyEnabled,
+    historyLimit,
+  } = props;
+
+  const emojiPopupContainer = window.document.createElement('div');
+  emojiPopupContainer.id = POPUP_CONTAINER_ID;
+  window.document.body.appendChild(emojiPopupContainer);
+  ReactDOM.render((
+    <div
+      className={classNames(CLASSNAMES.popupWrapper)}
+    >
+      <div
+        key="popupArrow"
+        className={CLASSNAMES.popupArrow}
+      />
+      <EmojisPopup
+        prefix={prefix}
+        historyEnabled={historyEnabled}
+        historyLimit={historyLimit}
+        className={CLASSNAMES.popup}
+        categories={categories}
+        onClickEmoji={onClickEmoji}
+      />
+    </div>
+  ), emojiPopupContainer);
 };
 
 export default class EmojisPopupToggler extends Component {
   static propTypes = {
     categories: PropTypes.array,
+    className: PropTypes.string,
     onClickEmoji: PropTypes.func,
     isOpened: PropTypes.bool,
     historyEnabled: PropTypes.bool,
@@ -48,6 +87,7 @@ export default class EmojisPopupToggler extends Component {
   };
 
   static defaultProps = {
+    className: '',
     prefix: 'emojis',
     categories: [],
     onClickEmoji: noop,
@@ -79,36 +119,9 @@ export default class EmojisPopupToggler extends Component {
   }
 
   componentDidMount() {
-    const {
-      categories,
-      prefix,
-      historyEnabled,
-      historyLimit,
-    } = this.props;
-
-    let emojiPopupContainer = window.document.getElementById(POPUP_CONTAINER_ID);
+    const emojiPopupContainer = window.document.getElementById(POPUP_CONTAINER_ID);
     if (emojiPopupContainer === null) {
-      emojiPopupContainer = window.document.createElement('div');
-      emojiPopupContainer.id = POPUP_CONTAINER_ID;
-      window.document.body.appendChild(emojiPopupContainer);
-      ReactDOM.render((
-        <div
-          className={classNames(CLASSNAMES.popupWrapper)}
-        >
-          <div
-            key="popupArrow"
-            className={CLASSNAMES.popupArrow}
-          />
-          <EmojisPopup
-            prefix={prefix}
-            historyEnabled={historyEnabled}
-            historyLimit={historyLimit}
-            className={CLASSNAMES.popup}
-            categories={categories}
-            onClickEmoji={this.onClickEmoji}
-          />
-        </div>
-      ), emojiPopupContainer);
+      buildPopup(this.props, this.onClickEmoji);
     }
 
     document.addEventListener(
@@ -123,6 +136,14 @@ export default class EmojisPopupToggler extends Component {
     togglersMounted.push(this.UID);
   }
 
+
+  componentWillReceiveProps(newProps) {
+    if (newProps.categories !== this.props.categories && newProps.categories.length !== 0) {
+      destroyPopup();
+      buildPopup(newProps, this.onClickEmoji);
+    }
+  }
+
   componentWillUnmount() {
     document.removeEventListener(
       'click',
@@ -132,9 +153,7 @@ export default class EmojisPopupToggler extends Component {
     togglersMounted = togglersMounted.filter(uid => uid !== this.UID);
 
     if (togglersMounted.length === 0) {
-      const container = window.document.getElementById(POPUP_CONTAINER_ID);
-      ReactDOM.unmountComponentAtNode(container);
-      container.remove();
+      destroyPopup();
     }
   }
 

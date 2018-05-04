@@ -17,6 +17,7 @@
 }
 
 .emojisPopupTogglerPopupWrapper {
+    z-index: 1;
     animation-duration: 0.3s;
     border: 1px solid $popupBorderColor;
     box-shadow: 0 6px 12px 0 rgba(38, 40, 45, .2);
