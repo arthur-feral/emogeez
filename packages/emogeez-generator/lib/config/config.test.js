@@ -32,7 +32,7 @@ describe('Config', () => {
     expect(conf).to.deep.equal({
       destination: 'emojis',
       themesUrl: DEFAULT_THEMES_URL,
-      size: 48,
+      size: 24,
       cache: false,
       prefix: 'emojis',
       preproc: 'sass',
