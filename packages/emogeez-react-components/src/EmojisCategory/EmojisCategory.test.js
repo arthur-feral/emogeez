@@ -40,9 +40,9 @@ describe('EmojisCategory', () => {
     const emojis = ReactTestUtils.findRenderedDOMComponentWithClass(component, CLASSNAMES.categoryEmojis);
     expect(emojis.children.length).to.equal(340);
     const grinningFace = emojis.children[0].children[0];
-    expect(grinningFace.className).to.equal('emojiContainer emojisCategoryEmoji emojis-grinning-face');
+    expect(grinningFace.className).to.equal('emojiContainer emojisCategoryEmoji emojisCategoryEmojiHasModifiers emojis-grinning-face');
     const man = emojis.children[105].children[0];
-    expect(man.className).to.equal('emojiContainer emojisCategoryEmoji emojis-man');
+    expect(man.className).to.equal('emojiContainer emojisCategoryEmoji emojisCategoryEmojiHasModifiers emojis-man');
   });
 
   it('should react onClick', () => {

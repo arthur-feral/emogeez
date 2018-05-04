@@ -45,7 +45,7 @@ describe('EmojisPopup', () => {
       const component = renderComponentIntoDOM({
         ...story,
         historyEnabled: false,
-        onClickEmoji: onClickSpy,
+        onClickEmoji: () => onClickSpy,
       });
 
       const emoji = ReactTestUtils.findRenderedDOMComponentWithClass(component, 'emojis-grinning-face');
@@ -58,7 +58,7 @@ describe('EmojisPopup', () => {
       const component = renderComponentIntoDOM({
         ...story,
         historyEnabled: true,
-        onClickEmoji: onClickSpy,
+        onClickEmoji: () => onClickSpy,
       });
 
       assert.isNull(localStorage.getItem('emojis-history'));
@@ -79,7 +79,7 @@ describe('EmojisPopup', () => {
         ...story,
         historyEnabled: true,
         historyLimit: 1,
-        onClickEmoji: onClickSpy,
+        onClickEmoji: () => onClickSpy,
       });
       assert.isNull(localStorage.getItem('emojis-history'));
       const emoji = ReactTestUtils.findRenderedDOMComponentWithClass(component, 'emojis-grinning-face');
