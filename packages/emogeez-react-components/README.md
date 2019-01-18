@@ -107,6 +107,13 @@ static propTypes = {
   // if you want the popup to be placed according to a parent
   // the popup will try to be contained in it
   containerClassNameForPlacement: PropTypes.string,
+  
+  // if you want to unmount the popup from the DOM
+  // on the last toggler unmount
+  // it means next time you render a new toggler
+  // and if it's the only one,
+  // then we re-render a popup
+  destroyPopupIfNoToggler: PropTypes.bool,
 };
 static defaultProps = {
   prefix: 'emojis',
@@ -123,6 +130,7 @@ static defaultProps = {
   onOpen: noop,
   onClose: noop,
   containerClassNameForPlacement: null,
+  destroyPopupIfNoToggler: false,
 };
 ```
 
