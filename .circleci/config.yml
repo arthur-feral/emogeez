@@ -28,7 +28,8 @@ jobs:
           - v2-cache-react-components-{{ checksum "packages/emogeez-react-components/yarn.lock" }}
           - v2-cache-react-components
 
-      - run: sudo apt-get install graphicsmagick
+      - run: sudo apt-get update
+      - run: sudo apt-get install -y graphicsmagick
       - run: yarn
       - run: yarn run lerna-bootstrap
 
