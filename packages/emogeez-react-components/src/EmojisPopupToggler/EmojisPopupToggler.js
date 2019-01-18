@@ -90,6 +90,7 @@ export default class EmojisPopupToggler extends Component {
     onClose: PropTypes.func,
     togglerRenderer: PropTypes.func,
     containerClassNameForPlacement: PropTypes.string,
+    destroyPopupIfNoToggler: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -108,6 +109,7 @@ export default class EmojisPopupToggler extends Component {
       </button>
     ),
     containerClassNameForPlacement: null,
+    destroyPopupIfNoToggler: false,
   };
 
   constructor(props) {
@@ -158,7 +160,7 @@ export default class EmojisPopupToggler extends Component {
 
     togglersMounted = togglersMounted.filter(uid => uid !== this.UID);
 
-    if (togglersMounted.length === 0) {
+    if (this.props.destroyPopupIfNoToggler && togglersMounted.length === 0) {
       destroyPopup();
     }
   }
