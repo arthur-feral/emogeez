@@ -17,6 +17,7 @@ $ git clone git@github.com:arthur-feral/emogeez.git
 
 # install imagemagick dependency for emogeez-gegnerator
 $ brew install graphicsmagick
+$ sudo apt-get install graphicsmagick
 
 # bootstrap the workspace
 $ yarn
