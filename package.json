@@ -5,12 +5,11 @@
   "author": "Arthur Féral, iAdvize <arthur.feral@hotmail.fr>",
   "license": "MIT",
   "scripts": {
-    "test": "./scripts/test.sh",
-    "bootstrap": "yarn",
     "lerna-bootstrap": "lerna bootstrap",
     "lerna-publish": "lerna publish",
     "lerna-clean": "lerna clean",
     "build": "./scripts/build.sh"
+    "test": "yarn run build && ./scripts/test.sh",
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",

@@ -4,12 +4,8 @@
   "description": "A toolbox for parsing emojis in texts.",
   "main": "dist/index.js",
   "scripts": {
-    "transpile": "$(npm bin)/babel . --out-dir dist --ignore cache,tests,node_modules,dist,*.test.js",
-    "prepublish": "yarn run transpile && yarn run test",
-    "lint:js": "eslint lib tests --ext .js",
-    "coverage": "NODE_ENV=test nyc --check-coverage --lines 85 --report-dir=${CIRCLE_ARTIFACTS:-'./nyc-reports'} --reporter=lcov yarn run mocha",
-    "test": "yarn run lint:js --quiet && yarn run coverage",
-    "mocha": "NODE_ENV=test mocha --compilers js:babel-register --timeout 5000 -r tests/bootstrap.js -r babel-polyfill $(find lib -name '*.test.js')"
+    "prepublish": "echo \"run tests?\"",
+    "test": "NODE_ENV=test mocha --compilers js:babel-register --timeout 5000 -r tests/bootstrap.js -r babel-polyfill $(find lib -name '*.test.js')"
   },
   "homepage": "https://github.com/arthur-feral/emogeez/tree/master/packages/emogeez-parser",
   "keywords": [
@@ -31,11 +27,5 @@
     "chai": "^3.5.0",
     "fetch-mock": "^6.3.0",
     "sinon": "4.5.0"
-  },
-  "nyc": {
-    "exclude": [
-      "dist/",
-      "tests/"
-    ]
   }
 }

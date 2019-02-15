@@ -5,12 +5,8 @@
   "scripts": {
     "start": "TEMP_FILES_PATH=tmp node ./dist/index.js",
     "dev": "node ./index.js",
-    "transpile": "$(npm bin)/babel . --out-dir dist --ignore cache,tests,node_modules,dist,*.test.js",
-    "prepublish": "yarn run transpile && yarn run test",
-    "lint:js": "eslint lib tests --ext .js --quiet",
-    "coverage": "NODE_ENV=test TEMP_FILES_PATH=tests/tmp nyc --check-coverage --lines 85 --report-dir=${CIRCLE_ARTIFACTS:-'./nyc-reports'} --reporter=lcov yarn run mocha",
-    "test": "yarn run lint:js --quiet && yarn run coverage",
-    "mocha": "NODE_ENV=test TEMP_FILES_PATH=tests/tmp mocha --compilers js:babel-register -r tests/bootstrap.js --timeout 5000 -r babel-polyfill $(find lib -name '*.test.js')",
+    "prepublish": "echo \"run tests?\"",
+    "test": "NODE_ENV=test TEMP_FILES_PATH=tests/tmp mocha --compilers js:babel-register -r tests/bootstrap.js --timeout 5000 -r babel-polyfill $(find lib -name '*.test.js')",
     "clean": "rm -r tmp/**/*"
   },
   "homepage": "https://github.com/arthur-feral/emogeez/tree/master/packages/emogeez-generator",
@@ -46,11 +42,5 @@
     "chai": "^3.5.0",
     "sinon": "^1.17.6",
     "superagent-mock": "3.7.0"
-  },
-  "nyc": {
-    "exclude": [
-      "dist/",
-      "tests/"
-    ]
   }
 }
