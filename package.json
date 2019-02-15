@@ -8,8 +8,8 @@
     "lerna-bootstrap": "lerna bootstrap",
     "lerna-publish": "lerna publish",
     "lerna-clean": "lerna clean",
-    "build": "./scripts/build.sh"
-    "test": "yarn run build && ./scripts/test.sh",
+    "build": "./scripts/build.sh",
+    "test": "yarn run build && ./scripts/test.sh"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
