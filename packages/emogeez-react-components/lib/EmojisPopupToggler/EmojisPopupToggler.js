@@ -6,9 +6,6 @@ import { noop, omit } from 'lodash';
 import EmojisPopup from '../EmojisPopup/EmojisPopup';
 import icons from '../Icons/Icons';
 import { placeEmojiPopup } from '../placement';
-import {
-  CLASSNAMES as EmojisCategoryCLASSNAMES,
-} from '../EmojisCategory/EmojisCategory';
 
 const POPUP_CONTAINER_ID = 'emogeezPopup';
 const OFFSET_POPUP = 10;
@@ -123,7 +120,7 @@ export default class EmojisPopupToggler extends Component {
     this.onClickToggler = this.onClickToggler.bind(this);
     this.openPopup = this.openPopup.bind(this);
     this.closePopup = this.closePopup.bind(this);
-    this.isOpened = props.isOpened;
+    togglerOpenedUID = props.isOpened ? this.UID : null;
   }
 
   componentDidMount() {
@@ -137,7 +134,7 @@ export default class EmojisPopupToggler extends Component {
       this.handleClickOutside,
     );
 
-    if (this.isOpened) {
+    if (togglerOpenedUID === this.UID) {
       this.openPopup();
     }
 
@@ -169,17 +166,14 @@ export default class EmojisPopupToggler extends Component {
     event.preventDefault();
     event.stopPropagation();
 
-    if (!this.isOpened) {
-      // in case the popup is already opened from another toggler
-      // we close it first to get the animation
-      if (togglerOpenedUID !== null && this.UID !== togglerOpenedUID) {
-        this.closePopup();
-      }
-      this.isOpened = true;
+    if (togglerOpenedUID !== this.UID) {
+      this.closePopup();
+    }
+
+    if (togglerOpenedUID === null) {
       onClickEmojiCallback = this.onClickEmoji;
       this.openPopup();
     } else {
-      this.isOpened = false;
       this.closePopup();
     }
 
@@ -187,7 +181,6 @@ export default class EmojisPopupToggler extends Component {
   }
 
   onClickEmoji = (emoji, event) => {
-    this.isOpened = false;
     this.closePopup();
     this.props.onClickEmoji(emoji, event);
   };
@@ -217,20 +210,16 @@ export default class EmojisPopupToggler extends Component {
    * @param {Event} event
    */
   handleClickOutside(event) {
-    if (this.isOpened) {
+    if (togglerOpenedUID !== null) {
       const togglerNode = this.container;
       const popupNode = getPopupNode();
-      //const modifiersClassNameRegex = new RegExp(EmojisCategoryCLASSNAMES.hasModifiers, 'g');
       if (
         !popupNode.contains(event.target)
         && !togglerNode.contains(event.target)
       ) {
-        this.isOpened = false;
         if (this.UID === togglerOpenedUID) {
           this.closePopup();
         }
-        // if (!modifiersClassNameRegex.test(event.target.className)) {
-        // }
       }
     }
   }
@@ -253,6 +242,7 @@ export default class EmojisPopupToggler extends Component {
       'onClose',
       'togglerRenderer',
       'containerClassNameForPlacement',
+      'destroyPopupIfNoToggler',
     ]);
     const originalToggler = togglerRenderer(this.props, this.state);
     const toggler = React.cloneElement(

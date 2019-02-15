@@ -1,5 +1,5 @@
-import Emoji from './src/Emoji/Emoji';
-import EmojisPopupToggler from './src/EmojisPopupToggler/EmojisPopupToggler';
+import Emoji from './lib/Emoji/Emoji';
+import EmojisPopupToggler from './lib/EmojisPopupToggler/EmojisPopupToggler';
 
 export default {
   Emoji,

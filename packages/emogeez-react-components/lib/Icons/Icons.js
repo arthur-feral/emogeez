@@ -1,3 +1,5 @@
+import React from 'react';
+
 const Activity = ({ className }) => (
   <svg className={className} xmlns="http://www.w3.org/2000/svg" width="768" height="768" viewBox="0 0 768 768">
     <path
