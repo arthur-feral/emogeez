@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { noop, take, sortBy, reverse, findIndex, forEach } from 'lodash';
+import {
+  noop, take, sortBy, reverse, findIndex, forEach,
+} from 'lodash';
 import store from 'store';
 import EmojisCategory from '../EmojisCategory/EmojisCategory';
 import icons from '../Icons/Icons';
@@ -110,6 +112,10 @@ export default class EmojisPopup extends Component {
   constructor(props) {
     super(props);
 
+    const {
+      historyEnabled,
+    } = this.props;
+
     this.categoriesList = {};
     this.categoriesListPaddingTop = 0;
     this.categories = {};
@@ -117,42 +123,49 @@ export default class EmojisPopup extends Component {
     this.onClickEmoji = this.onClickEmoji.bind(this);
 
     this.state = {
-      history: this.props.historyEnabled ?
-        getHistory(props.historyLimit) :
-        null,
+      history: historyEnabled
+        ? getHistory(props.historyLimit)
+        : null,
     };
   }
 
   componentDidMount() {
-    this.categoriesListPaddingTop = parseInt(window.getComputedStyle(this.categoriesList, null).getPropertyValue('padding-top'), 10);
+    this.categoriesListPaddingTop = parseInt(window.getComputedStyle(this.categoriesList, null)
+      .getPropertyValue('padding-top'), 10);
   }
 
   shouldComponentUpdate(newProps, newState) {
-    if (newProps.categories !== this.props.categories) {
+    const {
+      categories,
+      prefix,
+      onClickEmoji,
+      historyEnabled,
+      historyLimit,
+    } = this.props;
+    const {
+      history,
+    } = this.state;
+    if (newProps.categories !== categories) {
       return true;
     }
 
-    if (newProps.prefix !== this.props.prefix) {
+    if (newProps.prefix !== prefix) {
       return true;
     }
 
-    if (newProps.categories !== this.props.categories) {
+    if (newProps.onClickEmoji !== onClickEmoji) {
       return true;
     }
 
-    if (newProps.onClickEmoji !== this.props.onClickEmoji) {
+    if (newProps.historyEnabled !== historyEnabled) {
       return true;
     }
 
-    if (newProps.historyEnabled !== this.props.historyEnabled) {
+    if (newProps.historyLimit !== historyLimit) {
       return true;
     }
 
-    if (newProps.historyLimit !== this.props.historyLimit) {
-      return true;
-    }
-
-    if (newState.history !== this.state.history) {
+    if (newState.history !== history) {
       return true;
     }
 
@@ -161,19 +174,25 @@ export default class EmojisPopup extends Component {
   }
 
   onClickEmoji(emoji, event) {
+    const {
+      historyEnabled,
+      historyLimit,
+      onClickEmoji,
+    } = this.props;
+
     event.stopPropagation();
     event.preventDefault();
 
-    if (this.props.historyEnabled) {
+    if (historyEnabled) {
       updateHistory(emoji);
 
       this.setState({
-        history: getHistory(this.props.historyLimit),
+        history: getHistory(historyLimit),
       });
     }
 
     this.resetScroll();
-    this.props.onClickEmoji()(emoji, event);
+    onClickEmoji()(emoji, event);
   }
 
   onClickCategory = (categoryName) => {
@@ -219,6 +238,7 @@ export default class EmojisPopup extends Component {
         className={classNames(CLASSNAMES.emojiCategory, { selected: index === 0 })}
       >
         <button
+          type="button"
           onClick={() => {
             this.onClickCategory(category.name);
           }}

@@ -7,7 +7,7 @@ import {
   getUnicode,
 } from '../utils';
 
-const split = require('emoji-aware').split;
+const { split } = require('emoji-aware');
 
 export default ({
   getNameFromCodepoint,

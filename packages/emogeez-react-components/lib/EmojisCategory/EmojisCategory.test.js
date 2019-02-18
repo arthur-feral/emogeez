@@ -7,7 +7,7 @@ import {
 import apple from 'emogeez-generator/emojis/apple/apple.json';
 import EmojisCategory, { CLASSNAMES } from './EmojisCategory';
 
-const emojis = apple.people.emojis;
+const { emojis } = apple.people;
 
 const renderComponentIntoDOM = (props = {}) => ReactTestUtils.renderIntoDocument(
   <EmojisCategory {...props} />,

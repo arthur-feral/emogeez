@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign,no-cond-assign */
+
 /**
  * find parents by class
  * @param {HTMLElement} element

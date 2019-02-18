@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react';
 import apple from 'emogeez-generator/emojis/apple/apple.json';
 import Emoji from './Emoji';
 
-const emojis = apple.people.emojis;
+const { emojis } = apple.people;
 
 const stories = storiesOf('Emoji', module)
   .addDecorator(centered);
@@ -12,7 +12,7 @@ const stories = storiesOf('Emoji', module)
 stories.add('Default', () => {
   const props = {
     emoji: emojis[0],
-    onClick: console.log,
+    onClick: console.log, // eslint-disable-line
   };
 
   return (

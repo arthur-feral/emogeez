@@ -13,7 +13,7 @@ import {
 import Configuration from './Configuration';
 
 const AVAILABLE_PREPROCESSORS = ['sass', 'less'];
-const TEMP_FILES_PATH = process.env.TEMP_FILES_PATH;
+const { TEMP_FILES_PATH } = process.env;
 const IMAGES_PATH = `${TEMP_FILES_PATH}/images`;
 const BASE_IMAGE_PATH = `${IMAGES_PATH}/base.png`;
 
@@ -46,9 +46,9 @@ export default (commander, emitter) => {
   }
 
   each(DEFAULT_CONFIG_PARAMS, (defaultValue, parameter) => {
-    config[parameter] = commander[parameter] ?
-      commander[parameter] :
-      defaultValue;
+    config[parameter] = commander[parameter]
+      ? commander[parameter]
+      : defaultValue;
     logger.info(`${parameter}: ${config[parameter]}`);
   });
   logger.success('⚙️ Configuring app: ✅');

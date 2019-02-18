@@ -13,7 +13,7 @@ const stories = storiesOf('EmojisPopup', module)
 stories.add('Default', () => {
   const props = {
     categories: map(apple, category => category),
-    onClickEmoji: console.log,
+    onClickEmoji: console.log, // eslint-disable-line no-console
   };
 
   return (

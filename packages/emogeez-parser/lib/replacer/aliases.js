@@ -66,8 +66,7 @@ const aliasesListEscaped = aliasesList
     .replace('*', '\\*')
     .replace('|', '\\|')
     .replace('(', '\\(')
-    .replace('/', '\\/'),
-  );
+    .replace('/', '\\/'));
 
 const ALIASES_REGEXP = new RegExp(`(\\s|^)(${aliasesListEscaped.join('|')})(?:(?=\\s|$))`, 'mg');
 

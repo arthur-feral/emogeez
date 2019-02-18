@@ -1,8 +1,9 @@
-//process.stdin.resume();
+// process.stdin.resume();
 
 import commander from 'commander';
 import superagent from 'superagent';
 
+import EventEmitter from 'eventemitter3';
 import logger from './lib/logger';
 import Config from './lib/config/config';
 import Fetcher from './lib/fetcher/fetcher';
@@ -11,7 +12,6 @@ import Monitor from './lib/monitor/monitor';
 import Generators from './lib/generators/generators';
 import Collector from './lib/collector/collector';
 
-import EventEmitter from 'eventemitter3';
 import {
   APP_START,
   APP_DONE,
@@ -19,7 +19,7 @@ import {
 
 const emitter = new EventEmitter();
 
-const packagejson = require(`${process.cwd()}/package.json`);
+const packagejson = require(`${process.cwd()}/package.json`); // eslint-disable-line
 
 commander
   .version(packagejson.version)
@@ -33,11 +33,11 @@ commander
   .parse(process.argv);
 
 const config = Config(commander, emitter);
-const fetcher = Fetcher(superagent, config, emitter);
-const parser = Parser(config, emitter);
-const monitor = Monitor(config, emitter);
-const generators = Generators(config, emitter);
-const collector = Collector(config, emitter);
+const fetcher = Fetcher(superagent, config, emitter); // eslint-disable-line no-unused-vars
+const parser = Parser(config, emitter); // eslint-disable-line no-unused-vars
+const monitor = Monitor(config, emitter); // eslint-disable-line no-unused-vars
+const generators = Generators(config, emitter); // eslint-disable-line no-unused-vars
+const collector = Collector(config, emitter); // eslint-disable-line no-unused-vars
 
 const stopAndExit = (status, error) => {
   if (error) {
@@ -45,7 +45,7 @@ const stopAndExit = (status, error) => {
     logger.error(error.stack);
   }
 
-  //process.stdin.pause();
+  // process.stdin.pause();
   process.exit(status);
 };
 
@@ -55,7 +55,7 @@ emitter.on(APP_DONE, () => {
   stopAndExit(0);
 });
 
-process.on('SIGINT', function () {
+process.on('SIGINT', () => {
   stopAndExit(1);
 });
 

@@ -23,11 +23,15 @@ export default class EmojiModifiers extends Component {
   };
 
   shouldComponentUpdate(nextProps) {
-    if (this.props.emoji !== nextProps.emoji) {
+    const {
+      emoji,
+      onClickEmoji,
+    } = this.props;
+    if (emoji !== nextProps.emoji) {
       return true;
     }
 
-    if (this.props.onClickEmoji !== nextProps.onClickEmoji) {
+    if (onClickEmoji !== nextProps.onClickEmoji) {
       return true;
     }
 
@@ -35,7 +39,10 @@ export default class EmojiModifiers extends Component {
   }
 
   onClick = (emoji, event) => {
-    this.props.onClickEmoji(emoji, event);
+    const {
+      onClickEmoji,
+    } = this.props;
+    onClickEmoji(emoji, event);
   };
 
   getDOMNode() {

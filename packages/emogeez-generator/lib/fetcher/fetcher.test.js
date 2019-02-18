@@ -8,12 +8,14 @@ import sinon from 'sinon';
 import EventEmitter from 'eventemitter3';
 import superagent from 'superagent';
 import fs from 'fs-extra';
+import superAgentMockFactory from 'superagent-mock';
 import Fetcher from './fetcher';
 
 require('../../tests/bootstrap');
 
 const superagentMockConfig = require('../../tests/superagent-mock.config.js');
-const superagentMocked = require('superagent-mock')(superagent, superagentMockConfig);
+
+const superagentMocked = superAgentMockFactory(superagent, superagentMockConfig);
 
 const emitter = new EventEmitter();
 const baseConfig = {
@@ -58,69 +60,109 @@ describe('Fetcher', () => {
   describe('APP_READY', () => {
     it('calls fetchCategories', async () => {
       await fetcher.fetchCategories();
-      expect(fetchCategoriesSuccessSpy.callCount).to.equal(1);
-      expect(fetchCategoriesSuccessSpy.args[0][0]).to.equal(indexHTML);
+      expect(fetchCategoriesSuccessSpy.callCount)
+        .to
+        .equal(1);
+      expect(fetchCategoriesSuccessSpy.args[0][0])
+        .to
+        .equal(indexHTML);
     });
   });
 
   describe('fetchCategory', () => {
     it('fetch emojis list from a category', async () => {
-      expect(fetchCategorySuccessSpy.callCount).to.equal(0);
+      expect(fetchCategorySuccessSpy.callCount)
+        .to
+        .equal(0);
       await fetcher.fetchCategory(indexJSON[0]);
-      expect(fetchCategorySuccessSpy.callCount).to.equal(1);
-      expect(fetchCategorySuccessSpy.args[0][0]).to.deep.equal({
-        symbol: '😃',
-        url: 'https://emojipedia.org/people/',
-        name: 'people',
-        fullName: 'Smileys & People',
-      });
-      expect(fetchCategorySuccessSpy.args[0][1]).to.equal(categoryHTML);
+      expect(fetchCategorySuccessSpy.callCount)
+        .to
+        .equal(1);
+      expect(fetchCategorySuccessSpy.args[0][0])
+        .to
+        .deep
+        .equal({
+          symbol: '😃',
+          url: 'https://emojipedia.org/people/',
+          name: 'people',
+          fullName: 'Smileys & People',
+        });
+      expect(fetchCategorySuccessSpy.args[0][1])
+        .to
+        .equal(categoryHTML);
     });
   });
 
   describe('fetchEmoji', () => {
     it('calls fetchEmoji', async () => {
       await fetcher.fetchEmoji(categoryEmojis[0]);
-      expect(fetchEmojiSuccessSpy.callCount).to.equal(1);
-      expect(fetchEmojiSuccessSpy.args[0][0]).to.deep.equal({
-        category: 'people',
-        symbol: '😀',
-        fullName: 'Grinning Face',
-        name: 'grinning-face',
-        url: 'https://emojipedia.org/grinning-face/',
-      });
-      expect(fetchEmojiSuccessSpy.args[0][1]).to.equal(emojiHTML1);
+      expect(fetchEmojiSuccessSpy.callCount)
+        .to
+        .equal(1);
+      expect(fetchEmojiSuccessSpy.args[0][0])
+        .to
+        .deep
+        .equal({
+          category: 'people',
+          symbol: '😀',
+          fullName: 'Grinning Face',
+          name: 'grinning-face',
+          url: 'https://emojipedia.org/grinning-face/',
+        });
+      expect(fetchEmojiSuccessSpy.args[0][1])
+        .to
+        .equal(emojiHTML1);
 
       await fetcher.fetchEmoji(categoryEmojis[1]);
-      expect(fetchEmojiSuccessSpy.callCount).to.equal(2);
-      expect(fetchEmojiSuccessSpy.args[1][0]).to.deep.equal({
-        category: 'people',
-        symbol: '😉',
-        fullName: 'Winking Face',
-        name: 'winking-face',
-        url: 'https://emojipedia.org/winking-face/',
-      });
-      expect(fetchEmojiSuccessSpy.args[1][1]).to.equal(emojiHTML2);
+      expect(fetchEmojiSuccessSpy.callCount)
+        .to
+        .equal(2);
+      expect(fetchEmojiSuccessSpy.args[1][0])
+        .to
+        .deep
+        .equal({
+          category: 'people',
+          symbol: '😉',
+          fullName: 'Winking Face',
+          name: 'winking-face',
+          url: 'https://emojipedia.org/winking-face/',
+        });
+      expect(fetchEmojiSuccessSpy.args[1][1])
+        .to
+        .equal(emojiHTML2);
 
       await fetcher.fetchEmoji(categoryEmojis[2]);
-      expect(fetchEmojiSuccessSpy.callCount).to.equal(3);
-      expect(fetchEmojiSuccessSpy.args[2][0]).to.deep.equal({
-        symbol: '🎅',
-        name: 'father-christmas',
-        fullName: 'Santa Claus',
-        category: 'people',
-        url: 'https://emojipedia.org/father-christmas/',
-      });
-      expect(fetchEmojiSuccessSpy.args[2][1]).to.equal(emojiHTML3);
+      expect(fetchEmojiSuccessSpy.callCount)
+        .to
+        .equal(3);
+      expect(fetchEmojiSuccessSpy.args[2][0])
+        .to
+        .deep
+        .equal({
+          symbol: '🎅',
+          name: 'father-christmas',
+          fullName: 'Santa Claus',
+          category: 'people',
+          url: 'https://emojipedia.org/father-christmas/',
+        });
+      expect(fetchEmojiSuccessSpy.args[2][1])
+        .to
+        .equal(emojiHTML3);
     });
   });
 
   describe('fetchImage', () => {
     it('fetches all the themes images', async () => {
       await fetcher.fetchImage(emojiJSON1, 'apple', 'https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/118/grinning-face_1f600.png');
-      expect(fetchImageSuccessSpy.callCount).to.equal(1);
-      expect(fetchImageSuccessSpy.args[0][0]).to.equal(emojiJSON1);
-      expect(fetchImageSuccessSpy.args[0][1]).to.equal('apple');
+      expect(fetchImageSuccessSpy.callCount)
+        .to
+        .equal(1);
+      expect(fetchImageSuccessSpy.args[0][0])
+        .to
+        .equal(emojiJSON1);
+      expect(fetchImageSuccessSpy.args[0][1])
+        .to
+        .equal('apple');
     });
   });
 });

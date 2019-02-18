@@ -170,7 +170,7 @@ export default (config, emitter) => {
         emojiFull.shortnames.push(emojiFull.name);
         emojiFull.shortname = emojiFull.name;
       } else {
-        emojiFull.shortname = emojiFull.shortnames[0];
+        emojiFull.shortname = emojiFull.shortnames[0]; // eslint-disable-line prefer-destructuring
       }
 
       // if this emoji is not a modifier

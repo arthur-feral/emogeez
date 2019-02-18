@@ -21,11 +21,15 @@ export default class Emoji extends Component {
   };
 
   shouldComponentUpdate(nextProps) {
-    if (this.props.emoji !== nextProps.emoji) {
+    const {
+      emoji,
+      onClick,
+    } = this.props;
+    if (emoji !== nextProps.emoji) {
       return true;
     }
 
-    if (this.props.onClick !== nextProps.onClick) {
+    if (onClick !== nextProps.onClick) {
       return true;
     }
 
@@ -33,7 +37,11 @@ export default class Emoji extends Component {
   }
 
   onClick = (event) => {
-    this.props.onClick(this.props.emoji, event);
+    const {
+      emoji,
+      onClick,
+    } = this.props;
+    onClick(emoji, event);
   };
 
   getDOMNode() {
@@ -57,6 +65,7 @@ export default class Emoji extends Component {
           this.DOMNode = node;
         }}
         {...cleanProps}
+        type="button"
         className={classNames(CLASSNAMES.container, className, `${prefix}-${name}`)}
         draggable="false"
         onClick={this.onClick}

@@ -101,7 +101,7 @@ export default class EmojisPopupToggler extends Component {
     onOpen: noop,
     onClose: noop,
     togglerRenderer: () => (
-      <button>
+      <button type="button">
         <People className={CLASSNAMES.icon} />
       </button>
     ),
@@ -143,13 +143,20 @@ export default class EmojisPopupToggler extends Component {
 
 
   componentWillReceiveProps(newProps) {
-    if (newProps.categories !== this.props.categories && newProps.categories.length !== 0) {
+    const {
+      categories,
+    } = this.props;
+
+    if (newProps.categories !== categories && newProps.categories.length !== 0) {
       destroyPopup();
       buildPopup(newProps);
     }
   }
 
   componentWillUnmount() {
+    const {
+      destroyPopupIfNoToggler,
+    } = this.props;
     document.removeEventListener(
       'click',
       this.handleClickOutside,
@@ -157,7 +164,7 @@ export default class EmojisPopupToggler extends Component {
 
     togglersMounted = togglersMounted.filter(uid => uid !== this.UID);
 
-    if (this.props.destroyPopupIfNoToggler && togglersMounted.length === 0) {
+    if (destroyPopupIfNoToggler && togglersMounted.length === 0) {
       destroyPopup();
     }
   }
@@ -181,27 +188,37 @@ export default class EmojisPopupToggler extends Component {
   }
 
   onClickEmoji = (emoji, event) => {
+    const {
+      onClickEmoji,
+    } = this.props;
     this.closePopup();
-    this.props.onClickEmoji(emoji, event);
+    onClickEmoji(emoji, event);
   };
 
   closePopup() {
+    const {
+      onClose,
+    } = this.props;
     togglerOpenedUID = null;
     const $popup = getPopupNode();
     $popup.className = $popup.className.replace(' opened', '');
-    this.props.onClose();
+    onClose();
   }
 
   openPopup() {
+    const {
+      onOpen,
+      containerClassNameForPlacement,
+    } = this.props;
     togglerOpenedUID = this.UID;
     const $popup = getPopupNode();
     const $toggler = this.toggler;
     const $arrow = $popup.children[0];
     $popup.className = `${$popup.className} opened`;
     if ($popup && $toggler && $arrow) {
-      placeEmojiPopup($popup, $toggler, OFFSET_POPUP, $arrow, this.props.containerClassNameForPlacement);
+      placeEmojiPopup($popup, $toggler, OFFSET_POPUP, $arrow, containerClassNameForPlacement);
     }
-    this.props.onOpen();
+    onOpen();
   }
 
   /**

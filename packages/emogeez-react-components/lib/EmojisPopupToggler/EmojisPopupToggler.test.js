@@ -28,7 +28,10 @@ describe('EmojisPopupToggler', () => {
 
     expect(() => {
       ReactTestUtils.findRenderedDOMComponentWithClass(component, 'customClass');
-    }).to.not.throw();
+    })
+      .to
+      .not
+      .throw();
   });
 
   it('should open the popup onClick on toggler', () => {
@@ -36,26 +39,36 @@ describe('EmojisPopupToggler', () => {
     const toggler = ReactTestUtils.findRenderedDOMComponentWithClass(component, CLASSNAMES.button);
     let popup = ReactTestUtils.scryRenderedDOMComponentsWithClass(component, CLASSNAMES.popupWrapper);
 
-    expect(popup.length).to.equal(0);
+    expect(popup.length)
+      .to
+      .equal(0);
     ReactTestUtils.Simulate.click(toggler);
-    popup = window.document.getElementById('emogeezPopup').children[0];
-    expect(popup.className).to.equal('emojisPopupTogglerPopupWrapper opened');
+    popup = window.document.getElementById('emogeezPopup').children[0]; // eslint-disable-line
+    expect(popup.className)
+      .to
+      .equal('emojisPopupTogglerPopupWrapper opened');
     ReactTestUtils.Simulate.click(toggler);
-    popup = window.document.getElementById('emogeezPopup').children[0];
-    expect(popup.className).to.equal('emojisPopupTogglerPopupWrapper');
+    popup = window.document.getElementById('emogeezPopup').children[0]; // eslint-disable-line
+    expect(popup.className)
+      .to
+      .equal('emojisPopupTogglerPopupWrapper');
   });
 
   it('should have a custom toggler', () => {
     const component = renderComponentIntoDOM({
       ...story,
       togglerRenderer: () => (
-        <button className="customClassName">
+        <button type="button" className="customClassName">
           hi
         </button>
       ),
     });
     const toggler = ReactTestUtils.findRenderedDOMComponentWithClass(component, CLASSNAMES.button);
-    expect(toggler.textContent).to.equal('hi');
-    expect(toggler.className).to.equal('emojisPopupTogglerButton customClassName');
+    expect(toggler.textContent)
+      .to
+      .equal('hi');
+    expect(toggler.className)
+      .to
+      .equal('emojisPopupTogglerButton customClassName');
   });
 });

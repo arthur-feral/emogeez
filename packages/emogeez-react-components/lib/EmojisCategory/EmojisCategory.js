@@ -37,11 +37,6 @@ export default class EmojisCategory extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      isModifiersPanelOpened: false,
-      modifierPanelName: '',
-    };
-
     this.emojisNodes = {};
     this.modifierNodes = {};
     this.closePanel = this.closePanel.bind(this);
@@ -57,15 +52,20 @@ export default class EmojisCategory extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    if (this.props.emojis !== nextProps.emojis) {
+    const {
+      emojis,
+      name,
+      onClickEmoji,
+    } = this.props;
+    if (emojis !== nextProps.emojis) {
       return true;
     }
 
-    if (this.props.name !== nextProps.name) {
+    if (name !== nextProps.name) {
       return true;
     }
 
-    if (this.props.onClickEmoji !== nextProps.onClickEmoji) {
+    if (onClickEmoji !== nextProps.onClickEmoji) {
       return true;
     }
 
@@ -97,7 +97,10 @@ export default class EmojisCategory extends Component {
         canClose = true;
       }, 500);
     } else {
-      this.props.onClickEmoji(emoji, event);
+      const {
+        onClickEmoji,
+      } = this.props;
+      onClickEmoji(emoji, event);
       canClose = true;
       this.closePanel();
     }
@@ -119,6 +122,9 @@ export default class EmojisCategory extends Component {
 
   renderEmojis(emojis) {
     return emojis.map((emoji) => {
+      const {
+        prefix,
+      } = this.props;
       const hasModifier = has(emoji, 'modifiers');
 
       return (
@@ -130,7 +136,7 @@ export default class EmojisCategory extends Component {
             ref={(node) => {
               this.emojisNodes[emoji.name] = node;
             }}
-            prefix={this.props.prefix}
+            prefix={prefix}
             key={emoji.name}
             className={classNames(CLASSNAMES.emoji, CLASSNAMES.hasModifiers)}
             emoji={emoji}
@@ -142,7 +148,7 @@ export default class EmojisCategory extends Component {
                 ref={(node) => {
                   this.modifierNodes[emoji.name] = node;
                 }}
-                prefix={this.props.prefix}
+                prefix={prefix}
                 className={CLASSNAMES.modifiers}
                 key={`${CLASSNAMES.modifiers}${emoji.name}`}
                 emoji={emoji}

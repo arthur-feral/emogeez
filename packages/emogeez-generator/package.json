@@ -6,7 +6,9 @@
     "start": "TEMP_FILES_PATH=tmp node ./dist/index.js",
     "dev": "node ./index.js",
     "prepublish": "echo \"run tests?\"",
-    "test": "NODE_ENV=test TEMP_FILES_PATH=tests/tmp mocha -r @babel/register -r @babel/polyfill --timeout 5000 -r tests/bootstrap.js $(find lib -name '*.test.js')",
+    "test:js": "NODE_ENV=test TEMP_FILES_PATH=tests/tmp mocha -r @babel/register -r @babel/polyfill --timeout 5000 -r tests/bootstrap.js $(find lib -name '*.test.js')",
+    "lint:js": "eslint ./ --ext .js --ignore-path ./.eslintignore --fix",
+    "test": "yarn run lint:js && yarn run test:js",
     "clean": "rm -r tmp/**/*"
   },
   "homepage": "https://github.com/arthur-feral/emogeez/tree/master/packages/emogeez-generator",
@@ -51,6 +53,11 @@
     "babel-eslint": "^8.2.3",
     "babel-plugin-inline-import": "^3.0.0",
     "chai": "^3.5.0",
+    "eslint": "^5.14.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.12.4",
     "mocha": "^5.2.0",
     "sinon": "^1.17.6",
     "superagent-mock": "3.7.0"

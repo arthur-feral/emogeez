@@ -5,7 +5,9 @@
   "main": "dist/index.js",
   "scripts": {
     "prepublish": "echo \"run tests?\"",
-    "test": "NODE_ENV=test mocha -r @babel/register -r @babel/polyfill --timeout 5000 -r tests/bootstrap.js $(find lib -name '*.test.js')",
+    "test:js": "NODE_ENV=test mocha -r @babel/register -r @babel/polyfill --timeout 5000 -r tests/bootstrap.js $(find lib -name '*.test.js')",
+    "lint:js": "eslint ./ --ext .js --ignore-path ./.eslintignore --fix",
+    "test": "yarn run lint:js && yarn run test:js",
     "storybook": "start-storybook -p 9001 -c .storybook",
     "build-storybook": "build-storybook"
   },
@@ -50,6 +52,11 @@
     "css-loader": "^0.28.11",
     "emogeez-generator": "^0.19.5",
     "emogeez-parser": "^0.19.5",
+    "eslint": "^5.14.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.12.4",
     "jsdom": "^11.7.0",
     "mocha": "^5.2.0",
     "node-sass": "^4.8.3",

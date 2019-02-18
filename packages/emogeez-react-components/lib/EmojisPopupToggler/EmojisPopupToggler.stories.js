@@ -2,18 +2,16 @@ import {
   map,
 } from 'lodash';
 import React from 'react';
-import centered from '@storybook/addon-centered';
 import { storiesOf } from '@storybook/react';
 import EmojisPopupToggler from './EmojisPopupToggler';
 import apple from '../../node_modules/emogeez-generator/emojis/apple/apple.json';
 
 const stories = storiesOf('EmojisPopupToggler', module);
-//.addDecorator(centered);
 
 stories.add('Default', () => {
   const props = {
     categories: map(apple, category => category),
-    onClickEmoji: console.log,
+    onClickEmoji: console.log, // eslint-disable-line no-console
     historyEnabled: true,
   };
 
@@ -25,9 +23,12 @@ stories.add('Default', () => {
 stories.add('Custom toggler', () => {
   const props = {
     categories: map(apple, category => category),
-    onClickEmoji: console.log,
+    onClickEmoji: console.log, // eslint-disable-line no-console
     togglerRenderer: () => (
-      <button className="customClassName">
+      <button
+        type="button"
+        className="customClassName"
+      >
         custom toggler
       </button>
     ),
@@ -47,7 +48,7 @@ stories.add('Placement from parentClass', () => {
 
   const props = {
     categories: map(apple, category => category),
-    onClickEmoji: console.log,
+    onClickEmoji: console.log, // eslint-disable-line no-console
     style: togglerStyle,
     containerClassNameForPlacement: 'parentClass',
   };
@@ -80,7 +81,7 @@ stories.add('Multiples togglers', () => {
   const toggler1 = {
     categories: map(apple, category => category),
     onClickEmoji: (emoji) => {
-      console.log('toggler1', emoji);
+      console.log('toggler1', emoji); // eslint-disable-line no-console
     },
     style: {
       position: 'absolute',
@@ -93,7 +94,7 @@ stories.add('Multiples togglers', () => {
   const toggler2 = {
     categories: map(apple, category => category),
     onClickEmoji: (emoji) => {
-      console.log('toggler2', emoji);
+      console.log('toggler2', emoji); // eslint-disable-line no-console
     },
     style: {
       position: 'absolute',
@@ -106,7 +107,7 @@ stories.add('Multiples togglers', () => {
   const toggler3 = {
     categories: map(apple, category => category),
     onClickEmoji: (emoji) => {
-      console.log('toggler3', emoji);
+      console.log('toggler3', emoji); // eslint-disable-line no-console
     },
     style: {
       position: 'absolute',
@@ -119,7 +120,7 @@ stories.add('Multiples togglers', () => {
   const toggler4 = {
     categories: map(apple, category => category),
     onClickEmoji: (emoji) => {
-      console.log('toggler4', emoji);
+      console.log('toggler4', emoji); // eslint-disable-line no-console
     },
     style: {
       position: 'absolute',
@@ -132,7 +133,7 @@ stories.add('Multiples togglers', () => {
   const toggler5 = {
     categories: map(apple, category => category),
     onClickEmoji: (emoji) => {
-      console.log('toggler5', emoji);
+      console.log('toggler5', emoji); // eslint-disable-line no-console
     },
     style: {
       position: 'absolute',
@@ -140,7 +141,7 @@ stories.add('Multiples togglers', () => {
       top: 100,
     },
     togglerRenderer: () => (
-      <button className="customClassName">
+      <button type="button" className="customClassName">
         position from window
       </button>
     ),
@@ -149,7 +150,7 @@ stories.add('Multiples togglers', () => {
   const toggler6 = {
     categories: map(apple, category => category),
     onClickEmoji: (emoji) => {
-      console.log('toggler6', emoji);
+      console.log('toggler6', emoji); // eslint-disable-line no-console
     },
     style: {
       position: 'absolute',

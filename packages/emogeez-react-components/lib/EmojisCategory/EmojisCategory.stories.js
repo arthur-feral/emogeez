@@ -16,7 +16,7 @@ const defaultStory = {
 stories.add('Default', () => {
   const props = {
     ...defaultStory,
-    onClickEmoji: console.log,
+    onClickEmoji: console.log, // eslint-disable-line no-console
   };
 
   return (

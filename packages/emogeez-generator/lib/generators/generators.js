@@ -31,7 +31,7 @@ const Spritesmith = require('spritesmith');
 const MAX_IMAGES_TO_PROCESS_AT_TIME = 5;
 const MAX_SPRITES_TO_PROCESS_AT_TIME = 1;
 
-const TEMP_FILES_PATH = process.env.TEMP_FILES_PATH;
+const { TEMP_FILES_PATH } = process.env;
 const IMAGES_PATH = `${TEMP_FILES_PATH}/images`;
 const BASE_IMAGE_PATH = `${IMAGES_PATH}/base.png`;
 
@@ -226,7 +226,6 @@ export default (config, emitter) => {
       logger.success(`[Generator] ${themeName} Done`);
       emitter.emit(GENERATOR_GENERATE_SPRITE_SUCCESS, themeName, keys(theme), properties, coordinates);
     }).catch((error) => {
-      console.log('fuck', error);
       logger.error(`[Generator] ${error}`);
       emitter.emit(GENERATOR_GENERATE_SPRITE_ERROR, error, themeName, theme);
     });
@@ -239,28 +238,27 @@ export default (config, emitter) => {
    * @param {object} properties
    * @param {object} coordinates
    */
-  const generateStyle = (themeName, emojisNames, properties, coordinates) =>
-    new Promise((resolve, reject) => {
-      const styleFiles = stylesGenerator(themeName, emojisNames, properties, coordinates);
-      const filePath = `${config.destination}/${themeName}`;
-      const fileNameCss = `${themeName}.${EXTENTIONS.css}`;
-      const completePathCss = `${filePath}/${fileNameCss}`;
-      const fileNamePreproc = `${themeName}.${EXTENTIONS[config.preproc]}`;
-      const completePathPreproc = `${filePath}/${fileNamePreproc}`;
+  const generateStyle = (themeName, emojisNames, properties, coordinates) => new Promise((resolve, reject) => {
+    const styleFiles = stylesGenerator(themeName, emojisNames, properties, coordinates);
+    const filePath = `${config.destination}/${themeName}`;
+    const fileNameCss = `${themeName}.${EXTENTIONS.css}`;
+    const completePathCss = `${filePath}/${fileNameCss}`;
+    const fileNamePreproc = `${themeName}.${EXTENTIONS[config.preproc]}`;
+    const completePathPreproc = `${filePath}/${fileNamePreproc}`;
 
-      try {
-        fse.mkdirpSync(filePath);
-        fs.writeFileSync(completePathCss, styleFiles.css, 'utf8');
-        fs.writeFileSync(completePathPreproc, styleFiles[config.preproc], 'utf8');
-        return resolve(completePathPreproc);
-      } catch (error) {
-        return reject(error);
-      }
-    }).then(() => {
-      emitter.emit(GENERATOR_GENERATE_STYLE_SUCCESS, themeName, emojisNames);
-    }).catch((error) => {
-      emitter.emit(ERROR, error);
-    });
+    try {
+      fse.mkdirpSync(filePath);
+      fs.writeFileSync(completePathCss, styleFiles.css, 'utf8');
+      fs.writeFileSync(completePathPreproc, styleFiles[config.preproc], 'utf8');
+      return resolve(completePathPreproc);
+    } catch (error) {
+      return reject(error);
+    }
+  }).then(() => {
+    emitter.emit(GENERATOR_GENERATE_STYLE_SUCCESS, themeName, emojisNames);
+  }).catch((error) => {
+    emitter.emit(ERROR, error);
+  });
 
   emitter.on(COLLECTOR_COLLECT_DONE, generateSprites);
   emitter.on(FETCHER_FETCH_IMAGE_SUCCESS, queueImageProcessing);

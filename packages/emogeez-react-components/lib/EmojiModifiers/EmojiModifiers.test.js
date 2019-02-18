@@ -10,7 +10,7 @@ import {
 import apple from 'emogeez-generator/emojis/apple/apple.json';
 import EmojiModifiers, { CLASSNAMES } from './EmojiModifiers';
 
-const emojis = apple.people.emojis;
+const { emojis } = apple.people;
 const emoji = find(emojis, e => e.name === 'boy');
 
 const renderComponentIntoDOM = (props = {}) => ReactTestUtils.renderIntoDocument(

@@ -134,8 +134,7 @@ describe('Generator', () => {
           width: 144,
           height: 144,
         },
-        coordinatesJSON,
-      );
+        coordinatesJSON);
       expect(generateStyleSuccessSpy.callCount).to.equal(1);
       expect(() => {
         fs.readFileSync(`${baseConfig.destination}/apple/apple.scss`, 'utf8');

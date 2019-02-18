@@ -15,7 +15,7 @@ const stories = storiesOf('EmojiModifiers', module)
 stories.add('Default', () => {
   const props = {
     emoji: parser.store.getEmojiByName('apple', 'waving-hand-sign'),
-    onClickEmoji: console.log,
+    onClickEmoji: console.log, // eslint-disable-line no-console
   };
 
   return (

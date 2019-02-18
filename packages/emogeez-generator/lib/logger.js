@@ -13,9 +13,9 @@ const loggersTypes = {
 const loggers = {};
 
 each(loggersTypes, (color, type) => {
-  loggers[type] = process.env.NODE_ENV === 'test' ?
-    noop :
-    (message) => {
+  loggers[type] = process.env.NODE_ENV === 'test'
+    ? noop
+    : (message) => {
       process.stdout.write(`${chalk[color](message)}\n`);
     };
 });
