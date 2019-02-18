@@ -8,6 +8,7 @@
     "test:js": "NODE_ENV=test mocha -r @babel/register -r @babel/polyfill --timeout 5000 -r tests/bootstrap.js $(find lib -name '*.test.js')",
     "lint:js": "eslint ./ --ext .js --ignore-path ./.eslintignore --fix",
     "test": "yarn run lint:js && yarn run test:js",
+    "build": "./node_modules/.bin/babel . --out-dir dist --ignore cache,tests,node_modules,dist,**/*.test.js,./.storybook",
     "storybook": "start-storybook -p 9001 -c .storybook",
     "build-storybook": "build-storybook"
   },

@@ -8,6 +8,7 @@
     "prepublish": "echo \"run tests?\"",
     "test:js": "NODE_ENV=test TEMP_FILES_PATH=tests/tmp mocha -r @babel/register -r @babel/polyfill --timeout 5000 -r tests/bootstrap.js $(find lib -name '*.test.js')",
     "lint:js": "eslint ./ --ext .js --ignore-path ./.eslintignore --fix",
+    "build": "./node_modules/.bin/babel . --out-dir dist --ignore cache,tests,node_modules,dist,**/*.test.js,./.storybook",
     "test": "yarn run lint:js && yarn run test:js",
     "clean": "rm -r tmp/**/*"
   },
