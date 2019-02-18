@@ -66,7 +66,7 @@ const buildPopup = (props) => {
         historyLimit={historyLimit}
         className={CLASSNAMES.popup}
         categories={categories}
-        onClickEmoji={() => (emoji, event) => {
+        onClickEmoji={(emoji, event) => {
           onClickEmojiCallback(emoji, event);
         }}
       />

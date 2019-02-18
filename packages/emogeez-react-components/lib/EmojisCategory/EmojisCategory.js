@@ -97,10 +97,7 @@ export default class EmojisCategory extends Component {
         canClose = true;
       }, 500);
     } else {
-      const {
-        onClickEmoji,
-      } = this.props;
-      onClickEmoji(emoji, event);
+      this.props.onClickEmoji(emoji, event); // eslint-disable-line
       canClose = true;
       this.closePanel();
     }

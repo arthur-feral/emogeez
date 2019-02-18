@@ -177,7 +177,6 @@ export default class EmojisPopup extends Component {
     const {
       historyEnabled,
       historyLimit,
-      onClickEmoji,
     } = this.props;
 
     event.stopPropagation();
@@ -192,7 +191,7 @@ export default class EmojisPopup extends Component {
     }
 
     this.resetScroll();
-    onClickEmoji()(emoji, event);
+    this.props.onClickEmoji(emoji, event); // eslint-disable-line
   }
 
   onClickCategory = (categoryName) => {
