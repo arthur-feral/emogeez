@@ -1,16 +1,12 @@
 const path = require('path');
-const webpack = require('webpack');
 
-// Getting default webpackconfig in storybook
-const genDefaultConfig = require('@storybook/react/dist/server/config/defaults/webpack.config.js');
-
-module.exports = function (baseConfig, env) {
+module.exports = function (baseConfig) {
   // Generating the default configuration from env
-  const config = genDefaultConfig(baseConfig, env);
+  const config = { ...baseConfig };
 
-  config.devtool = '#cheap-source-map';
+  config.devtool = 'eval-source-map';
   const babelLoader = config.module.rules[0];
-  babelLoader.query.cacheDirectory = path.resolve('./.storybook/build/cache/babel');
+  babelLoader.use[0].options.cacheDirectory = path.resolve('./.storybook/build/cache/babel');
 
   config.module.rules.push({
     test: /\.scss$/,
