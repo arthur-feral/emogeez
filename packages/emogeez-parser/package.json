@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "prepublish": "echo \"run tests?\"",
-    "test": "NODE_ENV=test mocha --compilers js:babel-register --timeout 5000 -r tests/bootstrap.js -r babel-polyfill $(find lib -name '*.test.js')"
+    "test": "NODE_ENV=test mocha -r @babel/register -r @babel/polyfill --timeout 5000 -r tests/bootstrap.js $(find lib -name '*.test.js')"
   },
   "homepage": "https://github.com/arthur-feral/emogeez/tree/master/packages/emogeez-parser",
   "keywords": [
@@ -20,12 +20,23 @@
     "emoji-aware": "^3.0.3",
     "eslint-config-iadvize": "^1.1.0",
     "lodash": "^4.17.10",
-    "mocha": "^5.2.0",
     "store": "^1.3.20",
     "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.3.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.3.1",
+    "@babel/plugin-transform-async-to-generator": "^7.2.0",
+    "@babel/polyfill": "^7.2.5",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.0.0",
+    "babel-eslint": "^8.2.3",
+    "babel-plugin-inline-import": "^3.0.0",
     "chai": "^3.5.0",
+    "mocha": "^5.2.0",
     "fetch-mock": "^6.3.0",
     "sinon": "4.5.0"
   }

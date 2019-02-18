@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "prepublish": "echo \"run tests?\"",
-    "test": "NODE_ENV=test mocha --compilers js:babel-register --timeout 5000 -r tests/bootstrap.js -r babel-polyfill $(find src -name '*.test.js')",
+    "test": "NODE_ENV=test mocha -r @babel/register -r @babel/polyfill --timeout 5000 -r tests/bootstrap.js $(find lib -name '*.test.js')",
     "storybook": "start-storybook -p 9001 -c .storybook",
     "build-storybook": "build-storybook"
   },
@@ -22,13 +22,23 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "lodash": "^4.17.5",
-    "mocha": "^5.2.0",
     "prop-types": "^15.6.1",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
     "store": "^2.0.12"
   },
   "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.3.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.3.1",
+    "@babel/plugin-transform-async-to-generator": "^7.2.0",
+    "@babel/polyfill": "^7.2.5",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.0.0",
+    "babel-eslint": "^8.2.3",
+    "babel-plugin-inline-import": "^3.0.0",
     "@storybook/addon-actions": "^3.4.0",
     "@storybook/addon-backgrounds": "^3.3.6",
     "@storybook/addon-centered": "^3.3.6",
@@ -41,6 +51,7 @@
     "emogeez-generator": "^0.19.5",
     "emogeez-parser": "^0.19.5",
     "jsdom": "^11.7.0",
+    "mocha": "^5.2.0",
     "node-sass": "^4.8.3",
     "sass-loader": "^7.0.1",
     "sinon": "4.5.0",

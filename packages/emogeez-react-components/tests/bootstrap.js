@@ -1,4 +1,5 @@
 /* eslint-disable*/
+require('@babel/polyfill');
 import jsdom from 'jsdom';
 
 const { JSDOM } = jsdom;
