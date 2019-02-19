@@ -9,7 +9,7 @@
     "lint:js": "eslint ./ --ext .js --ignore-path ./.eslintignore --fix",
     "test": "yarn run lint:js && yarn run test:js",
     "build": "./node_modules/.bin/babel . --out-dir dist --ignore cache,tests,node_modules,dist,**/*.test.js,./.storybook",
-    "storybook": "start-storybook -p 9001 -c .storybook",
+    "storybook": "start-storybook -s ./node_modules/emogeez-generator/emojis/apple/ -p 9001 -c .storybook",
     "build-storybook": "build-storybook"
   },
   "homepage": "https://github.com/arthur-feral/emogeez/tree/master/packages/emogeez-react-components",

@@ -28,6 +28,12 @@
     "browser": true
   },
   "rules": {
+    "newline-per-chained-call": [
+      1,
+      {
+        "ignoreChainWithDepth": 3
+      }
+    ],
     "global-require": "off",
     "no-shadow": 0,
     "max-len": [

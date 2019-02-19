@@ -1,6 +1,5 @@
-import jimp from 'jimp';
+import jimp, { AUTO } from 'jimp';
 import sizeOf from 'image-size';
-import gm from 'gm';
 import fse from 'fs-extra';
 import fs from 'fs';
 import {
@@ -76,44 +75,41 @@ export default (config, emitter) => {
     }
 
     return new Promise((resolve, reject) => {
-      jimp.read(imageRawPath).then((image) => {
-        image
-          .autocrop()
-          .write(imagePath, (writeBaseError) => {
-            if (writeBaseError) {
-              reject(writeBaseError);
-            }
+      jimp.read(imageRawPath)
+        .then((image) => {
+          image
+          // first we need to autocrop to remove extra transparent pixels
+            .autocrop()
+            .resize(sizeWithGoodResolution, AUTO)
+            .write(imagePath, (writeBaseError) => {
+              if (writeBaseError) {
+                reject(writeBaseError);
+              }
 
-            gm(imageRawPath)
-              .resize(null, sizeWithGoodResolution)
-              .write(imagePath, (writeRawError) => {
-                if (writeRawError) {
-                  reject(writeRawError);
-                }
+              jimp.read(BASE_IMAGE_PATH)
+                .then((baseImage) => {
+                  const dimensions = sizeOf(imagePath);
+                  const x = Math.round((sizeWithGoodResolution - dimensions.width) / 2);
+                  const y = Math.round((sizeWithGoodResolution - dimensions.height) / 2);
 
-                const dimensions = sizeOf(imagePath);
-                const x = Math.round((sizeWithGoodResolution - dimensions.width) / 2);
-
-                gm(BASE_IMAGE_PATH)
-                // add the emoji image into the base transparent image centered
-                  .draw(`image Over ${x},0 0,0 ${imagePath}`)
-                  .write(imagePath, (writeResultError) => {
-                    if (writeResultError) {
-                      reject(writeResultError);
-                    }
-
-                    resolve();
-                  });
-              });
-          });
-      }).then(() => {
-        emitter.emit(PARSER_PARSE_IMAGE_SUCCESS, emoji, themeName, imagePath);
-      }).catch((error) => {
-        logger.error('[GenerateImage]');
-        logger.error(error.message);
-        logger.error(error.stack);
-        emitter.emit(PARSER_PARSE_IMAGE_ERROR, error, emoji, themeName);
-      });
+                  resolve(
+                    baseImage
+                      .resize(sizeWithGoodResolution, sizeWithGoodResolution)
+                      .composite(image, x, y)
+                      .write(imagePath),
+                  );
+                });
+            });
+        })
+        .then(() => {
+          emitter.emit(PARSER_PARSE_IMAGE_SUCCESS, emoji, themeName, imagePath);
+        })
+        .catch((error) => {
+          logger.error('[GenerateImage]');
+          logger.error(error.message);
+          logger.error(error.stack);
+          emitter.emit(PARSER_PARSE_IMAGE_ERROR, error, emoji, themeName);
+        });
     });
   };
 
@@ -195,7 +191,10 @@ export default (config, emitter) => {
 
           try {
             fs.writeFileSync(themeSpriteDestination, image);
-            resolve({ properties, coordinates });
+            resolve({
+              properties,
+              coordinates,
+            });
           } catch (error) {
             reject(error);
           }
@@ -225,10 +224,11 @@ export default (config, emitter) => {
     }).then(({ properties, coordinates }) => {
       logger.success(`[Generator] ${themeName} Done`);
       emitter.emit(GENERATOR_GENERATE_SPRITE_SUCCESS, themeName, keys(theme), properties, coordinates);
-    }).catch((error) => {
-      logger.error(`[Generator] ${error}`);
-      emitter.emit(GENERATOR_GENERATE_SPRITE_ERROR, error, themeName, theme);
-    });
+    })
+      .catch((error) => {
+        logger.error(`[Generator] ${error}`);
+        emitter.emit(GENERATOR_GENERATE_SPRITE_ERROR, error, themeName, theme);
+      });
   };
 
   /**
@@ -256,9 +256,10 @@ export default (config, emitter) => {
     }
   }).then(() => {
     emitter.emit(GENERATOR_GENERATE_STYLE_SUCCESS, themeName, emojisNames);
-  }).catch((error) => {
-    emitter.emit(ERROR, error);
-  });
+  })
+    .catch((error) => {
+      emitter.emit(ERROR, error);
+    });
 
   emitter.on(COLLECTOR_COLLECT_DONE, generateSprites);
   emitter.on(FETCHER_FETCH_IMAGE_SUCCESS, queueImageProcessing);

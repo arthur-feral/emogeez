@@ -41,7 +41,7 @@ export const GENERATOR_GENERATE_THEMES_ERROR = 'GENERATOR_GENERATE_THEMES_ERROR'
 export const HTML_CATEGORIES_SELECTOR = 'body div.container div.sidebar div.block:first-child';
 export const HTML_EMOJIS_SELECTOR = 'body div.container div.content ul.emoji-list';
 export const HTML_EMOJI_SHORTNAMES = 'body div.container div.content article ul.shortcodes li';
-export const HTML_EMOJI_MODIFIERS = 'body div.container div.content article section.modifiers ul li';
+export const HTML_EMOJI_MODIFIERS_LIST = 'body div.container div.content article .emoji-list';
 export const HTML_EMOJI_THEMES = 'body div.container div.content article section.vendor-list ul li .vendor-rollout-target';
 export const DEFAULT_THEMES_URL = 'https://cdn.jsdelivr.net/gh/arthur-feral/emogeez@latest/packages/emogeez-generator/emojis';
 

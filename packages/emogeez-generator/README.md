@@ -107,22 +107,6 @@ of course you will find the modifiers version of emojis (black skin etc...). The
 
 #### Installation 
 
-##### prerequisites
-
-You have to install [GraphicsMagick](http://www.graphicsmagick.org/)
-
-On Mac
-```bash
-$ brew install graphicsmagick
-```
-
-On Linux
-```bash
-$ sudo apt-get install graphicsmagick
-```
-
-##### installation
-
 ```bash
 $ yarn i emogeez-generator
 ```

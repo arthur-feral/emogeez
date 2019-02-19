@@ -44,7 +44,6 @@ describe('Constants', () => {
     expect(constants.HTML_CATEGORIES_SELECTOR).to.equal('body div.container div.sidebar div.block:first-child');
     expect(constants.HTML_EMOJIS_SELECTOR).to.equal('body div.container div.content ul.emoji-list');
     expect(constants.HTML_EMOJI_SHORTNAMES).to.equal('body div.container div.content article ul.shortcodes li');
-    expect(constants.HTML_EMOJI_MODIFIERS).to.equal('body div.container div.content article section.modifiers ul li');
     expect(constants.HTML_EMOJI_THEMES).to.equal('body div.container div.content article section.vendor-list ul li .vendor-rollout-target');
     expect(constants.DEFAULT_THEMES_URL).to.equal('https://cdn.jsdelivr.net/gh/arthur-feral/emogeez@latest/packages/emogeez-generator/emojis');
 
