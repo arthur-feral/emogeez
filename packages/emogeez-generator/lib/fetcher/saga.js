@@ -1,9 +1,9 @@
 import fs from 'fs-extra';
-import Throttle from 'superagent-throttle';
 import {
   has,
   map,
   size,
+  take as _take,
 } from 'lodash';
 import {
   take,
@@ -16,46 +16,15 @@ import {
 import {
   APP_READY,
   BASE_URL,
-  FETCHER_RETRY_COUNT,
-  TEMP_HTML_PATH, TEMP_IMAGES_PATH,
+  TEMP_HTML_PATH,
 } from '../constants';
 import { getConfig } from '../config/selectors';
 import { exitApp } from '../actions';
-import { saveFile } from '../utils';
+import { getRequest, saveFile } from '../utils';
 import { parseCategories, parseCategory, parseEmoji } from '../parser/parser';
 import { parseCategoriesSucceeded, parseCategorySucceeded, parseEmojiSucceeded } from '../parser/actions';
-import { fetchImageSucceeded, imagesFound, modifiersFound } from './actions';
-
-const throttle = new Throttle({
-  active: true, // set false to pause queue
-  rate: 150, // how many requests can be sent every `ratePer`
-  ratePer: 1000, // number of ms in which `rate` requests may be sent
-  concurrent: 50, // how many requests can be sent concurrently
-});
-const getRequest = (superagent, url) => superagent
-  .get(url)
-  .use(throttle.plugin())
-  .retry(FETCHER_RETRY_COUNT);
-
-function* fetchImage(superagent, emoji, themeName, url) {
-  const cacheFilePath = `${TEMP_IMAGES_PATH}/${themeName}/${emoji.category}/${emoji.name}_raw.png`;
-  const { cache } = yield select(getConfig);
-
-  let image = null;
-  if (cache && fs.existsSync(cacheFilePath)) {
-    image = fs.readFileSync(cacheFilePath);
-  } else {
-    try {
-      const response = yield call(getRequest, superagent, url);
-      image = response.body;
-      yield call(saveFile, response.body, `${TEMP_IMAGES_PATH}/${themeName}/${emoji.category}`, `${emoji.name}_raw.png`);
-    } catch (e) {
-      yield put(exitApp(e));
-    }
-  }
-
-  yield put(fetchImageSucceeded(emoji, themeName, url, image));
-}
+import { fetchComplete, modifiersFound } from './actions';
+import logger from '../logger';
 
 function* fetchEmoji(superagent, emoji) {
   const cacheFilePath = `${TEMP_HTML_PATH}/${emoji.category}/${emoji.name}.html`;
@@ -68,7 +37,7 @@ function* fetchEmoji(superagent, emoji) {
   } else {
     try {
       const response = yield call(getRequest, superagent, emoji.url);
-      yield call(saveFile, response.text, `${TEMP_HTML_PATH}/${emoji.category}`, `${emoji.name}.html`);
+      saveFile(response.text, `${TEMP_HTML_PATH}/${emoji.category}`, `${emoji.name}.html`);
       emojiFull = parseEmoji(emoji, response.text);
     } catch (e) {
       yield put(exitApp(e));
@@ -76,11 +45,6 @@ function* fetchEmoji(superagent, emoji) {
   }
 
   yield put(parseEmojiSucceeded(emoji, emojiFull));
-
-  yield put(imagesFound(size(emojiFull.themes)));
-  yield all(
-    map(emojiFull.themes, (themeUrl, themeName) => fork(fetchImage, superagent, emojiFull, themeName, themeUrl)),
-  );
 
   if (has(emojiFull, 'modifiers')) {
     yield put(modifiersFound(size(emojiFull.modifiers)));
@@ -100,7 +64,7 @@ function* fetchCategory(superagent, category) {
   } else {
     try {
       const response = yield call(getRequest, superagent, category.url);
-      yield call(saveFile, response.text, TEMP_HTML_PATH, `${category.name}.html`);
+      saveFile(response.text, TEMP_HTML_PATH, `${category.name}.html`);
       emojis = parseCategory(category, response.text);
     } catch (e) {
       yield put(exitApp(e));
@@ -136,9 +100,13 @@ function* fetchIndex(superagent) {
   yield all(
     categories.map(category => call(fetchCategory, superagent, category)),
   );
+  yield put(fetchComplete());
+  logger.success('📡  Collecting data: ✅️');
 }
 
 export default function* fetcherSaga(superagent) {
   yield take(APP_READY);
+
+  logger.sameLine('📡  Collecting data: ♻️');
   yield fork(fetchIndex, superagent);
 }

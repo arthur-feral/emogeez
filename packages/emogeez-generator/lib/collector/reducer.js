@@ -1,8 +1,7 @@
 import {
-  reduce,
+  reduce, size,
 } from 'lodash';
 import {
-  FETCHER_IMAGES_FOUND,
   FETCHER_MODIFIERS_FOUND,
   PARSER_PARSE_CATEGORIES_SUCCESS,
   PARSER_PARSE_CATEGORY_SUCCESS,
@@ -72,6 +71,13 @@ const collectorReducer = (state = initialState, { type, payload }) => {
       const {
         emoji,
       } = payload;
+      const themes = reduce(emoji.themes, (result, themeUrl, themeName) => ({
+        ...result,
+        [themeName]: {
+          ...state.themes[themeName],
+          [emoji.name]: themeUrl,
+        },
+      }), state.themes);
 
       return {
         ...state,
@@ -80,13 +86,8 @@ const collectorReducer = (state = initialState, { type, payload }) => {
           [emoji.name]: emoji,
         },
         emojisFetched: state.emojisFetched + 1,
-      };
-    }
-
-    case FETCHER_IMAGES_FOUND: {
-      return {
-        ...state,
-        imagesToProcess: state.imagesToProcess + payload.count,
+        imagesToProcess: state.imagesToProcess + size(emoji.themes),
+        themes,
       };
     }
 

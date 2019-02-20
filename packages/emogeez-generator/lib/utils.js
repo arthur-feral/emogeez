@@ -1,4 +1,6 @@
 import fs from 'fs-extra';
+import Throttle from 'superagent-throttle/dist';
+import { FETCHER_RETRY_COUNT } from './constants';
 
 /**
  * format char unicode to something like this
@@ -46,3 +48,15 @@ export const saveFile = (content, path, name) => {
 
   fs.writeFileSync(`${path}/${name}`, content);
 };
+
+
+const throttle = new Throttle({
+  active: true, // set false to pause queue
+  rate: 150, // how many requests can be sent every `ratePer`
+  ratePer: 1000, // number of ms in which `rate` requests may be sent
+  concurrent: 50, // how many requests can be sent concurrently
+});
+export const getRequest = (superagent, url) => superagent
+  .get(url)
+  .use(throttle.plugin())
+  .retry(FETCHER_RETRY_COUNT);

@@ -2,7 +2,9 @@ import {
   FETCHER_FETCH_CATEGORIES_SUCCESS,
   FETCHER_FETCH_CATEGORY_SUCCESS,
   FETCHER_FETCH_COMPLETE,
-  FETCHER_FETCH_EMOJI_SUCCESS, FETCHER_FETCH_IMAGE_SUCCESS, FETCHER_IMAGES_FOUND, FETCHER_MODIFIERS_FOUND,
+  FETCHER_FETCH_EMOJI_SUCCESS,
+  FETCHER_FETCH_IMAGE_SUCCESS,
+  FETCHER_MODIFIERS_FOUND,
 } from '../constants';
 
 export const fetchComplete = () => ({
@@ -49,9 +51,3 @@ export const modifiersFound = count => ({
   },
 });
 
-export const imagesFound = count => ({
-  type: FETCHER_IMAGES_FOUND,
-  payload: {
-    count,
-  },
-});

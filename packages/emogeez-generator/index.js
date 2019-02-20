@@ -26,6 +26,9 @@ import {
   middleware as collectorMiddleware,
 } from './lib/collector';
 import {
+  saga as generatorSaga,
+} from './lib/generators';
+import {
   APP_START,
 } from './lib/constants';
 import { exitApp } from './lib/actions';
@@ -59,6 +62,7 @@ const sagas = [
   configSaga,
   fsSaga,
   fetcherSaga,
+  generatorSaga,
 ];
 
 const middlewares = [

@@ -7,7 +7,7 @@ import {
   CONFIG_UPDATED,
   APP_READY,
   FS_READY, APP_DONE,
-  FETCHER_FETCH_COMPLETE,
+  GENERATOR_GENERATE_THEMES_SUCCESS,
 } from './constants';
 import logger from './logger';
 
@@ -16,6 +16,9 @@ function* appTermination() {
     const { payload } = yield take(APP_DONE);
     if (payload.code === 1) {
       logger.error(payload.status);
+    }
+    if (payload.error instanceof Error) {
+      logger.error(payload.error.stack);
     }
 
     process.exit(payload.code);
@@ -37,7 +40,5 @@ export default function* appSaga() {
 
   yield put({ type: APP_READY });
 
-  logger.sameLine('📡  Collecting data: ♻️');
-  yield take(FETCHER_FETCH_COMPLETE);
-  logger.success('📡  Collecting data: ✅️');
+  yield take(GENERATOR_GENERATE_THEMES_SUCCESS);
 }
