@@ -3,6 +3,7 @@ import {
   PARSER_PARSE_CATEGORY_SUCCESS,
   PARSER_PARSE_EMOJI_SUCCESS,
   PARSER_PARSE_IMAGE_SUCCESS,
+  PARSER_PARSE_IMAGE_ERROR,
 } from '../constants';
 
 export const parseCategoriesSucceeded = categories => ({
@@ -30,6 +31,15 @@ export const parseEmojiSucceeded = (emojiBase, emoji) => ({
 
 export const parseImageSucceeded = (emoji, themeName, url) => ({
   type: PARSER_PARSE_IMAGE_SUCCESS,
+  payload: {
+    emoji,
+    themeName,
+    url,
+  },
+});
+
+export const parseImageFailed = (emoji, themeName, url) => ({
+  type: PARSER_PARSE_IMAGE_ERROR,
   payload: {
     emoji,
     themeName,

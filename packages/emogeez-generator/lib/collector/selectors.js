@@ -14,7 +14,7 @@ export const getThemesImages = createSelector(
   getThemes,
   themes => reduce(themes, (result, images, themeName) => ({
     ...result,
-    ...reduce(images, (res, url, emojiName) => ({
+    ...reduce(images, (res, emojiName, url) => ({
       ...res,
       [emojiName]: {
         url,

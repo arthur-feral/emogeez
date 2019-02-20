@@ -1,12 +1,20 @@
 const { TEMP_FILES_PATH: tempPath } = process.env;
 
-export const TEMP_FILES_PATH = tempPath;
-export const TEMP_IMAGES_PATH = `${tempPath}/images/`;
-export const TEMP_HTML_PATH = `${tempPath}/html/`;
-export const TEMP_JSON_PATH = `${tempPath}/jsons/`;
-export const TEMP_STYLE_PATH = `${tempPath}/styles/`;
-export const BASE_IMAGE_PATH = `${TEMP_IMAGES_PATH}/base.png`;
+export const ALLOWED_THEMES = [
+  'apple',
+  'facebook',
+  // 'google',
+  'messenger',
+  'twitter',
+  'whatsapp',
+];
 export const CURRENT_WORKING_DIRECTORY = process.cwd();
+export const TEMP_FILES_PATH = `${CURRENT_WORKING_DIRECTORY}/${tempPath}`;
+export const TEMP_IMAGES_PATH = `${TEMP_FILES_PATH}/images/`;
+export const TEMP_HTML_PATH = `${TEMP_FILES_PATH}/html/`;
+export const TEMP_JSON_PATH = `${TEMP_FILES_PATH}/jsons/`;
+export const TEMP_STYLE_PATH = `${TEMP_FILES_PATH}/styles/`;
+export const BASE_IMAGE_PATH = `${TEMP_IMAGES_PATH}/base.png`;
 export const CONFIG_UPDATED = 'CONFIG_UPDATED';
 
 export const BASE_URL = 'https://emojipedia.org';

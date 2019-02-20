@@ -1,12 +1,14 @@
 import {
-  reduce, size,
+  reduce, size, includes,
 } from 'lodash';
 import {
   FETCHER_MODIFIERS_FOUND,
   PARSER_PARSE_CATEGORIES_SUCCESS,
   PARSER_PARSE_CATEGORY_SUCCESS,
   PARSER_PARSE_EMOJI_SUCCESS,
+  PARSER_PARSE_IMAGE_ERROR,
   PARSER_PARSE_IMAGE_SUCCESS,
+  ALLOWED_THEMES,
 } from '../constants';
 
 const initialState = {
@@ -71,13 +73,18 @@ const collectorReducer = (state = initialState, { type, payload }) => {
       const {
         emoji,
       } = payload;
-      const themes = reduce(emoji.themes, (result, themeUrl, themeName) => ({
-        ...result,
-        [themeName]: {
-          ...state.themes[themeName],
-          [emoji.name]: themeUrl,
-        },
-      }), state.themes);
+      const themes = reduce(emoji.themes, (result, themeUrl, themeName) => {
+        if (includes(ALLOWED_THEMES, themeName)) {
+          return {
+            ...result,
+            [themeName]: {
+              ...state.themes[themeName],
+              [themeUrl]: emoji.name,
+            },
+          };
+        }
+        return result;
+      }, state.themes);
 
       return {
         ...state,
@@ -95,6 +102,32 @@ const collectorReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         imagesProcessed: state.imagesProcessed + 1,
+      };
+    }
+
+    case PARSER_PARSE_IMAGE_ERROR: {
+      const {
+        emoji,
+        themeName,
+        url,
+      } = payload;
+      const theme = reduce(emoji.themes[themeName], (result, themeUrl, emojiName) => {
+        if (themeUrl !== url) {
+          return {
+            ...result,
+            [themeUrl]: emojiName,
+          };
+        }
+
+        return result;
+      }, {});
+
+      return {
+        ...state,
+        themes: {
+          ...state.themes,
+          [themeName]: theme,
+        },
       };
     }
 

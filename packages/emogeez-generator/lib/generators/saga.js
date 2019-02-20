@@ -23,19 +23,19 @@ import {
 } from '../constants';
 import logger from '../logger';
 import {
-  getEmojis, getThemes,
-  getThemesImages,
+  getEmojis,
+  getThemes,
 } from '../collector/selectors';
 import { getConfig } from '../config/selectors';
 import { getRequest, saveFile } from '../utils';
 import { exitApp } from '../actions';
-import { parseImageSucceeded } from '../parser/actions';
+import { parseImageSucceeded, parseImageFailed } from '../parser/actions';
 import { generateSpriteSucceeded, generateThemesSucceeded } from './actions';
 import StylesGenerator from './stylesGenerators';
 
 function* processImage(emoji, themeName, url) {
   const config = yield select(getConfig);
-  const imageFolder = `${TEMP_IMAGES_PATH}/${themeName}/${emoji.category}`;
+  const imageFolder = `${TEMP_IMAGES_PATH}${themeName}/${emoji.category}`;
   const imagePath = `${imageFolder}/${emoji.name}.png`;
   const imageRawPath = `${imageFolder}/${emoji.name}_raw.png`;
 
@@ -69,28 +69,31 @@ function* processImage(emoji, themeName, url) {
         .composite(image, x, y)
         .write(imagePath);
     } catch (e) {
+      logger.error('processImage', emoji.name, themeName, url, e);
       success = false;
     }
   }
 
   if (success) {
     yield put(parseImageSucceeded(emoji, themeName, url));
+  } else {
+    console.error(emoji, themeName, url);
+    yield put(parseImageFailed(emoji, themeName, url));
   }
 }
 
 function* fetchImage(superagent, emoji, themeName, url) {
-  const cacheFilePath = `${TEMP_IMAGES_PATH}/${themeName}/${emoji.category}/${emoji.name}_raw.png`;
-
-  if (!fse.existsSync(cacheFilePath)) {
+  const cacheFilePath = `${TEMP_IMAGES_PATH}${themeName}/${emoji.category}`;
+  const cacheFileName = `${emoji.name}_raw.png`;
+  if (!fse.existsSync(`${cacheFilePath}/${cacheFileName}`)) {
     try {
       const response = yield call(getRequest, superagent, url);
-      saveFile(response.body, `${TEMP_IMAGES_PATH}/${themeName}/${emoji.category}`, `${emoji.name}_raw.png`);
+      saveFile(response.body, cacheFilePath, cacheFileName);
+      yield call(processImage, emoji, themeName, url);
     } catch (e) {
-      yield put(exitApp(e));
+      yield put(parseImageFailed(emoji, themeName, url));
     }
   }
-
-  yield call(processImage, emoji, themeName, url);
 }
 
 function* generateStyle(config, themeName, emojisNames, properties, coordinates) {
@@ -106,7 +109,7 @@ function* generateStyle(config, themeName, emojisNames, properties, coordinates)
     yield call(fs.writeFileSync, completePathCss, styleFiles.css, 'utf8');
     yield call(fs.writeFileSync, completePathPreproc, styleFiles[config.preproc], 'utf8');
   } catch (error) {
-    yield call(exitApp(error));
+    yield put(exitApp(error));
   }
 
   logger.success(`[Generator] ${themeName} done`);
@@ -142,12 +145,12 @@ function _generateSprite(sources, destination) { // eslint-disable-line no-under
 function* generateSprite(themeName, theme) {
   const emojis = yield select(getEmojis);
   const config = yield select(getConfig);
-  const emojisFilePath = map(theme, (_, emojiName) => {
+  const emojisFilePath = map(theme, (emojiName) => {
     const emoji = emojis[emojiName];
 
-    return `${TEMP_IMAGES_PATH}/${themeName}/${emoji.category}/${emoji.name}.png`;
+    return `${TEMP_IMAGES_PATH}${themeName}/${emoji.category}/${emoji.name}.png`;
   });
-  const emojisNames = map(theme, (_, emojiName) => emojiName);
+  const emojisNames = map(theme, emojiName => emojiName);
   const themeSpritePath = `${config.destination}/${themeName}`;
   const themeSpriteDestination = `${themeSpritePath}/${themeName}.png`;
   fse.mkdirpSync(themeSpritePath);
@@ -159,6 +162,7 @@ function* generateSprite(themeName, theme) {
     } = yield call(_generateSprite, emojisFilePath, themeSpriteDestination);
     yield call(generateStyle, config, themeName, emojisNames, properties, coordinates);
   } catch (e) {
+    console.error(themeName, theme);
     yield put(exitApp(e));
   }
 }
@@ -179,10 +183,14 @@ function* generateSprites() {
  */
 function* generateThemes(superagent) {
   const emojis = yield select(getEmojis);
-  const themes = yield select(getThemesImages);
-  const imagesToFetch = reduce(themes, (result, theme) => ([
+  const themes = yield select(getThemes);
+
+  const imagesToFetch = reduce(themes, (result, theme, themeName) => ([
     ...result,
-    [superagent, emojis[theme.emojiName], theme.themeName, theme.url],
+    ...reduce(theme, (result, emojiName, imageUrl) => ([
+      ...result,
+      [superagent, emojis[emojiName], themeName, imageUrl],
+    ]), []),
   ]), []);
 
   yield all(
