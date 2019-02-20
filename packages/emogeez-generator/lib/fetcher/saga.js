@@ -3,7 +3,7 @@ import {
   has,
   map,
   size,
-  take as _take,
+  // take as _take,
 } from 'lodash';
 import {
   take,
@@ -72,7 +72,7 @@ function* fetchCategory(superagent, category) {
   }
 
   // @TODO
-  //const shortArray = _take(emojis, 1);
+  // const shortArray = _take(emojis, 1);
   // yield put(parseCategorySucceeded(category, shortArray));
   //
   // yield all(

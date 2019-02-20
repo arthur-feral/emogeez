@@ -24,6 +24,7 @@ import {
 import {
   reducer as collectorReducer,
   middleware as collectorMiddleware,
+  saga as collectorSaga,
 } from './lib/collector';
 import {
   saga as generatorSaga,
@@ -63,6 +64,7 @@ const sagas = [
   fsSaga,
   fetcherSaga,
   generatorSaga,
+  collectorSaga,
 ];
 
 const middlewares = [

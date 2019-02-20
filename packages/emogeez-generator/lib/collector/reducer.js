@@ -1,5 +1,7 @@
 import {
-  reduce, size, includes,
+  reduce,
+  size,
+  includes,
 } from 'lodash';
 import {
   FETCHER_MODIFIERS_FOUND,

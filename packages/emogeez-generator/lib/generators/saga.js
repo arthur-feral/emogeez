@@ -77,7 +77,7 @@ function* processImage(emoji, themeName, url) {
   if (success) {
     yield put(parseImageSucceeded(emoji, themeName, url));
   } else {
-    console.error(emoji, themeName, url);
+    console.error(emoji, themeName, url); // eslint-disable-line no-console
     yield put(parseImageFailed(emoji, themeName, url));
   }
 }
@@ -162,7 +162,7 @@ function* generateSprite(themeName, theme) {
     } = yield call(_generateSprite, emojisFilePath, themeSpriteDestination);
     yield call(generateStyle, config, themeName, emojisNames, properties, coordinates);
   } catch (e) {
-    console.error(themeName, theme);
+    console.error(themeName, theme); // eslint-disable-line no-console
     yield put(exitApp(e));
   }
 }
