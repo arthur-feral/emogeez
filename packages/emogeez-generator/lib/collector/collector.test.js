@@ -133,7 +133,7 @@ describe('Collector', () => {
   // describe('FETCHER_FETCH_IMAGE_ERROR', () => {
   //   it('handle image fetching error and remove related theme for the emoji', () => {
   //     expect(collector.getStore().imagesFailedCount).to.equal(0);
-  //     emitter.emit('FETCHER_FETCH_IMAGE_ERROR', emojiParsed, 'apple', 'path/to/image.png');
+  //     emitter.emit('FETCHER_FETCH_IMAGE_ERROR', parseEmojiSucceeded, 'apple', 'path/to/image.png');
   //     expect(collector.getStore().imagesFailedCount).to.equal(1);
   //   });
   // });

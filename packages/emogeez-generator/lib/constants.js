@@ -1,12 +1,24 @@
-/**
- * @constant BASE_URL
- * @type {string}
- */
+const { TEMP_FILES_PATH: tempPath } = process.env;
+
+export const TEMP_FILES_PATH = tempPath;
+export const TEMP_IMAGES_PATH = `${tempPath}/images/`;
+export const TEMP_HTML_PATH = `${tempPath}/html/`;
+export const TEMP_JSON_PATH = `${tempPath}/jsons/`;
+export const TEMP_STYLE_PATH = `${tempPath}/styles/`;
+export const BASE_IMAGE_PATH = `${TEMP_IMAGES_PATH}/base.png`;
+export const CURRENT_WORKING_DIRECTORY = process.cwd();
+export const CONFIG_UPDATED = 'CONFIG_UPDATED';
+
 export const BASE_URL = 'https://emojipedia.org';
 export const APP_START = 'APP_START';
 export const APP_DONE = 'APP_DONE';
 export const APP_READY = 'APP_READY';
+export const FS_READY = 'FS_READY';
 export const ERROR = 'ERROR';
+export const AVAILABLE_PREPROCESSORS = ['sass', 'less'];
+
+export const FETCHER_RETRY_COUNT = 5;
+export const FETCHER_FETCH_COMPLETE = 'FETCHER_FETCH_COMPLETE';
 
 export const FETCHER_FETCH_CATEGORIES_ERROR = 'FETCHER_FETCH_CATEGORIES_ERROR';
 export const FETCHER_FETCH_CATEGORIES_SUCCESS = 'FETCHER_FETCH_CATEGORIES_SUCCESS';
@@ -16,6 +28,8 @@ export const FETCHER_FETCH_EMOJI_ERROR = 'FETCHER_FETCH_EMOJI_ERROR';
 export const FETCHER_FETCH_EMOJI_SUCCESS = 'FETCHER_FETCH_EMOJI_SUCCESS';
 export const FETCHER_FETCH_IMAGE_ERROR = 'FETCHER_FETCH_IMAGE_ERROR';
 export const FETCHER_FETCH_IMAGE_SUCCESS = 'FETCHER_FETCH_IMAGE_SUCCESS';
+export const FETCHER_MODIFIERS_FOUND = 'FETCHER_MODIFIERS_FOUND';
+export const FETCHER_IMAGES_FOUND = 'FETCHER_IMAGES_FOUND';
 
 export const PARSER_PARSE_CATEGORIES_ERROR = 'PARSER_PARSE_CATEGORIES_ERROR';
 export const PARSER_PARSE_CATEGORIES_SUCCESS = 'PARSER_PARSE_CATEGORIES_SUCCESS';
