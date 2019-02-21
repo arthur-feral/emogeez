@@ -25,44 +25,14 @@ const doc = new JSDOM(`
         <div id="content"></div>
     </body>
 </html>
-`);
+`, {
+  url: 'https://example.org/',
+  referrer: 'https://example.com/',
+  contentType: 'text/html',
+  includeNodeLocations: true,
+  storageQuota: 10000000,
+});
 global.window = doc.window;
 // take all properties of the window object and also attach it to the
 // mocha global object
 propagateToGlobal(window);
-
-// add localStorage support in tests suite
-// Storage Mock
-function storageMock() {
-  let storage = {};
-
-  return {
-    setItem: function (key, value) {
-      storage[key] = value || '';
-    },
-    getItem: function (key) {
-      return key in storage ? storage[key] : null;
-    },
-    removeItem: function (key) {
-      delete storage[key];
-    },
-    get length() {
-      return Object.keys(storage).length;
-    },
-    key: function (i) {
-      let keys = Object.keys(storage);
-      return keys[i] || null;
-    },
-    clear: function () {
-      storage = {};
-    },
-  };
-}
-
-global.localStorage = storageMock();
-global.sessionStorage = storageMock();
-
-// mock the localStorage
-window.localStorage = global.localStorage;
-// mock the sessionStorage
-window.sessionStorage = global.sessionStorage;
