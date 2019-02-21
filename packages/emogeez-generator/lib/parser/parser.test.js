@@ -203,7 +203,7 @@ describe('Parser', () => {
             messenger: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/facebook/65/father-christmas_1f385.png',
             microsoft: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/microsoft/153/father-christmas_1f385.png',
             mozilla: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/mozilla/36/father-christmas_1f385.png',
-            samsung: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/samsung/148/father-christmas_1f385.png',
+            samsung: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/samsung/161/father-christmas_1f385.png',
             softbank: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/softbank/145/father-christmas_1f385.png',
             twitter: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/twitter/180/father-christmas_1f385.png',
             whatsapp: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/whatsapp/160/father-christmas_1f385.png',

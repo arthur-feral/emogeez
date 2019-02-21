@@ -59,7 +59,7 @@
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.12.4",
-    "jsdom": "^11.7.0",
+    "jsdom": "^13.2.0",
     "mocha": "^5.2.0",
     "node-sass": "^4.8.3",
     "sass-loader": "^7.1.0",

@@ -5,12 +5,10 @@ import {
   expect,
 } from 'chai';
 import fs from 'fs-extra';
-import EventEmitter from 'eventemitter3';
 import StylesGenerator from './stylesGenerators';
 
 require('../../tests/bootstrap');
 
-const emitter = new EventEmitter();
 const stylesGenerator = StylesGenerator({
   destination: 'emojis',
   themesUrl: 'emojis',
@@ -18,7 +16,7 @@ const stylesGenerator = StylesGenerator({
   cache: false,
   prefix: 'emojis',
   preproc: 'sass',
-}, emitter);
+});
 const coordinatesJSON = require(`${process.cwd()}/tests/jsons/coordinates.json`);// eslint-disable-line
 const emojisFullPeopleJSON = require(`${process.cwd()}/tests/jsons/emojisFullForCategory.json`);// eslint-disable-line
 const emojisNames = map(emojisFullPeopleJSON.people.emojis, e => e.name);
@@ -34,10 +32,13 @@ describe('StylesGenerator', () => {
           height: 144,
         }, coordinatesJSON);
 
-      expect(result).to.deep.equal({
-        css: cssResult,
-        sass: sassResult,
-      });
+      expect(result)
+        .to
+        .deep
+        .equal({
+          css: cssResult,
+          sass: sassResult,
+        });
     });
   });
 });

@@ -148,11 +148,6 @@ export const parseEmoji = (emojiBase, html) => {
       emojiFull.themes[themeName] = imagePath;
     });
 
-    // //@TODO
-    // emojiFull.themes = {
-    //   apple: emojiFull.themes.apple,
-    // };
-
     // collecting shortnames
     const $shortNames = $(HTML_EMOJI_SHORTNAMES);
     $shortNames.each(function () {

@@ -9,7 +9,6 @@ import {
   combineReducers,
 } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import thunk from 'redux-thunk';
 import mainSaga from './lib/saga';
 import {
   reducer as configReducer,
@@ -68,7 +67,6 @@ const sagas = [
 ];
 
 const middlewares = [
-  thunk,
   sagaMiddleware,
   collectorMiddleware,
 ];

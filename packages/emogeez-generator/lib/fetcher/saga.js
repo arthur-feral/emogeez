@@ -71,13 +71,6 @@ function* fetchCategory(superagent, category) {
     }
   }
 
-  // @TODO
-  // const shortArray = _take(emojis, 1);
-  // yield put(parseCategorySucceeded(category, shortArray));
-  //
-  // yield all(
-  //   shortArray.map(emoji => call(fetchEmoji, superagent, emoji)),
-  // );
   yield put(parseCategorySucceeded(category, emojis));
 
   yield all(
