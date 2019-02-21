@@ -26,7 +26,9 @@ import { parseCategoriesSucceeded, parseCategorySucceeded, parseEmojiSucceeded }
 import { fetchComplete, modifiersFound } from './actions';
 import logger from '../logger';
 
-function* fetchEmoji(superagent, emoji) {
+let index = 0;
+
+function* fetchEmoji(superagent, emoji, i) {
   const cacheFilePath = `${TEMP_HTML_PATH}/${emoji.category}/${emoji.name}.html`;
 
   let emojiFull = null;
@@ -38,7 +40,7 @@ function* fetchEmoji(superagent, emoji) {
     try {
       const response = yield call(getRequest, superagent, emoji.url);
       saveFile(response.text, `${TEMP_HTML_PATH}/${emoji.category}`, `${emoji.name}.html`);
-      emojiFull = parseEmoji(emoji, response.text);
+      emojiFull = parseEmoji(emoji, response.text, i);
     } catch (e) {
       yield put(exitApp(e));
     }
@@ -49,7 +51,10 @@ function* fetchEmoji(superagent, emoji) {
   if (has(emojiFull, 'modifiers')) {
     yield put(modifiersFound(size(emojiFull.modifiers)));
     yield all(
-      map(emojiFull.modifiers, modifier => call(fetchEmoji, superagent, modifier)),
+      map(emojiFull.modifiers, (modifier) => {
+        index += 1;
+        return call(fetchEmoji, superagent, modifier, index);
+      }),
     );
   }
 }
@@ -74,7 +79,10 @@ function* fetchCategory(superagent, category) {
   yield put(parseCategorySucceeded(category, emojis));
 
   yield all(
-    emojis.map(emoji => call(fetchEmoji, superagent, emoji)),
+    emojis.map((emoji) => {
+      index += 1;
+      return call(fetchEmoji, superagent, emoji, index);
+    }),
   );
 }
 
@@ -100,8 +108,8 @@ function* fetchIndex(superagent) {
   yield all(
     categories.map(category => call(fetchCategory, superagent, category)),
   );
-  yield put(fetchComplete());
   logger.success('📡  Collecting data: ✅️');
+  yield put(fetchComplete());
 }
 
 export default function* fetcherSaga(superagent) {

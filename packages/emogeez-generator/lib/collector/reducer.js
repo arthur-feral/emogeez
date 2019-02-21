@@ -1,6 +1,7 @@
 import {
   reduce,
   size,
+  omit,
   includes,
 } from 'lodash';
 import {
@@ -11,12 +12,14 @@ import {
   PARSER_PARSE_IMAGE_ERROR,
   PARSER_PARSE_IMAGE_SUCCESS,
   ALLOWED_THEMES,
+  DATA_OPTIMIZATION_DONE,
 } from '../constants';
 
 const initialState = {
   categories: {},
   emojis: {},
   themes: {},
+  themedEmojis: {},
 
   categoriesToFetch: 0,
   categoriesFetched: 0,
@@ -109,27 +112,30 @@ const collectorReducer = (state = initialState, { type, payload }) => {
 
     case PARSER_PARSE_IMAGE_ERROR: {
       const {
-        emoji,
         themeName,
         url,
       } = payload;
-      const theme = reduce(emoji.themes[themeName], (result, themeUrl, emojiName) => {
-        if (themeUrl !== url) {
-          return {
-            ...result,
-            [themeUrl]: emojiName,
-          };
-        }
-
-        return result;
-      }, {});
 
       return {
         ...state,
         themes: {
           ...state.themes,
-          [themeName]: theme,
+          [themeName]: omit(state.themes[themeName], url),
         },
+      };
+    }
+
+    case DATA_OPTIMIZATION_DONE: {
+      const {
+        emojis,
+        categories,
+        themedEmojis,
+      } = payload;
+      return {
+        ...state,
+        emojis,
+        categories,
+        themedEmojis,
       };
     }
 

@@ -17,8 +17,9 @@ import {
 } from 'redux-saga/effects';
 import {
   APP_READY,
-  BASE_IMAGE_PATH, EXTENTIONS,
-  FETCHER_FETCH_COMPLETE,
+  BASE_IMAGE_PATH,
+  DATA_OPTIMIZATION_DONE,
+  EXTENTIONS,
   TEMP_IMAGES_PATH,
 } from '../constants';
 import logger from '../logger';
@@ -169,10 +170,10 @@ function* generateSprite(themeName, theme) {
 
 
 function* generateSprites() {
-  const themes = yield select(getThemes);
+  const theme = yield select(getThemes);
 
   yield all(
-    map(themes, (theme, themeName) => call(generateSprite, themeName, theme)),
+    map(theme, (theme, themeName) => call(generateSprite, themeName, theme)),
   );
 }
 
@@ -207,7 +208,8 @@ function* generateThemes(superagent) {
  */
 export default function* generatorSaga(superagent) {
   yield take(APP_READY);
-  yield take(FETCHER_FETCH_COMPLETE);
+  yield take(DATA_OPTIMIZATION_DONE);
   logger.sameLine('🌈 Generating themes files: ♻️');
+  logger.info('');
   yield fork(generateThemes, superagent);
 }

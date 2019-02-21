@@ -1,4 +1,5 @@
 import {
+  FETCHER_FETCH_COMPLETE,
   PARSER_PARSE_CATEGORIES_SUCCESS,
   PARSER_PARSE_CATEGORY_SUCCESS,
   PARSER_PARSE_EMOJI_SUCCESS,
@@ -19,6 +20,7 @@ const collectorMiddleware = store => next => (action) => {
     case PARSER_PARSE_CATEGORIES_SUCCESS:
     case PARSER_PARSE_CATEGORY_SUCCESS:
     case PARSER_PARSE_IMAGE_SUCCESS:
+    case FETCHER_FETCH_COMPLETE:
     case PARSER_PARSE_EMOJI_SUCCESS: {
       next(action);
 
@@ -40,7 +42,12 @@ const collectorMiddleware = store => next => (action) => {
       toLog += ` = [I ${imagesProcessed}/${imagesToProcess} - ${imaPercentage}%]`;
       toLog += ` = [TOTAL ${Math.floor(total)}%]`;
 
-      logger.sameLine(toLog);
+      if (type === FETCHER_FETCH_COMPLETE) {
+        logger.sameLine(' '.repeat(toLog.length));
+      } else {
+        logger.sameLine(toLog);
+      }
+
       break;
     }
 

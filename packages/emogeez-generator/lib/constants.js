@@ -39,6 +39,9 @@ export const PARSER_PARSE_IMAGE_ERROR = 'PARSER_PARSE_IMAGE_ERROR';
 export const GENERATOR_GENERATE_SPRITE_SUCCESS = 'GENERATOR_GENERATE_SPRITE_SUCCESS';
 export const GENERATOR_GENERATE_THEMES_SUCCESS = 'GENERATOR_GENERATE_THEMES_SUCCESS';
 
+export const DATA_OPTIMIZATION = 'DATA_OPTIMIZATION';
+export const DATA_OPTIMIZATION_DONE = 'DATA_OPTIMIZATION_DONE';
+
 export const HTML_CATEGORIES_SELECTOR = 'body div.container div.sidebar div.block:first-child';
 export const HTML_EMOJIS_SELECTOR = 'body div.container div.content ul.emoji-list';
 export const HTML_EMOJI_SHORTNAMES = 'body div.container div.content article ul.shortcodes li';
@@ -51,3 +54,14 @@ export const EXTENTIONS = {
   sass: 'scss',
   less: 'less',
 };
+
+export const CATEGORIES_ORDER = [
+  'people',
+  'nature',
+  'food-drink',
+  'activity',
+  'travel-places',
+  'objects',
+  'symbols',
+  'flags',
+];

@@ -120,11 +120,13 @@ export const parseCategory = (category, html) => {
  * - themes
  * @param emojiBase
  * @param html
+ * @param index
  */
-export const parseEmoji = (emojiBase, html) => {
+export const parseEmoji = (emojiBase, html, index) => {
   try {
     const emojiFull = {
       ...emojiBase,
+      index,
       unicode: getUnicode(emojiBase.symbol),
       shortnames: [],
       modifiers: {},
