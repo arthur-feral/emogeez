@@ -2,54 +2,53 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:9.2
+    - image: circleci/node:9.11
     working_directory: ~/repo
 
     steps:
-      - checkout
+    - checkout
 
-      - restore_cache:
-          keys:
-          - v2-cache-root-{{ checksum "yarn.lock" }}
-          - v2-cache-root-
+    - restore_cache:
+        keys:
+        - v2-cache-root-{{ checksum "yarn.lock" }}
+        - v2-cache-root-
 
-      - restore_cache:
-          keys:
-          - v2-cache-generator-{{ checksum "packages/emogeez-generator/yarn.lock" }}
-          - v2-cache-generator
+    - restore_cache:
+        keys:
+        - v2-cache-generator-{{ checksum "packages/emogeez-generator/yarn.lock" }}
+        - v2-cache-generator
 
-      - restore_cache:
-          keys:
-          - v2-cache-parser-{{ checksum "packages/emogeez-parser/yarn.lock" }}
-          - v2-cache-parser
+    - restore_cache:
+        keys:
+        - v2-cache-parser-{{ checksum "packages/emogeez-parser/yarn.lock" }}
+        - v2-cache-parser
 
-      - restore_cache:
-          keys:
-          - v2-cache-react-components-{{ checksum "packages/emogeez-react-components/yarn.lock" }}
-          - v2-cache-react-components
+    - restore_cache:
+        keys:
+        - v2-cache-react-components-{{ checksum "packages/emogeez-react-components/yarn.lock" }}
+        - v2-cache-react-components
 
-      - run: sudo apt-get update
-      - run: sudo apt-get install -y graphicsmagick
-      - run: yarn
-      - run: yarn run lerna-bootstrap
+    - run: yarn
+    - run: yarn run lerna-bootstrap
+    - run: yarn run build
 
-      - save_cache:
-          key: v2-cache-root-{{ checksum "yarn.lock" }}
-          paths:
-            - node_modules
-      - save_cache:
-          key: v2-cache-generator-{{ checksum "packages/emogeez-generator/yarn.lock" }}
-          paths:
-            - packages/emogeez-generator/node_modules
+    - save_cache:
+        key: v2-cache-root-{{ checksum "yarn.lock" }}
+        paths:
+        - node_modules
+    - save_cache:
+        key: v2-cache-generator-{{ checksum "packages/emogeez-generator/yarn.lock" }}
+        paths:
+        - packages/emogeez-generator/node_modules
 
-      - save_cache:
-          key: v2-cache-parser-{{ checksum "packages/emogeez-parser/yarn.lock" }}
-          paths:
-            - packages/emogeez-parser/node_modules
+    - save_cache:
+        key: v2-cache-parser-{{ checksum "packages/emogeez-parser/yarn.lock" }}
+        paths:
+        - packages/emogeez-parser/node_modules
 
-      - save_cache:
-          key: v2-cache-react-components-{{ checksum "packages/emogeez-react-components/yarn.lock" }}
-          paths:
-            - packages/emogeez-react-components/node_modules
+    - save_cache:
+        key: v2-cache-react-components-{{ checksum "packages/emogeez-react-components/yarn.lock" }}
+        paths:
+        - packages/emogeez-react-components/node_modules
 
-      - run: yarn test
+    - run: yarn test

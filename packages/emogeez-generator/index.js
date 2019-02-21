@@ -1,25 +1,39 @@
-//process.stdin.resume();
-
 import commander from 'commander';
-import superagent from 'superagent';
-
-import logger from './lib/logger';
-import Config from './lib/config/config';
-import Fetcher from './lib/fetcher/fetcher';
-import Parser from './lib/parser/parser';
-import Monitor from './lib/monitor/monitor';
-import Generators from './lib/generators/generators';
-import Collector from './lib/collector/collector';
-
-import EventEmitter from 'eventemitter3';
+import {
+  forEach,
+} from 'lodash';
+import {
+  createStore,
+  applyMiddleware,
+  compose,
+  combineReducers,
+} from 'redux';
+import createSagaMiddleware from 'redux-saga';
+import mainSaga from './lib/saga';
+import {
+  reducer as configReducer,
+  saga as configSaga,
+} from './lib/config';
+import {
+  saga as fsSaga,
+} from './lib/fs';
+import {
+  saga as fetcherSaga,
+} from './lib/fetcher';
+import {
+  reducer as collectorReducer,
+  middleware as collectorMiddleware,
+  saga as collectorSaga,
+} from './lib/collector';
+import {
+  saga as generatorSaga,
+} from './lib/generators';
 import {
   APP_START,
-  APP_DONE,
 } from './lib/constants';
+import { exitApp } from './lib/actions';
 
-const emitter = new EventEmitter();
-
-const packagejson = require(`${process.cwd()}/package.json`);
+const packagejson = require(`${process.cwd()}/package.json`); // eslint-disable-line
 
 commander
   .version(packagejson.version)
@@ -32,37 +46,56 @@ commander
   .option('-c, --cache', 'Force cache use (use last cached html and images) Dont use it if you want last released emojis')
   .parse(process.argv);
 
-const config = Config(commander, emitter);
-const fetcher = Fetcher(superagent, config, emitter);
-const parser = Parser(config, emitter);
-const monitor = Monitor(config, emitter);
-const generators = Generators(config, emitter);
-const collector = Collector(config, emitter);
-
-const stopAndExit = (status, error) => {
-  if (error) {
-    logger.error(error.message);
-    logger.error(error.stack);
-  }
-
-  //process.stdin.pause();
-  process.exit(status);
+const sagaMiddleware = createSagaMiddleware({
+  onError: (...args) => {
+    // eslint-disable-next-line no-console
+    console.error('Uncaught error from saga', ...args);
+  },
+});
+const reducers = {
+  collector: collectorReducer,
+  config: configReducer,
 };
 
-emitter.emit(APP_START);
+const sagas = [
+  mainSaga,
+  configSaga,
+  fsSaga,
+  fetcherSaga,
+  generatorSaga,
+  collectorSaga,
+];
 
-emitter.on(APP_DONE, () => {
-  stopAndExit(0);
+const middlewares = [
+  sagaMiddleware,
+  collectorMiddleware,
+];
+
+const store = createStore(
+  combineReducers(reducers),
+  compose(applyMiddleware(...middlewares)),
+);
+
+forEach(
+  sagas,
+  (saga) => {
+    sagaMiddleware.run(saga);
+  },
+);
+
+store.dispatch({
+  type: APP_START,
+  payload: commander,
 });
 
-process.on('SIGINT', function () {
-  stopAndExit(1);
+process.on('SIGINT', () => {
+  store.dispatch(exitApp(1, 'SIGINT'));
 });
 
 process.on('uncaughtException', (error) => {
-  stopAndExit(1, error);
+  store.dispatch(exitApp(1, error));
 });
 
 process.on('error', (error) => {
-  stopAndExit(1, error);
+  store.dispatch(exitApp(1, error));
 });

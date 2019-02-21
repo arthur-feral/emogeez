@@ -5,23 +5,15 @@
   "author": "Arthur Féral, iAdvize <arthur.feral@hotmail.fr>",
   "license": "MIT",
   "scripts": {
-    "test": "./scripts/test.sh",
-    "bootstrap": "yarn",
     "lerna-bootstrap": "lerna bootstrap",
-    "lerna-publish": "lerna publish"
+    "lerna-publish": "lerna publish",
+    "lerna-clean": "lerna clean",
+    "build": "./scripts/build.sh",
+    "test": "./scripts/test.sh",
+    "prepare-publish": "yarn run build && yarn run test"
   },
   "devDependencies": {
-    "babel-cli": "^6.18.0",
-    "babel-core": "^6.20.0",
-    "babel-env": "^2.4.1",
-    "babel-plugin-transform-class-properties": "6.24.1",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-polyfill": "^6.23.0",
-    "babel-preset-airbnb": "^2.4.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-register": "^6.18.0",
-    "lerna": "^3.10.5",
-    "mocha": "^3.2.0",
-    "nyc": "^11.3.0"
-  }
+    "lerna": "3.13.0"
+  },
+  "dependencies": {}
 }

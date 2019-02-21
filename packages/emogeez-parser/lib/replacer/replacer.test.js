@@ -1,6 +1,7 @@
 import {
   expect,
 } from 'chai';
+import apple from 'emogeez-generator/emojis/apple/apple.json';
 import Config from '../config/config';
 import Store from '../store/store';
 import Http from '../http/http';
@@ -8,12 +9,10 @@ import Replacer from './replacer';
 
 require('../../tests/bootstrap');
 
-const emojisData = require('../../tests/json/apple.json');
-
 const config = Config();
 const http = Http(config);
 const store = Store(config, http);
-store.setTheme('apple', emojisData);
+store.setTheme('apple', apple);
 
 const {
   aliasesToNames,

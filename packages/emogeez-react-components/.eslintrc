@@ -1,16 +1,90 @@
 {
   "parser": "babel-eslint",
   "extends": [
-    "iadvize"
+    "eslint-config-airbnb"
   ],
+  "overrides": [
+    {
+      "files": [
+        "browsersAlert*"
+      ]
+    },
+    {
+      "files": [
+        "tests/**/*.js",
+        "**/*.test.js*"
+      ],
+      "globals": {
+        "describe": true,
+        "it": true,
+        "after": true,
+        "before": true,
+        "afterEach": true,
+        "beforeEach": true
+      }
+    }
+  ],
+  "env": {
+    "browser": true
+  },
   "rules": {
+    "global-require": "off",
+    "no-shadow": 0,
+    "max-len": [
+      "error",
+      150
+    ],
+    "no-multiple-empty-lines": [
+      "error",
+      {
+        "max": 2,
+        "maxBOF": 0,
+        "maxEOF": 1
+      }
+    ],
+    "func-names": "off",
+    "no-console": "error",
+    "no-alert": "error",
+    "no-warning-comments": [
+      "warn",
+      {
+        "terms": [
+          "todo",
+          "fixme",
+          "@todo",
+          "@fixme"
+        ]
+      }
+    ],
+    "import/prefer-default-export": "off",
+    "import/extensions": [
+      "error",
+      "always",
+      {
+        "js": "never"
+      }
+    ],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          ".storybook/**/*.js",
+          "**/.storybook/**/*.js",
+          "**/*.stories.js",
+          "**/*.test.js"
+        ]
+      }
+    ],
     "react/jsx-filename-extension": "off",
-    "react/prefer-es6-class": "warn",
-    "global-require": "warn",
-    "import/extensions": "warn",
-    "import/no-extraneous-dependencies": "warn",
-    "jsx-a11y/anchor-has-content": "warn",
-    "react/forbid-prop-types": "warn",
+    "react/no-danger": "error",
+    "react/forbid-prop-types": [
+      "error",
+      {
+        "forbid": [
+          "any"
+        ]
+      }
+    ],
     "react/prop-types": [
       "error",
       {
@@ -19,26 +93,7 @@
           "className"
         ]
       }
-    ]
-  },
-  "overrides": [
-    {
-      "files": [
-        "**/*.test.js"
-      ],
-      "globals": {
-        "describe": true,
-        "it": true,
-        "beforeEach": true,
-        "afterEach": true,
-        "before": true,
-        "after": true
-      },
-      "rules": {
-        "react/react-in-jsx-scope": "warn",
-        "import/no-extraneous-dependencies": "warn",
-        "no-unused-expressions": "warn"
-      }
-    }
-  ]
+    ],
+    "jsx-a11y/href-no-hash": "off"
+  }
 }

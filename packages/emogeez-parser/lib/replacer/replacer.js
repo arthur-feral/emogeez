@@ -6,7 +6,7 @@ import {
   getUnicode,
 } from '../utils';
 
-const split = require('emoji-aware').split;
+const { split } = require('emoji-aware');
 
 const {
   ALIASES_MAP,
@@ -91,8 +91,7 @@ export default (store) => {
    * @param {boolean} HTMLRenderer
    * @returns {string}
    */
-  const UTF8ToHTML = (theme, text, HTMLRenderer) =>
-    namesToHTML(theme, utf8ToNames(theme, text), HTMLRenderer);
+  const UTF8ToHTML = (theme, text, HTMLRenderer) => namesToHTML(theme, utf8ToNames(theme, text), HTMLRenderer);
 
   return {
     aliasesToNames,

@@ -1,15 +1,14 @@
 {
   "name": "emogeez-parser",
-  "version": "0.19.5",
+  "version": "0.20.0-alpha.0",
   "description": "A toolbox for parsing emojis in texts.",
   "main": "dist/index.js",
   "scripts": {
-    "transpile": "$(npm bin)/babel . --out-dir dist --ignore cache,tests,node_modules,nyc-reports,dist,*.test.js",
-    "prepublish": "yarn run transpile && yarn run test",
-    "lint:js": "eslint lib tests --ext .js",
-    "coverage": "NODE_ENV=test nyc --check-coverage --lines 85 --report-dir=${CIRCLE_ARTIFACTS:-'./nyc-reports'} --reporter=lcov yarn run mocha",
-    "test": "yarn run lint:js --quiet && yarn run coverage",
-    "mocha": "NODE_ENV=test mocha --compilers js:babel-register --timeout 5000 -r tests/bootstrap.js -r babel-polyfill $(find lib -name '*.test.js')"
+    "prepublish": "echo \"run tests?\"",
+    "test:js": "NODE_ENV=test mocha -r @babel/register -r @babel/polyfill --timeout 5000 -r tests/bootstrap.js $(find lib -name '*.test.js')",
+    "lint:js": "eslint ./ --ext .js --ignore-path ./.eslintignore --fix",
+    "build": "./node_modules/.bin/babel . --out-dir dist --ignore cache,tests,node_modules,dist,**/*.test.js,./.storybook",
+    "test": "yarn run lint:js && yarn run test:js"
   },
   "homepage": "https://github.com/arthur-feral/emogeez/tree/master/packages/emogeez-parser",
   "keywords": [
@@ -28,28 +27,26 @@
     "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
-    "babel": "^6.23.0",
-    "babel-cli": "^6.18.0",
-    "babel-core": "^6.20.0",
-    "babel-env": "^2.4.1",
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.3.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.3.1",
+    "@babel/plugin-transform-async-to-generator": "^7.2.0",
+    "@babel/polyfill": "^7.2.5",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.0.0",
     "babel-eslint": "^8.2.3",
-    "babel-plugin-transform-class-properties": "6.24.1",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-polyfill": "^6.23.0",
-    "babel-preset-airbnb": "^2.4.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-register": "^6.18.0",
+    "babel-plugin-inline-import": "^3.0.0",
     "chai": "^3.5.0",
-    "eslint": "^4.19.1",
+    "emogeez-generator": "^0.20.0-alpha.0",
+    "eslint": "^5.14.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.12.4",
     "fetch-mock": "^6.3.0",
-    "mocha": "^3.2.0",
-    "nyc": "^11.3.0",
+    "mocha": "^5.2.0",
     "sinon": "4.5.0"
-  },
-  "nyc": {
-    "exclude": [
-      "dist/",
-      "tests/"
-    ]
   }
 }
