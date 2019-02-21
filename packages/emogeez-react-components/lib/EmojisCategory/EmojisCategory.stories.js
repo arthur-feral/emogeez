@@ -1,3 +1,6 @@
+import {
+  map,
+} from 'lodash';
 import centered from '@storybook/addon-centered';
 import React from 'react';
 import { storiesOf } from '@storybook/react';
@@ -10,7 +13,7 @@ const stories = storiesOf('EmojisCategory', module)
 const defaultStory = {
   name: appleJSON.people.name,
   symbol: appleJSON.people.symbol,
-  emojis: appleJSON.people.emojis,
+  emojis: map(appleJSON.people.emojis, emoji => emoji),
 };
 
 stories.add('Default', () => {

@@ -163,7 +163,7 @@ export default class EmojisPopupToggler extends Component {
     );
 
     togglersMounted = togglersMounted.filter(uid => uid !== this.UID);
-
+    this.closePopup();
     if (destroyPopupIfNoToggler && togglersMounted.length === 0) {
       destroyPopup();
     }

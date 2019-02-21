@@ -66,11 +66,33 @@ function* generateThemeJSON(themeName, categories) {
 function* generateThemesJSON() {
   logger.sameLine('🧳 Packing json: ♻️');
 
+  const config = yield select(getConfig);
   const themedEmojis = yield select(getThemedEmojis);
 
   yield all(
     map(themedEmojis, (categories, themeName) => call(generateThemeJSON, themeName, categories)),
   );
+
+  const categories = yield select(getCategories);
+  const emojis = yield select(getEmojis);
+  const json = reduce(categories, (resultCategories, category, categoryName) => ({
+    ...resultCategories,
+    [categoryName]: {
+      ...category,
+      emojis: reduce(emojis, (resultEmojis, emoji, emojiName) => {
+        if (emoji.category === categoryName) {
+          return {
+            ...resultEmojis,
+            [emojiName]: emoji,
+          };
+        }
+
+        return resultEmojis;
+      }, {}),
+    },
+  }), {});
+  fs.writeFileSync(`${config.destination}/emojis.json`, JSON.stringify(json), 'utf8');
+
   logger.success('🧳 Packing json: ✅');
 }
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { noop, has } from 'lodash';
+import { noop, has, map } from 'lodash';
 import Emoji from '../Emoji/Emoji';
 import EmojiModifiers from '../EmojiModifiers/EmojiModifiers';
 import { placeModifiersPopup } from '../placement';
@@ -23,13 +23,13 @@ let canClose = true;
 export default class EmojisCategory extends Component {
   static propTypes = {
     prefix: PropTypes.string,
-    emojis: PropTypes.array,
+    emojis: PropTypes.object,
     name: PropTypes.string.isRequired,
     onClickEmoji: PropTypes.func,
   };
 
   static defaultProps = {
-    emojis: [],
+    emojis: {},
     prefix: 'emojis',
     onClickEmoji: noop,
   };
@@ -118,7 +118,7 @@ export default class EmojisCategory extends Component {
   }
 
   renderEmojis(emojis) {
-    return emojis.map((emoji) => {
+    return map(emojis, (emoji) => {
       const {
         prefix,
       } = this.props;

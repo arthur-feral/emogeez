@@ -14,7 +14,7 @@ const renderComponentIntoDOM = (props = {}) => ReactTestUtils.renderIntoDocument
 );
 
 const story = {
-  emoji: emojis[0],
+  emoji: emojis['grinning-face'],
 };
 const onClickSpy = sinon.spy();
 
@@ -27,7 +27,10 @@ describe('Emoji', () => {
 
     expect(() => {
       ReactTestUtils.findRenderedDOMComponentWithClass(component, 'customClass');
-    }).to.not.throw();
+    })
+      .to
+      .not
+      .throw();
   });
 
   it('support custom prefix', () => {
@@ -36,13 +39,17 @@ describe('Emoji', () => {
       prefix: 'my-custom-prefix',
     });
     const emoji = ReactTestUtils.findRenderedDOMComponentWithClass(component, CLASSNAMES.container);
-    expect(emoji.className).to.equal('emojiContainer my-custom-prefix-grinning-face');
+    expect(emoji.className)
+      .to
+      .equal('emojiContainer my-custom-prefix-grinning-face');
   });
 
   it('should render properly', () => {
     const component = renderComponentIntoDOM(story);
     const emoji = ReactTestUtils.findRenderedDOMComponentWithClass(component, CLASSNAMES.container);
-    expect(emoji.textContent).to.equal(emojis[0].symbol);
+    expect(emoji.textContent)
+      .to
+      .equal(emojis['grinning-face'].symbol);
   });
 
   it('should react onClick', () => {
@@ -51,8 +58,12 @@ describe('Emoji', () => {
       onClick: onClickSpy,
     });
     const emoji = ReactTestUtils.findRenderedDOMComponentWithClass(component, CLASSNAMES.container);
-    expect(onClickSpy.callCount).to.equal(0);
+    expect(onClickSpy.callCount)
+      .to
+      .equal(0);
     ReactTestUtils.Simulate.click(emoji);
-    expect(onClickSpy.callCount).to.equal(1);
+    expect(onClickSpy.callCount)
+      .to
+      .equal(1);
   });
 });

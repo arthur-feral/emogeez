@@ -144,6 +144,7 @@ describe('Parser', () => {
         .equal({
           category: 'people',
           fullName: 'Santa Claus',
+          index: undefined,
           modifiers: {
             'father-christmas-type-1-2': {
               category: 'people',
@@ -222,7 +223,10 @@ describe('Parser', () => {
         )
           .to
           .deep
-          .equal(emojiJSON1);
+          .equal({
+            ...emojiJSON1,
+            index: undefined,
+          });
       });
     });
 
@@ -238,7 +242,10 @@ describe('Parser', () => {
         )
           .to
           .deep
-          .equal(emojiJSON2);
+          .equal({
+            ...emojiJSON2,
+            index: undefined,
+          });
       });
     });
 
@@ -254,7 +261,10 @@ describe('Parser', () => {
         )
           .to
           .deep
-          .equal(emojiJSON2);
+          .equal({
+            ...emojiJSON2,
+            index: undefined,
+          });
       });
     });
 
@@ -270,7 +280,10 @@ describe('Parser', () => {
         )
           .to
           .deep
-          .equal(emojiJSON3);
+          .equal({
+            ...emojiJSON3,
+            index: undefined,
+          });
       });
     });
 
@@ -286,7 +299,10 @@ describe('Parser', () => {
         )
           .to
           .deep
-          .equal(emojiJSON4);
+          .equal({
+            ...emojiJSON4,
+            index: undefined,
+          });
       });
     });
   });
