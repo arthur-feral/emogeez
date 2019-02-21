@@ -3,6 +3,8 @@ import Spritesmith from 'spritesmith';
 import sizeOf from 'image-size';
 import fse from 'fs-extra';
 import fs from 'fs';
+import imagemin from 'imagemin';
+import imageminPng from 'imagemin-pngquant';
 import {
   map,
   reduce,
@@ -59,7 +61,7 @@ function* processImage(emoji, themeName, url) {
       image
       // first we need to autocrop to remove extra transparent pixels
         .autocrop()
-        .resize(sizeWithGoodResolution, AUTO)
+        .resize(AUTO, sizeWithGoodResolution)
         .write(imagePath);
       const baseImage = yield call(jimp.read, BASE_IMAGE_PATH);
       const dimensions = sizeOf(imagePath);
@@ -117,9 +119,9 @@ function* generateStyle(config, themeName, emojisNames, properties, coordinates)
   yield put(generateSpriteSucceeded(themeName));
 }
 
-function _generateSprite(sources, destination) { // eslint-disable-line no-underscore-dangle
+function _generateSprite(sources, destination, name) { // eslint-disable-line no-underscore-dangle
   return new Promise((resolve, reject) => {
-    Spritesmith.run({ src: sources }, (err, result) => {
+    Spritesmith.run({ src: sources }, async (err, result) => {
       if (err) {
         reject(err);
       } else {
@@ -130,7 +132,12 @@ function _generateSprite(sources, destination) { // eslint-disable-line no-under
         } = result;
 
         try {
-          fse.writeFileSync(destination, image);
+          fse.writeFileSync(`${destination}/${name}`, image);
+          await imagemin([`${destination}/*.png`], destination, {
+            plugins: [
+              imageminPng({ quality: [0.35, 0.65] }),
+            ],
+          });
           resolve({
             properties,
             coordinates,
@@ -153,14 +160,14 @@ function* generateSprite(themeName, theme) {
   });
   const emojisNames = map(theme, emojiName => emojiName);
   const themeSpritePath = `${config.destination}/${themeName}`;
-  const themeSpriteDestination = `${themeSpritePath}/${themeName}.png`;
+  const themeSpriteName = `${themeName}.png`;
   fse.mkdirpSync(themeSpritePath);
 
   try {
     const {
       properties,
       coordinates,
-    } = yield call(_generateSprite, emojisFilePath, themeSpriteDestination);
+    } = yield call(_generateSprite, emojisFilePath, themeSpritePath, themeSpriteName);
     yield call(generateStyle, config, themeName, emojisNames, properties, coordinates);
   } catch (e) {
     console.error(themeName, theme); // eslint-disable-line no-console
