@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-    - image: circleci/node:9.2
+    - image: circleci/node:9.11
     working_directory: ~/repo
 
     steps:
@@ -28,7 +28,6 @@ jobs:
         - v2-cache-react-components-{{ checksum "packages/emogeez-react-components/yarn.lock" }}
         - v2-cache-react-components
 
-    - run: sudo apt-get update
     - run: yarn
     - run: yarn run lerna-bootstrap
     - run: yarn run build
