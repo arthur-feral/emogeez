@@ -5,13 +5,13 @@
   "scripts": {
     "start": "TEMP_FILES_PATH=tmp node ./dist/index.js",
     "dev": "node ./index.js",
-    "prepublish": "echo \"run tests?\"",
     "test:js": "NODE_ENV=test TEMP_FILES_PATH=tests/tmp mocha -r @babel/register -r @babel/polyfill --timeout 5000 -r tests/bootstrap.js $(find lib -name '*.test.js')",
     "lint:js": "eslint ./ --ext .js --ignore-path ./.eslintignore --fix",
     "build": "./node_modules/.bin/babel . --out-dir dist --ignore cache,tests,node_modules,dist,**/*.test.js,./.storybook",
     "test": "yarn run lint:js && yarn run test:js",
     "clean:tmp": "rm -r tmp/**/*",
     "clean:dist": "rm -r dist/",
+    "prepublish": "yarn run build",
     "clean": "yarn clean:tmp && yarn clean:dist"
   },
   "homepage": "https://github.com/arthur-feral/emogeez/tree/master/packages/emogeez-generator",

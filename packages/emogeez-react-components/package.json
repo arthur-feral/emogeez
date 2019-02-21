@@ -4,7 +4,7 @@
   "description": "A toolbox for emojis rendering.",
   "main": "dist/index.js",
   "scripts": {
-    "prepublish": "echo \"run tests?\"",
+    "prepublish": "yarn run build",
     "test:js": "NODE_ENV=test mocha -r @babel/register -r @babel/polyfill --timeout 5000 -r tests/bootstrap.js $(find lib -name '*.test.js')",
     "lint:js": "eslint ./ --ext .js --ignore-path ./.eslintignore --fix",
     "test": "yarn run lint:js && yarn run test:js",
