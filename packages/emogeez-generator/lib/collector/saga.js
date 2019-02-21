@@ -79,7 +79,7 @@ function* optimizeDatas() {
   const categories = yield select(getCategories);
   const categoriesOrdered = reduce(CATEGORIES_ORDER, (result, categoryName) => ({
     ...result,
-    [categoryName]: categories[categoryName],
+    [categoryName]: omit(categories[categoryName], 'url'),
   }), {});
 
   const emojis = yield select(getEmojis);
@@ -98,7 +98,7 @@ function* optimizeDatas() {
     return {
       ...resultThemes,
       [themeName]: {
-        ...reduce(categories, (resultCategories, category, categoryName) => ({
+        ...reduce(categoriesOrdered, (resultCategories, category, categoryName) => ({
           ...resultCategories,
           [categoryName]: {
             ...category,

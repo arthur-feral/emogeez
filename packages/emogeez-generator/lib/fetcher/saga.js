@@ -108,13 +108,13 @@ function* fetchIndex(superagent) {
   yield all(
     categories.map(category => call(fetchCategory, superagent, category)),
   );
-  logger.success('📡  Collecting data: ✅️');
+  logger.success('📡 Collecting data: ✅️');
   yield put(fetchComplete());
 }
 
 export default function* fetcherSaga(superagent) {
   yield take(APP_READY);
 
-  logger.sameLine('📡  Collecting data: ♻️');
+  logger.sameLine('📡 Collecting data: ♻️');
   yield fork(fetchIndex, superagent);
 }

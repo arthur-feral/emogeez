@@ -26,7 +26,7 @@ function* appTermination() {
 }
 
 export default function* appSaga() {
-  logger.info('🙂 App starting...');
+  logger.info('🚀 App starting...');
 
   yield fork(appTermination);
 

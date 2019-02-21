@@ -3,7 +3,7 @@ const { TEMP_FILES_PATH: tempPath } = process.env;
 export const ALLOWED_THEMES = [
   'apple',
   'facebook',
-  // 'google',
+  'google',
   'messenger',
   'twitter',
   'whatsapp',
