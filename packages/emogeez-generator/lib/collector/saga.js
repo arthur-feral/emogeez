@@ -41,8 +41,7 @@ function* generateThemeJSON(themeName, theme) {
         },
       };
     }
-    const parentIndex = findIndex(result[emoji.category].emojis, (e => e.name === emoji.parent));
-    const parent = result[emoji.category].emojis[parentIndex];
+    const parent = emojis[emoji.parent];
     parent.modifiers = {
       ...parent.modifiers || {},
       [emoji.name]: emoji,
