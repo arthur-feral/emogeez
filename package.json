@@ -11,7 +11,7 @@
     "lerna-clean": "lerna clean",
     "build": "./scripts/build.sh",
     "test": "./scripts/test.sh",
-    "publish": "./scripts/publish.sh",
+    "publish-libs": "./scripts/publish.sh",
     "prepare-publish": "yarn run build && yarn run test"
   },
   "devDependencies": {

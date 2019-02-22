@@ -21,5 +21,5 @@ echo "publishing $VERSION $NEW_VERSION"
 find $(pwd)/packages/emogeez-generator/emojis -type f -name "*.*css" -exec sed -E -i '' 's/emogeez@(([0-9]+(\.[0-9]+)+)|latest)/emogeez@'"$NEW_VERSION"'/g' {} +
 git add -A
 git commit -m "misc: update assets files with version $NEW_VERSION"
-git push
+git push origin $(git branch | grep \* | cut -d ' ' -f2)
 yarn run lerna publish from-package --force-publish=* --yes
