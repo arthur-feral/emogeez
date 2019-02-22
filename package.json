@@ -5,6 +5,7 @@
   "author": "Arthur Féral, iAdvize <arthur.feral@hotmail.fr>",
   "license": "MIT",
   "scripts": {
+    "lerna": "lerna",
     "lerna-bootstrap": "lerna bootstrap",
     "lerna-publish": "lerna publish",
     "lerna-clean": "lerna clean",
