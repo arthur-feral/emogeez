@@ -1,6 +1,6 @@
 {
   "name": "emogeez-parser",
-  "version": "0.20.1",
+  "version": "0.20.2",
   "description": "A toolbox for parsing emojis in texts.",
   "main": "dist/index.js",
   "scripts": {
@@ -39,7 +39,7 @@
     "babel-eslint": "^8.2.3",
     "babel-plugin-inline-import": "^3.0.0",
     "chai": "^3.5.0",
-    "emogeez-generator": "^0.20.1",
+    "emogeez-generator": "0.20.2",
     "eslint": "^5.14.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.16.0",
