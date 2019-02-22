@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import {
-  noop, take, sortBy, reverse, findIndex, forEach,
+  reduce, size, noop, take, sortBy, reverse, findIndex, forEach,
 } from 'lodash';
 import store from 'store';
 import EmojisCategory from '../EmojisCategory/EmojisCategory';
@@ -120,7 +120,6 @@ export default class EmojisPopup extends Component {
     this.categoriesListPaddingTop = 0;
     this.categories = {};
     this.categoriesTabs = {};
-    this.onClickEmoji = this.onClickEmoji.bind(this);
 
     this.state = {
       history: historyEnabled
@@ -173,7 +172,7 @@ export default class EmojisPopup extends Component {
     return false;
   }
 
-  onClickEmoji(emoji, event) {
+  onClickEmoji = (emoji, event) => {
     const {
       historyEnabled,
       historyLimit,
@@ -184,15 +183,20 @@ export default class EmojisPopup extends Component {
 
     if (historyEnabled) {
       updateHistory(emoji);
+      const history = getHistory(historyLimit);
+      history.emojis = reduce(history.emojis, (result, emoji) => ({
+        ...result,
+        [emoji.name]: emoji,
+      }), {});
 
       this.setState({
-        history: getHistory(historyLimit),
+        history,
       });
     }
 
     this.resetScroll();
     this.props.onClickEmoji(emoji, event); // eslint-disable-line
-  }
+  };
 
   onClickCategory = (categoryName) => {
     const $category = this.categories[categoryName].getDOMNode();
@@ -262,7 +266,7 @@ export default class EmojisPopup extends Component {
     } = this.state;
 
     let fullCategories = categories;
-    if (historyEnabled && history && history.emojis.length) {
+    if (historyEnabled && history && size(history.emojis) !== 0) {
       fullCategories = [history].concat(categories);
     }
 
