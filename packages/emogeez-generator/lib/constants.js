@@ -2,9 +2,18 @@ const { TEMP_FILES_PATH: tempPath } = process.env;
 
 export const ALLOWED_THEMES = [
   'apple',
+  'emojidex',
+  'emojione',
+  'emojipedia',
   'facebook',
   'google',
+  'htc',
+  'lg',
   'messenger',
+  'microsoft',
+  'mozilla',
+  'samsung',
+  'softbank',
   'twitter',
   'whatsapp',
 ];

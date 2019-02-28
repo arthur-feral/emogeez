@@ -79,16 +79,23 @@ const collectorReducer = (state = initialState, { type, payload }) => {
         emoji,
       } = payload;
       const themes = reduce(emoji.themes, (result, themeUrl, themeName) => {
-        if (includes(ALLOWED_THEMES, themeName)) {
-          return {
-            ...result,
-            [themeName]: {
-              ...state.themes[themeName],
-              [themeUrl]: emoji.name,
-            },
-          };
-        }
-        return result;
+        // if (includes(ALLOWED_THEMES, themeName)) {
+        //   return {
+        //     ...result,
+        //     [themeName]: {
+        //       ...state.themes[themeName],
+        //       [themeUrl]: emoji.name,
+        //     },
+        //   };
+        // }
+
+        return {
+          ...result,
+          [themeName]: {
+            ...state.themes[themeName],
+            [themeUrl]: emoji.name,
+          },
+        };
       }, state.themes);
 
       return {

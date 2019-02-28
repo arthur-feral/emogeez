@@ -15,14 +15,14 @@ const loggers = {};
 each(loggersTypes, (color, type) => {
   loggers[type] = process.env.NODE_ENV === 'test'
     ? noop
-    : (message) => {
+    : function (...args) {
+      const [message, ...rest] = args;
       process.stdout.write(`${chalk[color](message)}\n`);
+      if (rest && rest.length) {
+        console.log(rest); // eslint-disable-line no-console
+      }
     };
 });
-
-loggers.count = function (message) {
-  process.stdout.write(`${chalk.yellow(message)}\r`);
-};
 
 loggers.sameLine = (message) => {
   process.stdout.write(`${chalk.yellow(message)}\r`);

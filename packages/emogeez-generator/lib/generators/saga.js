@@ -135,7 +135,13 @@ function _generateSprite(sources, destination, name) { // eslint-disable-line no
           fse.writeFileSync(`${destination}/${name}`, image);
           await imagemin([`${destination}/*.png`], destination, {
             plugins: [
-              imageminPng({ quality: [0.35, 0.65] }),
+              imageminPng({
+                strip: true,
+                // dithering: 0.1,
+                speed: 10,
+                // quality: [0.10, 0.20],
+                // posterize: 4,
+              }),
             ],
           });
           resolve({
