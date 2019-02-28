@@ -2,11 +2,11 @@ const { TEMP_FILES_PATH: tempPath } = process.env;
 
 export const ALLOWED_THEMES = [
   'apple',
-  'facebook',
-  'google',
-  'messenger',
-  'twitter',
-  'whatsapp',
+  // 'facebook',
+  // 'google',
+  // 'messenger',
+  // 'twitter',
+  // 'whatsapp',
 ];
 export const CURRENT_WORKING_DIRECTORY = process.cwd();
 export const TEMP_FILES_PATH = `${CURRENT_WORKING_DIRECTORY}/${tempPath}`;

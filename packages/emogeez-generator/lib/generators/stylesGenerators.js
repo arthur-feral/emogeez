@@ -1,5 +1,6 @@
 import fs from 'fs-extra';
 import os from 'os';
+import CleanCss from 'clean-css';
 import {
   map,
 } from 'lodash';
@@ -70,8 +71,10 @@ export default (config) => {
       cssContent += generateEmoji(emojiTemplateCss, config.prefix, emojiName, coordinatesArray[index].x / 2, coordinatesArray[index].y / 2);
     });
 
+    const css = new CleanCss().minify(cssContent).styles;
+
     return {
-      css: cssContent,
+      css,
       [config.preproc]: preprocContent,
     };
   };
