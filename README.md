@@ -21,7 +21,7 @@ $ yarn run lerna-bootstrap
 ```
 
 ### emogeez-generator
-![generator](https://cdn.jsdelivr.net/gh/arthur-feral/emogeez@latest/packages/emogeez-generator/emojis/apple/apple.png)
+![generator](https://github.com/arthur-feral/emogeez/raw/master/packages/emogeez-generator/demo_generator.png)
 
 [README](https://github.com/arthur-feral/emogeez/blob/master/packages/emogeez-generator/README.md)
 ### emogeez-parser
