@@ -1,11 +1,11 @@
 # Emogeez
 
-Welcome.
-
-Emogeez provide all the tools you need to integrate emojis in your apps.
-You can find the sprites generator made to build different images with the latest emojis on Unicode for different themes.
+Emogeez provides tooling to deal with emojis in your application.
+You can find the theme generator which generate a sprite with stylesheet files and emojis definitions.
 A tool for parsing, replace or find emojis in texts.
 And some UI components to display emojis in your apps. 
+
+You can find the Readme below for each tool.
 
 It is managed by [lerna](https://github.com/lerna/lerna) and [yarn workspaces](https://yarnpkg.com/blog/2017/08/02/introducing-workspaces/).
 
@@ -15,17 +15,13 @@ It is managed by [lerna](https://github.com/lerna/lerna) and [yarn workspaces](h
 # clone the project
 $ git clone git@github.com:arthur-feral/emogeez.git
 
-# install imagemagick dependency for emogeez-gegnerator
-$ brew install graphicsmagick
-$ sudo apt-get install graphicsmagick
-
 # bootstrap the workspace
 $ yarn
 $ yarn run lerna-bootstrap
 ```
 
 ### emogeez-generator
-![generator](https://github.com/arthur-feral/emogeez/blob/master/examples/demo_generator.png)
+![generator](https://cdn.jsdelivr.net/gh/arthur-feral/emogeez@latest/packages/emogeez-generator/emojis/apple/apple.png)
 
 [README](https://github.com/arthur-feral/emogeez/blob/master/packages/emogeez-generator/README.md)
 ### emogeez-parser

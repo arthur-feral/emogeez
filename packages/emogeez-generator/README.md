@@ -6,7 +6,7 @@ To be used on web app easily, it build a JSON file with useful informations abou
 You can after this use the [emogeez-react-components](https://github.com/arthur-feral/emogeez/blob/master/packages/emogeez-react-components/README.md) components library to display them on your app.
 
 ---
-Themes that can be used: `apple, emojione, emojidex, emojipedia, facebook, google, htc, lg, messenger, microsoft, mozilla, samsung, twitter, whatsapp`
+Themes that can be used: `apple, emojione, emojidex, emojipedia, facebook, google, htc, lg, messenger, microsoft, mozilla, samsung, softbank, twitter, whatsapp`
 
 Once the generator's work is done, you find the generated files into the specified folder (default in the current working directory).
 For each themes, you will find a .json, .png and .sass or .less and a .css file.
@@ -120,7 +120,7 @@ $ yarn run -h
 
 Run it
 ```bash
-$ yarn run --preproc sass -d path/to/the/folder -s 24 -c
+$ yarn run -s 24
 ```
 
 ###Options
